@@ -26,8 +26,10 @@ class Env implements Base
         $content = Files::read($path);
         $vars = explode("\n", $content);
         foreach ($vars as $var) {
-            $configuration = explode("=", $var);
-            $this->set($configuration[0], $configuration[1]);
+            if (substr($var, 0, 1) !== "#") {
+                $configuration = explode("=", $var);
+                $this->set($configuration[0], $configuration[1]);
+            }
         }
     }
 

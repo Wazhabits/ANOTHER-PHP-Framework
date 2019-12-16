@@ -14,7 +14,7 @@ class Kernel
      */
     static function initialize() {
         self::$environment = new Env(PATH_ROOT . ".env");
-        Event::create("coucou");
+        Event::add("core/kernel.initialize", "coucou");
         Logger::log("general", "KERNEL|Initialize", Logger::$DEFAULT_LEVEL);
     }
 

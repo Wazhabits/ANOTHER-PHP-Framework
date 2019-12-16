@@ -15,7 +15,8 @@ interface Event
     /**
      * This function execute all listener associated to an event
      * @param $eventName
+     * @param $args
      * @return mixed
      */
-    static function exec($eventName);
+    static function exec($eventName, &$args);
 }

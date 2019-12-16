@@ -16,7 +16,7 @@ class Loader implements LoaderBase
                 self::explore($path, $needle, $constraint, $depth + 1);
             } else {
                 if (strpos($path, ".php") !== false) {
-                    if (($needle === "" || strpos($path, $needle) !== false) && ($constraint === "" || strpos($path, $constraint) === false) && $depth !== 0) {
+                    if (($needle === "" || strpos($path, $needle) !== false) && ($constraint === "" || strpos($path, $constraint) === false)) {
                         require_once $path;
                     }
                 }

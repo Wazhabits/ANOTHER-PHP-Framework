@@ -8,6 +8,10 @@
  *  - GAZAUBE François<>
  */
 
+define("PATH_CORE", __DIR__ . DIRECTORY_SEPARATOR . "Core");
+define("PATH_SITE", __DIR__ . DIRECTORY_SEPARATOR . "Site");
+define("PATH_ROOT", __DIR__);
+
 /**
  * Including loader
  */
@@ -16,13 +20,11 @@ include_once __DIR__ . "/Core/Loader/Loader.php";
 
 use Core\Loader;
 
-define("ROOT_DIRECTORY", getcwd() . DIRECTORY_SEPARATOR);
-
 /**
  * Including classes sorting by constraints
  */
-Loader::explore(__DIR__, "Interface");
-Loader::explore(__DIR__, "", "Interface");
+Loader::explore(PATH_CORE, "Interface");
+Loader::explore(PATH_CORE, "", "Interface");
 
 /**
  * Initialize kernel

@@ -6,6 +6,7 @@
     1 : Index
     
     2 : Kernel
+        A : Env
     
     
 * Norm
@@ -29,6 +30,7 @@
     1 : Loader -
         static class
         static function explore($path, $needle, $constraint) | This function include all PHP files
+        static $CLASSES | Array of loaded classes path
         
     2 : Env -
         Access from kernel

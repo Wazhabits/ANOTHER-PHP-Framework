@@ -10,7 +10,6 @@ class Logger implements LoggerBase
     static $WARNING_LEVEL = 1;
     static $DEFAULT_LEVEL = 0;
     static $FOLDERS = ["", "warning", "error"];
-    static $BASE_PATH = "/Logs/";
 
     public static function log($key = "", $message = "", $status = 0)
     {
@@ -21,7 +20,7 @@ class Logger implements LoggerBase
     }
 
     private static function makeLogPath($key, $status) {
-        $directory =  getcwd() . DIRECTORY_SEPARATOR . self::$BASE_PATH . $key . DIRECTORY_SEPARATOR
+        $directory =  PATH_LOG . DIRECTORY_SEPARATOR . $key . DIRECTORY_SEPARATOR
             . self::$FOLDERS[$status] . DIRECTORY_SEPARATOR;
         $timeHash = date("Ymd", time()) . "." .  date("H", time());
         $fileExt = ".log";

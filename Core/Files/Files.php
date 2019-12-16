@@ -25,7 +25,7 @@ class Files implements Base
      */
     static function put($path, $content) {
         self::test($path);
-        return file_put_contents($path, $content);
+        return file_put_contents($path, $content . PHP_EOL, FILE_APPEND | LOCK_EX);
     }
 
     /**

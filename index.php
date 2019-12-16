@@ -8,6 +8,9 @@
  *  - GAZAUBE François<>
  */
 
+/**
+ * Base environment vars
+ */
 define("PATH_CORE", __DIR__ . DIRECTORY_SEPARATOR . "Core");
 define("PATH_SITE", __DIR__ . DIRECTORY_SEPARATOR . "Site");
 define("PATH_ROOT", __DIR__ . DIRECTORY_SEPARATOR);
@@ -18,9 +21,7 @@ define("EXECUTION_BEGIN", microtime(true));
 /**
  * Including loader
  */
-
 include_once __DIR__ . "/Core/Loader/Loader.php";
-
 use Core\Loader;
 
 /**

@@ -16,7 +16,6 @@ define("PATH_SITE", __DIR__ . DIRECTORY_SEPARATOR . "Site");
 define("PATH_ROOT", __DIR__ . DIRECTORY_SEPARATOR);
 define("PATH_LOG", __DIR__ . DIRECTORY_SEPARATOR . "Logs");
 define("PATH_CACHE", __DIR__ . DIRECTORY_SEPARATOR . "Cache");
-define("EXECUTION_BEGIN", microtime(true));
 
 /**
  * Including loader
@@ -34,3 +33,10 @@ Loader::explore(PATH_CORE, "", "Interface");
  * Initialize kernel
  */
 \Core\Kernel::initialize();
+
+/**
+ * Define end of execution
+ */
+define("EXECUTION_END", \Core\Kernel::getEnvironment()->getMicrotime());
+
+echo "EXECUTION TIME : " . (EXECUTION_END - EXECUTION_BEGIN) . "ms";

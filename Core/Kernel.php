@@ -22,7 +22,7 @@ class Kernel
         define("EXECUTION_BEGIN", self::getEnvironment()->getMicrotime());
         self::$annotation = new Annotation();
         Logger::log("general", "KERNEL|Initialize", Logger::$DEFAULT_LEVEL);
-        Event::add("core/kernel.initialize", "coucou");
+        Event::add("core/kernel.initialize");
     }
 
     /**

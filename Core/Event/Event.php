@@ -13,11 +13,15 @@ class Event implements Base
      * @param $eventName = "Namespace/class.method"
      * @param $classnameAndMethod : "My\Class->myMethod()"
      */
-    public static function add($eventName, $classnameAndMethod)
+    public static function add($eventName, $classnameAndMethod = null)
     {
-        if (!array_key_exists($eventName, self::$event))
+        if (!array_key_exists($eventName, self::$event)) {
             self::$event[$eventName] = [];
-        self::$event[$eventName][] = $classnameAndMethod;
+            if ($classnameAndMethod !== null)
+                self::$event[$eventName][] = $classnameAndMethod;
+        } else {
+            self::$event[$eventName][] = $classnameAndMethod;
+        }
     }
 
     /**

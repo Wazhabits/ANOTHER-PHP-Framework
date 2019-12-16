@@ -34,8 +34,8 @@ class Files implements Base
      * @return mixed|void
      */
     static function delete($path) {
-        self::test($path);
-        unlink($path);
+        if (file_exists($path))
+            unlink($path);
     }
 
     /**

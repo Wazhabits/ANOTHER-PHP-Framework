@@ -15,7 +15,9 @@ class Event implements Base
      */
     public static function add($eventName, $classnameAndMethod)
     {
-        self::$event[$eventName][$classnameAndMethod];
+        if (!array_key_exists($eventName, self::$event))
+            self::$event[$eventName] = [];
+        self::$event[$eventName][] = $classnameAndMethod;
     }
 
     /**

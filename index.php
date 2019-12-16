@@ -37,6 +37,4 @@ Loader::explore(PATH_CORE, "", "Interface");
 /**
  * Define end of execution
  */
-define("EXECUTION_END", \Core\Kernel::getEnvironment()->getMicrotime());
-
-echo "EXECUTION TIME : " . (EXECUTION_END - EXECUTION_BEGIN) . "ms";
+define("EXECUTION_END", \Core\Kernel::getEnvironment()->getExecutionTime());

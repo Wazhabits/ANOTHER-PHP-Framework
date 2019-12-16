@@ -1,3 +1,5 @@
 <?php
 
-\Core\Kernel::initialize();
+// \Core\Kernel::initialize();
+
+echo "Bonjour";

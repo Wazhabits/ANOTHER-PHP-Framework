@@ -1,12 +1,12 @@
 <?php
 
-
 namespace Core;
 
-include_once __DIR__ . "/Loader/Loader.php";
+use Event;
 
 class Kernel
 {
+
     static function initialize() {
     }
 }

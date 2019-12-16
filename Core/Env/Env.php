@@ -63,4 +63,12 @@ class Env implements Base
     public function getMicrotime() {
         return (int)(microtime(true) * 1000);
     }
+
+    /**
+     * Return current execution time
+     * @return int
+     */
+    public function getExecutionTime() {
+        return $this->getMicrotime() - EXECUTION_BEGIN;
+    }
 }

@@ -43,10 +43,12 @@ class Files implements Base
      * @param $path
      * @return mixed|void
      */
-    static function create($path) {
+    static function create($path, $content = "") {
         self::test($path);
         $fd = fopen($path, "a+");
         fclose($fd);
+        if ($content !== "")
+            self::put($path, $content);
     }
 
     /**

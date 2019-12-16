@@ -30,10 +30,11 @@ interface Files
 
     /**
      * This function create a $path file given
+     * @param $content = ""
      * @param $path
      * @return mixed|void
      */
-    static function create($path);
+    static function create($path, $content = "");
 
     /**
      * This function test a $path given and create folder if not exist

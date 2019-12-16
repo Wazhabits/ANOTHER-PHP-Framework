@@ -25,9 +25,13 @@ class Annotation implements Base
      * This function return classes annotation documentation filter by method or not
      * @param $classname
      * @param string $method
+     * @return bool|mixed
      */
     public function getDocumentation($classname, $method = "") {
-        var_dump($this->documentation[$classname]);
+        if ($method !== "")
+            return (array_key_exists($method, $this->documentation[$classname])) ? $this->documentation[$classname][$method] : false;
+        else
+            return $this->documentation[$classname];
     }
 
     private function getClasses() {

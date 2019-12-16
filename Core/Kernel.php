@@ -2,11 +2,12 @@
 
 namespace Core;
 
-use Event;
+use Core\Event;
 
 class Kernel
 {
 
     static function initialize() {
+        Event::create("coucou");
     }
 }

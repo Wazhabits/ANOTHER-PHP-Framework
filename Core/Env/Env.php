@@ -37,7 +37,7 @@ class Env implements Base
      * @param $value
      */
     private function set($key, $value) {
-        $this->configuration[$key] = $value;
+        $this->configuration[strtoupper($key)] = trim($value);
     }
 
     /**
@@ -54,5 +54,13 @@ class Env implements Base
             else
                 return null;
         }
+    }
+
+    /**
+     * This function return the current milisecond
+     * @return int
+     */
+    public function getMicrotime() {
+        return (int)(microtime(true) * 1000);
     }
 }

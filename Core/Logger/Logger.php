@@ -22,7 +22,7 @@ class Logger implements LoggerBase
     {
         if ($key === "" || $message === "")
             return false;
-        Files::put(self::makeLogPath($key, $status), microtime() . "|" . $message . PHP_EOL);
+        Files::put(self::makeLogPath($key, $status), Kernel::getEnvironment()->getMicrotime() . "|" . $message);
         return true;
     }
 
@@ -35,7 +35,7 @@ class Logger implements LoggerBase
     private static function makeLogPath($key, $status) {
         $directory =  PATH_LOG . DIRECTORY_SEPARATOR . $key . DIRECTORY_SEPARATOR
             . self::$FOLDERS[$status] . DIRECTORY_SEPARATOR;
-        $timeHash = date("Ymd", time()) . "." .  date("H", time());
+        $timeHash = date(Kernel::getEnvironment()->getConfiguration("LOG_FORMAT"), time());
         $fileExt = ".log";
         return $directory . $timeHash . $fileExt;
     }

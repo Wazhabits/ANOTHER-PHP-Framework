@@ -37,6 +37,7 @@
     0 : Kernel -
         static class
         static function getEnvironment() | Return Env instance
+        static function getAnnotation() | Return Annotation instance
 
     1 : Loader -
         static class
@@ -59,3 +60,7 @@
         Acces from kernel
         public function getDocumentation($classname, $method = "") | Get the documentation array of specific class/method
         
+    5 : Event
+        static class
+        static function add($eventName, $classnameAndMethod = null) | Add a listener to an event, create event if no listener gave
+        static function exec($eventName, &$args) | Execute all listener associated to given event

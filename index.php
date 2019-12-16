@@ -3,6 +3,13 @@
 /**
  * This file is part of the Framework project
  * Copyright 2019 - Core team
+ * Authors :
+ *  - PIVETEAU Anatole<anatole.piveteau@gmail.com>
+ *  - GAZAUBE François<>
+ */
+
+/**
+ * Including loader
  */
 
 include_once __DIR__ . "/Core/Loader/Loader.php";

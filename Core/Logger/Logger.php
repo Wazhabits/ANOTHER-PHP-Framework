@@ -15,7 +15,7 @@ class Logger implements LoggerBase
     {
         if ($key === "" || $message === "")
             return false;
-        Files::put(self::makeLogPath($key, $status), $message);
+        Files::put(self::makeLogPath($key, $status), microtime() . "|" . $message . PHP_EOL);
         return true;
     }
 

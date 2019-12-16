@@ -2,4 +2,4 @@
 
 // \Core\Kernel::initialize();
 
-echo "Bonjour";
+Event::create('Test');

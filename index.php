@@ -1,5 +1,11 @@
 <?php
 
-include_once __DIR__ . "/Core/Kernel.php";
+include_once __DIR__ . "/Core/Loader/Loader.php";
 
-\Core\Kernel::initialize(__DIR__);
+use Core\Loader;
+
+
+Loader::explore(__DIR__, "Interface");
+Loader::explore(__DIR__, "", "Interface");
+
+\Core\Kernel::initialize();

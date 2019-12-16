@@ -34,6 +34,9 @@ class Annotation implements Base
             return $this->documentation[$classname];
     }
 
+    /**
+     * This function parse all loaded classes and read these documentation
+     */
     private function getClasses() {
         $loadedClasses = get_declared_classes();
         foreach ($loadedClasses as $class) {
@@ -45,7 +48,7 @@ class Annotation implements Base
                         $this->document($class, $reflectedClass);
                         $this->documentation["classes"][$namespace][] = str_replace($namespace. "\\", "", $class);
                     } catch (\Exception $exception) {
-
+                        var_dump($exception);
                     }
                 } catch (\Exception $exception) {
                     var_dump($exception);
@@ -98,6 +101,8 @@ class Annotation implements Base
                     $varsComment = $matches[2][0];
                     $classDocumentation[$varsName][] = $varsComment;
                 }
+            } else {
+                $classDocumentation["description"] = $comment;
             }
         }
     }

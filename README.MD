@@ -7,6 +7,7 @@
     
     2 : Kernel
         A : Env
+        B : Annotation
     
     
 * Norm
@@ -53,3 +54,8 @@
         static function delete($path) | Delete the given file
         static function create($path, $content = null) | Create the file and add content if specified
         static function test($path) | Test if a $path exist, create the missing folder if there are
+        
+    4 : Annotation
+        Acces from kernel
+        public function getDocumentation($classname, $method = "") | Get the documentation array of specific class/method
+        

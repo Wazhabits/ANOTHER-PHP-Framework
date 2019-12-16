@@ -23,6 +23,13 @@
     4 : LOG :
         Format : CLASS|Message of log
         
+    5 : Routing :
+        Format : 
+            "siteDomain": {
+                "route" => "controllerPath",
+                ...
+            }
+
 * Documentation
 
 

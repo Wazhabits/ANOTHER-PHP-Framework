@@ -10,11 +10,13 @@ class Files implements Base
     /**
      * This function return file contents
      * @param $path
-     * @return false|mixed|string
+     * @return false|string
      */
     static function read($path) {
-        self::test($path);
-        return file_get_contents($path);
+        if (file_exists($path))
+            return file_get_contents($path);
+        else
+            return false;
     }
 
     /**
@@ -41,6 +43,7 @@ class Files implements Base
     /**
      * This function create a $path file given
      * @param $path
+     * @param $content = ""
      * @return mixed|void
      */
     static function create($path, $content = "") {
@@ -56,8 +59,7 @@ class Files implements Base
      * @param $path
      * @return bool|mixed
      */
-    static function test($path)
-    {
+    static function test($path) {
         if (!file_exists($path)) {
             $elements = explode(DIRECTORY_SEPARATOR, $path);
             $accumulator = "";

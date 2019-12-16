@@ -1,3 +1,3 @@
 <?php
 
-echo "Hey !";
+\Core\Kernel::initialize();

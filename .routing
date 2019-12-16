@@ -1,0 +1,10 @@
+{
+    "framework.ddev.site": {
+        "/" => "",
+            "/home" => ""
+    },
+    "framework2.ddev.site": {
+        "/" => "",
+        "/home" => ""
+    }
+}

@@ -10,6 +10,14 @@ class Loader implements LoaderBase
 {
     static $CLASSES;
 
+    /**
+     * This function load classes by path with constraint or needle
+     * @param $path
+     * @param string $needle
+     * @param string $constraint
+     * @param int $depth
+     * @return mixed|void
+     */
     static function explore($path, $needle = "", $constraint = "", $depth = 0)
     {
         $scan = glob($path . DIRECTORY_SEPARATOR . "*");

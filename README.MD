@@ -12,9 +12,12 @@
 
 
     1 : Upper Camel Case for classes
+    
     2 : Lower Camel Case
-    3 : Interface : Core\Functionnality\InterfaceName
-        Class : Core\Functionnality
+    
+    3 : NameSpace :
+        Interface : Core\Functionnality
+        Class : Core
         
 * Documentation
 

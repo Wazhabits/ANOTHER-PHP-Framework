@@ -1,4 +1,10 @@
+# IDE PART
 .idea
+# DOCKER
+.ddev
 docker-compose.yml
 Dockerfile
 nginx
+# PROJECT
+Cache/*
+Logs/*

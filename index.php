@@ -11,6 +11,7 @@
 define("PATH_CORE", __DIR__ . DIRECTORY_SEPARATOR . "Core");
 define("PATH_SITE", __DIR__ . DIRECTORY_SEPARATOR . "Site");
 define("PATH_ROOT", __DIR__);
+define("EXECUTION_BEGIN", microtime());
 
 /**
  * Including loader

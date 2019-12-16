@@ -8,6 +8,8 @@ use \Core\Loader\LoaderBase;
 
 class Loader implements LoaderBase
 {
+    static $CLASSES;
+
     static function explore($path, $needle = "", $constraint = "", $depth = 0)
     {
         $scan = glob($path . DIRECTORY_SEPARATOR . "*");
@@ -17,6 +19,7 @@ class Loader implements LoaderBase
             } else {
                 if (strpos($path, ".php") !== false) {
                     if (($needle === "" || strpos($path, $needle) !== false) && ($constraint === "" || strpos($path, $constraint) === false)) {
+                        self::$CLASSES[] = $path;
                         require_once $path;
                     }
                 }

@@ -17,7 +17,6 @@ class Loader implements LoaderBase
             } else {
                 if (strpos($path, ".php") !== false) {
                     if (($needle === "" || strpos($path, $needle) !== false) && ($constraint === "" || strpos($path, $constraint) === false) && $depth !== 0) {
-                        var_dump($path);
                         require_once $path;
                     }
                 }

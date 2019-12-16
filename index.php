@@ -9,6 +9,8 @@ include_once __DIR__ . "/Core/Loader/Loader.php";
 
 use Core\Loader;
 
+define("ROOT_DIRECTORY", getcwd() . DIRECTORY_SEPARATOR);
+
 /**
  * Including classes sorting by constraints
  */

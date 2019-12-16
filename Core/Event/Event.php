@@ -6,13 +6,29 @@ use Core\Event\Event as Base;
 
 class Event implements Base
 {
+    static $event = [];
+
+    /**
+     * This function add listener to an event
+     * @param $eventName = "Namespace/class.method"
+     * @param $classnameAndMethod : "My\Class->myMethod()"
+     */
     public static function add($eventName, $classnameAndMethod)
     {
-        // TODO: Implement add() method.
+        self::$event[$eventName][$classnameAndMethod];
     }
 
-    public static function exec($eventName)
+    /**
+     * This function execute all listener associated to an event
+     * @param $eventName
+     * @param $args
+     */
+    public static function exec($eventName, &$args)
     {
-        // TODO: Implement exec() method.
+        if (array_key_exists($eventName, self::$event) && !empty(self::$event[$eventName])) {
+            foreach (self::$event[$eventName] as $listener) {
+                $listener($args);
+            }
+        }
     }
 }

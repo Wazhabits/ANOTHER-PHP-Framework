@@ -19,9 +19,7 @@ class Kernel
      */
     static function initialize() {
         self::$environment = new Env(PATH_ROOT . ".env");
-        define("EXECUTION_BEGIN", self::$environment->getMicrotime());
-        self::$annotation = new Annotation();
-        Event::create("coucou");
+        Event::add("core/kernel.initialize", "coucou");
         Logger::log("general", "KERNEL|Initialize", Logger::$DEFAULT_LEVEL);
     }
 

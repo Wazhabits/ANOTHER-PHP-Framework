@@ -1,5 +1,5 @@
 <?php
 
-// \Core\Kernel::initialize();
+include_once __DIR__ . "/Core/Kernel.php";
 
-Event::create('Test');
+\Core\Kernel::initialize(__DIR__);

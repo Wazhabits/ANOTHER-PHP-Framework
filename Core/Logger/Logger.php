@@ -13,7 +13,7 @@ class Logger implements LoggerBase
 
     /**
      * This function write in log file split by specific format
-     * @param string $key is use as sub-folder of Logs folder
+     * @param string $key is use as sub-folder of Log folder
      * @param string $message log content
      * @param int $status this value is needed for split log like warning/errors
      * @return bool

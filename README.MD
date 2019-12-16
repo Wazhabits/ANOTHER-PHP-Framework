@@ -20,6 +20,9 @@
         Interface : Core\Functionnality
         Class : Core
         
+    4 : LOG :
+        Format : CLASS|Message of log
+        
 * Documentation
 
 

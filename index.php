@@ -34,7 +34,4 @@ Loader::explore(PATH_CORE, "", "Interface");
  */
 \Core\Kernel::initialize();
 
-/**
- * Define end of execution
- */
-define("EXECUTION_END", \Core\Kernel::getEnvironment()->getExecutionTime());
+echo "<br>Exec. Time: " . \Core\Kernel::getEnvironment()->getExecutionTime() . "ms<br>";

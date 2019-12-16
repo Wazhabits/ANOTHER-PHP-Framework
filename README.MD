@@ -37,6 +37,7 @@
     0 : Kernel -
         static class
         static function getEnvironment() | Return Env instance
+        static function getAnnotation() | Return Annotation instance
 
     1 : Loader -
         static class

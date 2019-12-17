@@ -1,7 +1,8 @@
 {
     "framework.ddev.site": {
         "/": "",
-            "/home": ""
+        "/home": "",
+        "/home/[var]": ""
     },
     "framework2.ddev.site": {
         "/": "",

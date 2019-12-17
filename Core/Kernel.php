@@ -17,11 +17,11 @@ class Kernel
     /**
      * This function define environment
      */
-    static function initialize() {
+    static function boot() {
         self::$environment = new Env(PATH_ROOT . ".env");
         self::$annotation = new Annotation();
+        Event::add("core/kernel.boot");
         Logger::log("general", "KERNEL|Initialize", Logger::$DEFAULT_LEVEL);
-        Event::add("core/kernel.initialize");
     }
 
     /**

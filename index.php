@@ -32,6 +32,6 @@ Loader::explore(PATH_CORE, "", "Interface");
 /**
  * Initialize kernel
  */
-\Core\Kernel::initialize();
+\Core\Kernel::boot();
 
 echo "<br>Exec. Time: " . \Core\Kernel::getEnvironment()->getExecutionTime() . "ms<br>";

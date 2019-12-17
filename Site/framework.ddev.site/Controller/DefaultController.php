@@ -3,7 +3,9 @@
 
 namespace Framework\Controller;
 
-class DefaultController
+use Core\Controller;
+
+class DefaultController extends Controller
 {
     /**
      * @route /

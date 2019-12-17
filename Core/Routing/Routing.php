@@ -61,6 +61,12 @@ class Routing implements Base
         return (substr($SubURIElement, 0, 1) === "[" && substr($SubURIElement, strlen($SubURIElement) - 1, 1) === "]");
     }
 
+    /**
+     * This function compare existing route to the server request route, it can define the current Route
+     * @param $site
+     * @param $uri
+     * @return bool
+     */
     public function checkRouteParams($site, $uri) {
         foreach ($this->routes[$site] as $route => $controller) {
             $existingRouteArray = array_values(array_filter(explode("/", $route)));

@@ -17,6 +17,10 @@ class Routing implements Base
         $this->status = $this->setCurrent();
     }
 
+    /**
+     * This function read a .routing json file and create associate route into memory
+     * @param $path
+     */
     public function read($path) {
         $routes = json_decode(Files::read($path));
         foreach ($routes as $site => $configuration) {
@@ -26,6 +30,10 @@ class Routing implements Base
         }
     }
 
+    /**
+     * This function define which route of which site is used, it return the http response status
+     * @return int
+     */
     public function setCurrent() {
         $site = $_SERVER["HTTP_HOST"];
         $uri = $_SERVER["REQUEST_URI"];
@@ -44,6 +52,11 @@ class Routing implements Base
         return 200;
     }
 
+    /**
+     * This function tell if a subelement of URI is a param of route
+     * @param $SubURIElement
+     * @return bool
+     */
     public function isURIParameter($SubURIElement) {
         return (substr($SubURIElement, 0, 1) === "[" && substr($SubURIElement, strlen($SubURIElement) - 1, 1) === "]");
     }

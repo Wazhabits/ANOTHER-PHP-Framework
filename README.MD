@@ -4,10 +4,17 @@
     
     
     1 : Index
+        A : ENV_VAR
+        
+    2 : Loader
+        A : Include all interfaces in Core
+        B : Include all classes in Core
+        C : Include all files from Root
     
     2 : Kernel
         A : Env
         B : Annotation
+        C : Routing
     
     
 * Norm

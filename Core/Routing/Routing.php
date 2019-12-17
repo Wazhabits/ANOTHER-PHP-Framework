@@ -14,6 +14,20 @@ class Routing implements Base
     public function __construct() {
         foreach (Files::$ROUTING as $route)
             $this->read($route);
+        $annotation = Kernel::getAnnotation()->getDocumentation();
+        foreach ($annotation as $classname => $conf) {
+            foreach ($conf as $method => $configuration) {
+                if (isset($configuration) && array_key_exists("route", $configuration)) {
+                    if (isset($configuration["site"])) {
+                        $site = trim($configuration["site"][0]);
+                        foreach ($configuration["route"] as $route) {
+                            $route = trim($route);
+                            $this->routes[$site][$route] = $classname . "->" . $method;
+                        }
+                    }
+                }
+            }
+        }
         Event::add("core/routing.read", $this->routes);
         Logger::log("routing", "ROUTING|Read route", Logger::$DEFAULT_LEVEL);
         $this->status = $this->setCurrent();

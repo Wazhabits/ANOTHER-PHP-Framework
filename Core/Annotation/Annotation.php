@@ -27,7 +27,9 @@ class Annotation implements Base
      * @param string $method
      * @return bool|mixed
      */
-    public function getDocumentation($classname, $method = "") {
+    public function getDocumentation($classname = "", $method = "") {
+        if ($classname === "")
+            return $this->documentation;
         if ($method !== "")
             return (array_key_exists($method, $this->documentation[$classname])) ? $this->documentation[$classname][$method] : false;
         else

@@ -11,5 +11,5 @@ interface Annotation
      * @param $classname
      * @param string $method
      */
-    public function getDocumentation($classname, $method = "");
+    public function getDocumentation($classname = "", $method = "");
 }

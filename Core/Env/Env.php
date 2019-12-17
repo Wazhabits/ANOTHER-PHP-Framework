@@ -14,6 +14,7 @@ class Env implements Base
             $this->read($path);
         else
             return false;
+        define("EXECUTION_BEGIN", $this->getMicrotime());
         return $this;
     }
 

@@ -26,7 +26,8 @@ class Files implements Base
      * @return bool|int|mixed
      */
     static function put($path, $content) {
-        self::test($path);
+        if (!file_exists($path))
+            self::test($path);
         return file_put_contents($path, $content . PHP_EOL, FILE_APPEND | LOCK_EX);
     }
 
@@ -64,17 +65,14 @@ class Files implements Base
             $elements = explode(DIRECTORY_SEPARATOR, $path);
             $accumulator = "";
             foreach ($elements as $element) {
-                if ($accumulator === "") {
+                if ($accumulator === "")
                     $accumulator = $element;
-                } else {
+                else
                     $accumulator .= $element;
-                }
-                if (strpos($element, ".") === false && !file_exists($accumulator) && $accumulator !== "") {
+                if (strpos($element, ".") === false && !file_exists($accumulator) && $accumulator !== "")
                     mkdir($accumulator);
-                }
-                if (strpos($element, ".")) {
+                if (strpos($element, "."))
                     return file_exists($accumulator);
-                }
                 $accumulator .= DIRECTORY_SEPARATOR;
             }
         }

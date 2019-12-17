@@ -15,11 +15,17 @@ class Kernel
     static $annotation;
 
     /**
+     * @var \Core\Routing\Routing $routing
+     */
+    static $routing;
+
+    /**
      * This function define environment
      */
     static function boot() {
         self::$environment = new Env(PATH_ROOT . ".env");
         self::$annotation = new Annotation();
+        self::$routing = new Routing();
         Event::add("core/kernel.boot");
         Logger::log("general", "KERNEL|Initialize", Logger::$DEFAULT_LEVEL);
     }

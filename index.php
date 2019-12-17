@@ -28,6 +28,7 @@ use Core\Loader;
  */
 Loader::explore(PATH_CORE, "Interface");
 Loader::explore(PATH_CORE, "", "Interface");
+Loader::explore(PATH_ROOT, "Interface");
 
 /**
  * Initialize kernel

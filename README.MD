@@ -1,13 +1,25 @@
 **Framework Project**
 
+***Presentation***
+This project want to provide the lighter PHP framework developer-oriented, multi-site, multi-lang, multi-application. Under GNU GPL v2.0
+
+***Team*** Our team is composed by 2 developper : François Gazaube as PHP developper and Anatole Piveteau as Project Maintainer 
+
 * Stack 
     
     
     1 : Index
+        A : ENV_VAR
+        
+    2 : Loader
+        A : Include all interfaces in Core
+        B : Include all classes in Core
+        C : Include all files from Root
     
     2 : Kernel
         A : Env
         B : Annotation
+        C : Routing
     
     
 * Norm
@@ -64,3 +76,8 @@
         static class
         static function add($eventName, $classnameAndMethod = null) | Add a listener to an event, create event if no listener gave
         static function exec($eventName, &$args) | Execute all listener associated to given event
+        
+    6 : Routing
+        access from kernel
+        public functon getCurrent() | Return the current route use and the response status code
+        

@@ -9,11 +9,12 @@ class Routing implements Base
 {
     private $current = [];
     private $routes = [];
+    private $status;
 
     public function __construct() {
         foreach (Files::$ROUTING as $route)
             $this->read($route);
-        $this->setCurrent();
+        $this->status = $this->setCurrent();
     }
 
     public function read($path) {
@@ -34,6 +35,7 @@ class Routing implements Base
             if (isset($this->routes[$site][$uri])){
                 $this->current["route"] = $uri;
                 $this->current["controller"] = $this->routes[$site][$uri];
+                $this->current["site"] = $site;
             } else {
                 if (!$this->checkRouteParams($site, $uri))
                     return 404;
@@ -58,6 +60,7 @@ class Routing implements Base
                         if ($index === count($testingRouteArray)) {
                             $this->current["route"] = $route;
                             $this->current["controller"] = $controller;
+                            $this->current["site"] = $site;
                             return true;
                         }
                     }

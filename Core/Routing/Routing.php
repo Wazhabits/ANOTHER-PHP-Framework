@@ -21,7 +21,7 @@ class Routing implements Base
      * This function read a .routing json file and create associate route into memory
      * @param $path
      */
-    public function read($path) {
+    private function read($path) {
         $routes = json_decode(Files::read($path));
         foreach ($routes as $site => $configuration) {
             foreach ($configuration as $route => $controller) {
@@ -34,7 +34,7 @@ class Routing implements Base
      * This function define which route of which site is used, it return the http response status
      * @return int
      */
-    public function setCurrent() {
+    private function setCurrent() {
         $site = $_SERVER["HTTP_HOST"];
         $uri = $_SERVER["REQUEST_URI"];
         if (!isset($this->routes[$site])) {
@@ -57,7 +57,7 @@ class Routing implements Base
      * @param $SubURIElement
      * @return bool
      */
-    public function isURIParameter($SubURIElement) {
+    private function isURIParameter($SubURIElement) {
         return (substr($SubURIElement, 0, 1) === "[" && substr($SubURIElement, strlen($SubURIElement) - 1, 1) === "]");
     }
 
@@ -67,7 +67,7 @@ class Routing implements Base
      * @param $uri
      * @return bool
      */
-    public function checkRouteParams($site, $uri) {
+    private function checkRouteParams($site, $uri) {
         foreach ($this->routes[$site] as $route => $controller) {
             $existingRouteArray = array_values(array_filter(explode("/", $route)));
             $testingRouteArray = array_values(array_filter(explode("/", $uri)));
@@ -89,5 +89,13 @@ class Routing implements Base
             }
         }
         return false;
+    }
+
+    /**
+     * This function return the current route and the status code
+     * @return array
+     */
+    public function getCurrent() {
+        return ["route" => $this->current, "status" => $this->status];
     }
 }

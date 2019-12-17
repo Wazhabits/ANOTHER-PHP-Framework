@@ -64,3 +64,8 @@
         static class
         static function add($eventName, $classnameAndMethod = null) | Add a listener to an event, create event if no listener gave
         static function exec($eventName, &$args) | Execute all listener associated to given event
+        
+    6 : Routing
+        access from kernel
+        public functon getCurrent() | Return the current route use and the response status code
+        

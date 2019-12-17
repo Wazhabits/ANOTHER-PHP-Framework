@@ -33,7 +33,10 @@ class Kernel
         self::$routing = new Routing();
         Logger::log("general", "KERNEL|Initialize", Logger::$DEFAULT_LEVEL);
         Event::add("core/kernel.boot");
-        self::makeControllerCall(self::$routing->getCurrent());
+        if (self::$routing->getCurrent()["status"] === 200) {
+            self::makeControllerCall(self::$routing->getCurrent());
+        }
+        http_response_code(self::$routing->getCurrent()["status"]);
     }
 
     /**

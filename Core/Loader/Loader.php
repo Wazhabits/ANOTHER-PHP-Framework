@@ -39,4 +39,8 @@ class Loader implements LoaderBase
             }
         }
     }
+
+    static function isLoaded($classname) {
+        return in_array(self::$CLASSES, $classname);
+    }
 }

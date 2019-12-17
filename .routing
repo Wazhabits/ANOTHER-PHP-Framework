@@ -1,12 +1,7 @@
 {
     "framework.ddev.site": {
-        "/": "",
-        "/home": "",
-        "/home/{var}": ""
+        "/": "Framework\\Controller\\DefaultController->index"
     },
     "framework2.ddev.site": {
-        "/": "",
-        "/home": "",
-        "/babtou": ""
     }
 }

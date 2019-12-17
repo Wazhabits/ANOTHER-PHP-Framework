@@ -13,6 +13,7 @@ class Routing implements Base
     public function __construct() {
         foreach (Files::$ROUTING as $route)
             $this->read($route);
+        $this->setCurrent();
     }
 
     public function read($path) {

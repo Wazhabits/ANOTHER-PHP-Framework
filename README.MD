@@ -1,5 +1,10 @@
 **Framework Project**
 
+***Presentation***
+This project want to provide the lighter PHP framework developer-oriented, multi-site, multi-lang, multi-application. Under GNU GPL v2.0
+
+***Team*** Our team is composed by 2 developper : François Gazaube as PHP developper and Anatole Piveteau as Project Maintainer 
+
 * Stack 
     
     

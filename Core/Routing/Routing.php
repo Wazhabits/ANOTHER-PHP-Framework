@@ -58,7 +58,7 @@ class Routing implements Base
      * @return bool
      */
     private function isURIParameter($SubURIElement) {
-        return (substr($SubURIElement, 0, 1) === "[" && substr($SubURIElement, strlen($SubURIElement) - 1, 1) === "]");
+        return (substr($SubURIElement, 0, 1) === "{" && substr($SubURIElement, strlen($SubURIElement) - 1, 1) === "}");
     }
 
     /**

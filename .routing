@@ -2,7 +2,7 @@
     "framework.ddev.site": {
         "/": "",
         "/home": "",
-        "/home/[var]": ""
+        "/home/{var}": ""
     },
     "framework2.ddev.site": {
         "/": "",

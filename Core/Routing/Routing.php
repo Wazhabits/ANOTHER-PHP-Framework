@@ -14,6 +14,8 @@ class Routing implements Base
     public function __construct() {
         foreach (Files::$ROUTING as $route)
             $this->read($route);
+        Event::add("core/routing.read", $this->routes);
+        Logger::log("routing", "ROUTING|Read route", Logger::$DEFAULT_LEVEL);
         $this->status = $this->setCurrent();
     }
 
@@ -38,6 +40,8 @@ class Routing implements Base
         $site = $_SERVER["HTTP_HOST"];
         $uri = $_SERVER["REQUEST_URI"];
         if (!isset($this->routes[$site])) {
+            Event::add("core/routing.500", $this->routes);
+            Logger::log("routing", "ROUTING|Internal Error, code 500", Logger::$ERROR_LEVEL);
             return 500;
         } else {
             if (isset($this->routes[$site][$uri])){
@@ -45,10 +49,15 @@ class Routing implements Base
                 $this->current["controller"] = $this->routes[$site][$uri];
                 $this->current["site"] = $site;
             } else {
-                if (!$this->checkRouteParams($site, $uri))
+                if (!$this->checkRouteParams($site, $uri)) {
+                    Event::add("core/routing.404", $this->routes);
+                    Logger::log("routing", "ROUTING|Not Found, code 404", Logger::$ERROR_LEVEL);
                     return 404;
+                }
             }
         }
+        Event::add("core/routing.200", $this->routes);
+        Logger::log("routing", "ROUTING|OK, code 200", Logger::$DEFAULT_LEVEL);
         return 200;
     }
 

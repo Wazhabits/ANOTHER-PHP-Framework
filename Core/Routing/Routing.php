@@ -28,6 +28,10 @@ class Routing implements Base
                 }
             }
         }
+        foreach (explode(",",Kernel::getEnvironment()->getConfiguration("SITES_DOMAINS")) as $site) {
+            if (!isset($this->routes[$site]) || empty($this->routes[$site]))
+                Logger::log("routing", "ROUTING|Site '" . $site . "' has no route", Logger::$WARNING_LEVEL);
+        }
         Event::add("core/routing.read", $this->routes);
         Logger::log("routing", "ROUTING|Read route", Logger::$DEFAULT_LEVEL);
         $this->status = $this->setCurrent();

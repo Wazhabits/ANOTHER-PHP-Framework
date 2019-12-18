@@ -43,7 +43,8 @@ class Event implements Base
             /**
              * Add listener to event
              */
-            self::$event[$eventName][] = $classnameAndMethod;
+            if ($classnameAndMethod !== null)
+                self::$event[$eventName][] = $classnameAndMethod;
         }
     }
 
@@ -54,10 +55,13 @@ class Event implements Base
      */
     public static function exec($eventName, &$args = null)
     {
+        if (array_key_exists($eventName, self::$event)) {
+            self::add($eventName);
+        }
         /**
          * If there is listener for this event
          */
-        if (array_key_exists($eventName, self::$event) && !empty(self::$event[$eventName])) {
+        if (!empty(self::$event[$eventName])) {
             foreach (self::$event[$eventName] as $listener) {
                 /**
                  * Executing it

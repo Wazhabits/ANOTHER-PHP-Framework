@@ -11,6 +11,5 @@ class KernelBootEvent
      */
     static function sayHello()
     {
-        var_dump("Hello");
     }
 }

@@ -9,10 +9,10 @@ class DefaultController extends Controller
 {
     /**
      * @site framework.ddev.site
-     * @route /test/test
+     * @route /
      */
     public function index()
     {
-        var_dump("COUCOU");
+        $this->render("index", ["coucou" => "Bonjour", "liste" => ["Ma", "Liste", "A", "Virgule"], "message" => ["coucou"]]);
     }
 }

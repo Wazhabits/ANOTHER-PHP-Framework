@@ -20,7 +20,7 @@ class Logger implements LoggerBase
      */
     public static function log($key = "", $message = "", $status = 0)
     {
-        if ($key === "" || $message === "")
+        if ($key === "" || $message === "" || $status > (int)Kernel::getEnvironment()->getConfiguration("LOG_LEVEL"))
             return false;
         Files::put(self::makeLogPath($key, $status), Kernel::getEnvironment()->getMicrotime() . "|" . $message);
         return true;

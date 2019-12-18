@@ -63,6 +63,7 @@ Our team is composed by 2 developper : François Gazaube as PHP developper and A
 * Event Stack
 
 
+    sort by execution
     core/kernel.boot
     core/routing.read
     core/routing.current

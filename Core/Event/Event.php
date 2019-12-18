@@ -8,6 +8,9 @@ class Event implements Base
 {
     static $event = [];
 
+    /**
+     * This function read the annotation entry and add event listener if find method containing the @ event marker
+     */
     public static function addEventByAnnotation() {
         $annotation = Kernel::getAnnotation()->getDocumentation();
         foreach ($annotation as $classes => $configuration) {

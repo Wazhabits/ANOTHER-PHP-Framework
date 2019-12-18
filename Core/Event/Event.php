@@ -9,19 +9,11 @@ class Event implements Base
     static $event = [];
 
     public static function addEventByAnnotation() {
-        $annotation = Kernel::getAnnotation()->getDocumentation();
-        foreach ($annotation as $classes => $configuration) {
-            foreach ($configuration as $method => $comment) {
-                if ($comment) {
-                    if (array_key_exists("event", $comment)) {
-                        foreach ($comment["event"] as $listenEvent) {
-                            self::add(trim($listenEvent), $classes . "::" . $method);
-                        }
-                    }
-                }
+        foreach (Kernel::getAnnotation()->getByMarker("event") as $classes => $methodElement) {
+            foreach ($methodElement as $method => $event) {
+                self::add($event, $classes . "::" . $method);
             }
         }
-        echo "<pre><code>", var_dump(self::$event), "</pre></code>";
     }
 
     /**

@@ -78,10 +78,14 @@ class Template implements Base
     }
 
     /**
-     * Entrée :
+     * This function make a foreach in templates.
+     * Entry :
      * ...
      * {foreach:vars>key=var}
-     * @param $buffer
+     * <h1>My super {key}</h1>
+     * ....
+     * {end}
+     * @param &$buffer
      */
     static function makeLoop(&$buffer) {
         $matches = [];
@@ -133,37 +137,6 @@ class Template implements Base
                 $buffer = str_replace($contentToReplace, $subContent, $buffer);
             }
             $i++;
-        }
-    }
-
-    static function setLoop(&$buffer) {
-        $matches = [];
-        preg_match_all("/(({foreach:(.*?)\sas\s(.*?)\s\=\>\s(.*?)})(.*?){end})/s", $buffer, $matches);
-        foreach ($matches[2] as $index => $expression)  {
-            $variableName = $matches[3][$index];
-            $keyName = $matches[4][$index];
-            $valueName = $matches[5][$index];
-            $content = $matches[6][$index];
-            $subMatches = [];
-            $tmpContent = "";
-            preg_match_all("/\{(.*)\}/", $content, $subMatches);
-            // Pour chaque element du foreach
-            foreach (self::$args[$variableName] as $key => $element) {
-                // Pour chaque variable a l'interieur du foreach
-                foreach ($subMatches[1] as $subMatch) {
-                    $tmpContent .= $content;
-                    $tmpContent = str_replace("{" . $keyName . "}",  $key, $tmpContent);
-                    $tmpContent = str_replace("{" . $valueName . "}",  $element, $tmpContent);
-                    // Si tableau
-                    if (strpos($subMatch, ".") !== false) {
-                        if (explode(".", $subMatch)[0] === $valueName) {
-                            if (is_array($element) && isset($element[explode(".", $subMatch)[1]]))
-                                $tmpContent .= str_replace("{" . $subMatch . "}", $element[explode(".", $subMatch)[1]], $tmpContent);
-                        }
-                    }
-                }
-            }
-            $buffer = str_replace($matches[1][$index], $tmpContent, $buffer);
         }
     }
 

@@ -26,6 +26,10 @@ class Env implements Base
     {
         $content = Files::read($path);
         $vars = explode("\n", $content);
+        /**
+         * Foreach setting in .env
+         * Array : [Key, Value]
+         */
         foreach ($vars as $var) {
             if (substr($var, 0, 1) !== "#" && trim($var) !== "") {
                 $configuration = explode("=", $var);

@@ -40,6 +40,11 @@ class Loader implements LoaderBase
         }
     }
 
+    /**
+     * Return if a specified class is loaded
+     * @param $classname
+     * @return bool
+     */
     static function isLoaded($classname) {
         return in_array(self::$CLASSES, $classname);
     }

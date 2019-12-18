@@ -9,6 +9,9 @@ class Event implements Base
     static $event = [];
 
     public static function addEventByAnnotation() {
+        /**
+         * Parse all function who had @ event marker
+         */
         foreach (Kernel::getAnnotation()->getByMarker("event") as $classes => $methodElement) {
             foreach ($methodElement as $method => $event) {
                 self::add($event, $classes . "::" . $method);
@@ -23,11 +26,20 @@ class Event implements Base
      */
     public static function add($eventName, $classnameAndMethod = null)
     {
+        /**
+         * If event exist
+         */
         if (!array_key_exists($eventName, self::$event)) {
             self::$event[$eventName] = [];
+            /**
+             * If add listener to the new event
+             */
             if ($classnameAndMethod !== null)
                 self::$event[$eventName][] = $classnameAndMethod;
         } else {
+            /**
+             * Add listener to event
+             */
             self::$event[$eventName][] = $classnameAndMethod;
         }
     }
@@ -39,8 +51,14 @@ class Event implements Base
      */
     public static function exec($eventName, &$args = null)
     {
+        /**
+         * If there is listener for this event
+         */
         if (array_key_exists($eventName, self::$event) && !empty(self::$event[$eventName])) {
             foreach (self::$event[$eventName] as $listener) {
+                /**
+                 * Executing it
+                 */
                 $listener($args);
             }
         }

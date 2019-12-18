@@ -6,8 +6,20 @@ use Core\Logger\Logger as LoggerBase;
 
 class Logger implements LoggerBase
 {
+    /**
+     * Need by Logger to define in which folder put the file
+     * @var int $ERROR_LEVEL
+     */
     static $ERROR_LEVEL = 2;
+    /**
+     * Need by Logger to define in which folder put the file
+     * @var int $WARNING_LEVEL
+     */
     static $WARNING_LEVEL = 1;
+    /**
+     * Need by Logger to define in which folder put the file
+     * @var int $DEFAULT_LEVEL
+     */
     static $DEFAULT_LEVEL = 0;
     static $FOLDERS = ["", "warning", "error"];
 

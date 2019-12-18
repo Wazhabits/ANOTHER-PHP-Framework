@@ -59,6 +59,11 @@ class Files implements Base
 
     /**
      * This function test a $path given and create folder if not exist
+     * How it work, he get a path like /a/b/c and parse it like this :
+     * /a
+     * /a/b
+     * /a/b/c
+     * if a folder does not exist, create it
      * @param $path
      * @return bool|mixed
      */

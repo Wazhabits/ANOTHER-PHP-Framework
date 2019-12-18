@@ -14,6 +14,9 @@ class Routing implements Base
     public function __construct() {
         foreach (Files::$ROUTING as $route)
             $this->read($route);
+        /**
+         * Create routing for controller who had the @ route annotation
+         */
         $annotation = Kernel::getAnnotation()->getDocumentation();
         foreach ($annotation as $classname => $conf) {
             foreach ($conf as $method => $configuration) {
@@ -28,13 +31,17 @@ class Routing implements Base
                 }
             }
         }
+        /**
+         * Tell if a site of app doesn't had existing route
+         */
         foreach (explode(",",Kernel::getEnvironment()->getConfiguration("SITES_DOMAINS")) as $site) {
             if (!isset($this->routes[$site]) || empty($this->routes[$site]))
                 Logger::log("routing", "ROUTING|Site '" . $site . "' has no route", Logger::$WARNING_LEVEL);
         }
-        Event::add("core/routing.read", $this->routes);
+        Event::exec("core/routing.read", $this->routes);
         Logger::log("routing", "ROUTING|Read route", Logger::$DEFAULT_LEVEL);
         $this->status = $this->setCurrent();
+        Event::exec("core/routing.current", $this->current);
     }
 
     /**

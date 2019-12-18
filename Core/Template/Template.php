@@ -11,12 +11,23 @@ class Template implements Base
     private static $args = [];
     private static $baseTemplatePath = "";
 
-    static function render($templatePath = "index", $args = [])
+    /**
+     * This function render all template need from 1 master template
+     * @param string $templatePath
+     * @param array $args
+     */
+    static function render($templatePath = "index", &$args = [])
     {
+        /**
+         * Prepare args for event
+         */
         $argumentForEvent = [
             &$templatePath,
             &$args
         ];
+        /**
+         * Exec event preProcess
+         */
         Event::exec("core/template.preProcess", $argumentForEvent);
         self::$args = $args;
         foreach ($args as $name => $arg) {
@@ -30,6 +41,9 @@ class Template implements Base
         ob_start(Template::class . "::build");
         echo Files::read(self::$templatePath);
         ob_end_flush();
+        /**
+         * Exec event postProcess
+         */
         Event::exec("core/template.postProcess");
     }
 
@@ -40,9 +54,21 @@ class Template implements Base
      */
     static function build($buffer)
     {
+        /**
+         * Exec event preRender
+         */
         Event::exec("core/template.preRender", $buffer);
+        /**
+         * Include all section needed in templates
+         */
         self::sectionalize($buffer);
+        /**
+         * Put vars at the place of markers in templates
+         */
         self::setVars($buffer);
+        /**
+         * Exec event postRender
+         */
         Event::exec("core/template.postRender", $buffer);
         return $buffer;
     }

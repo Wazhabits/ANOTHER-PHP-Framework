@@ -33,6 +33,8 @@ This project want to provide the lighter PHP framework developer-oriented, multi
 * Stack 
     
     
+    FRONT RENDERING
+    
     1 : Index
         A : ENV_VAR
         
@@ -45,6 +47,13 @@ This project want to provide the lighter PHP framework developer-oriented, multi
         A : Env
         B : Annotation
         C : Routing
+        
+    3 : Controller
+        A : Render
+        
+    4 : Template
+        A : sectionnalize
+        B : setVars
     
     
 * Norm
@@ -109,3 +118,21 @@ This project want to provide the lighter PHP framework developer-oriented, multi
         access from kernel
         public functon getCurrent() | Return the current route use and the response status code
         
+    7 : Template
+        static class
+        static function render($templatePath, $args) | This function render a template defined by path with given args
+        static function build($buffer) | This function take a parameter containing the Template content and call other method to search and replace values
+        static function setVars($buffer) | This function search and replace all {vars}/{vars[X]} into template
+        static function sectionalize($buffer) | This function search and replace recursively section in templates
+        static function object_to_array($obj) | This function convert an object to an array recursively
+        
+        
+* Template :
+
+    
+    {var} : Show a variable named var, it can be a string or an array, if it is an array, it is convert to a comma separated list
+            If var is an array, you can show a single element by using {var[INDEX]}
+    {section:sectionPath} : Include a section (sub-template) into template
+
+
+    

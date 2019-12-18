@@ -21,7 +21,6 @@ class Event implements Base
                 }
             }
         }
-        echo "<pre><code>", var_dump(self::$event), "</pre></code>";
     }
 
     /**

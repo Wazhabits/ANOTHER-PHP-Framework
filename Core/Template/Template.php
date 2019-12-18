@@ -62,6 +62,9 @@ class Template implements Base
          * Include all section needed in templates
          */
         self::sectionalize($buffer);
+        /**
+         * Template foreach in templates
+         */
         self::setLoop($buffer);
         /**
          * Put vars at the place of markers in templates

@@ -56,8 +56,23 @@ Our team is composed by 2 developper : François Gazaube as PHP developper and A
         
     4 : Template
         A : sectionnalize
+        C : makeLoop
         B : setVars
+        D : [Context=Develop]Debug
     
+* Event Stack
+
+
+    core/kernel.boot
+    core/routing.read
+    core/routing.current
+        core/routing.500
+        core/routing.404
+        core/routing.200
+    core/template.preProcess
+    core/template.preRender
+    core/template.postRender
+    core/template.postProcess
     
 * Norm
 
@@ -77,11 +92,16 @@ Our team is composed by 2 developper : François Gazaube as PHP developper and A
             Status : 0 = Normal, 1 = Warning, 2 = Error
         
     5 : Routing :
-        Format : 
+        .routing Format File : 
             "siteDomain": {
                 "route" => "controllerPath",
                 ...
             }
+        Annotation :
+            use the "@route /my/route" flag into your phpdoc controller method
+            
+    6 : Event :
+         use the "@event Namespace/class.event" flag into your phpdoc static method or the Event::add($eventName, &$args)
 
 * Documentation
 

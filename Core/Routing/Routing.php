@@ -65,7 +65,7 @@ class Routing implements Base
         $site = $_SERVER["HTTP_HOST"];
         $uri = $_SERVER["REQUEST_URI"];
         if (!isset($this->routes[$site])) {
-            Event::add("core/routing.500", $this->routes);
+            Event::exec("core/routing.500", $this->routes);
             Logger::log("routing", "ROUTING|Internal Error, code 500", Logger::$ERROR_LEVEL);
             return 500;
         } else {
@@ -75,13 +75,13 @@ class Routing implements Base
                 $this->current["site"] = $site;
             } else {
                 if (!$this->checkRouteParams($site, $uri)) {
-                    Event::add("core/routing.404", $this->routes);
+                    Event::exec("core/routing.404", $this->routes);
                     Logger::log("routing", "ROUTING|Not Found, code 404", Logger::$ERROR_LEVEL);
                     return 404;
                 }
             }
         }
-        Event::add("core/routing.200", $this->routes);
+        Event::exec("core/routing.200", $this->routes);
         Logger::log("routing", "ROUTING|OK, code 200", Logger::$DEFAULT_LEVEL);
         return 200;
     }

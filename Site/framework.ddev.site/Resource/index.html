@@ -5,12 +5,14 @@
     <title>Title</title>
 </head>
 <body>
-    {foreach:message as key => element}
-        {key} => {element}
+    {foreach:message>key=element}
+        {key} {element}
     {end}
     {section:section/section}
     {coucou}
     {liste}
-    {message.0}
+    <h1>
+        {message.0}
+    </h1>
 </body>
 </html>

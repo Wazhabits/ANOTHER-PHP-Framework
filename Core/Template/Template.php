@@ -65,7 +65,7 @@ class Template implements Base
         /**
          * Template foreach in templates
          */
-        self::setLoop($buffer);
+        self::makeLoop($buffer);
         /**
          * Put vars at the place of markers in templates
          */
@@ -83,6 +83,58 @@ class Template implements Base
      * {foreach:vars>key=var}
      * @param $buffer
      */
+    static function makeLoop(&$buffer) {
+        $matches = [];
+        //    /(({foreach: (.*?) \s as \s (.*?) \s \=\> \s (.*?) })(.*?){end}) /s
+        preg_match_all("/({foreach:(.*?)>(.*?)=(.*?)}(.*?){end})/s", $buffer, $matches);
+        /**
+         * Matches vars
+         */
+        $contentsToReplace = &$matches[1];
+        $variableNames = &$matches[2];
+        $keyNames = &$matches[3];
+        $valueNames = &$matches[4];
+        $contents = &$matches[5];
+        $i = 0;
+        while ($i < count($variableNames)) {
+            /**
+             * Match elements
+             */
+            // Name of the key of foreach
+            $keyName = &$keyNames[$i];
+            // Name of value
+            $valueName = &$valueNames[$i];
+            // Argument array gave by controller
+            $argument = &self::$args[$variableNames[$i]];
+            // Keys of argument array
+            $argumentElementKeys = array_keys($argument);
+            // Content to replace into loop
+            $content = &$contents[$i];
+            $contentToReplace = $contentsToReplace[$i];
+            if (isset($argument) && is_array($argument)) {
+                // Content to replace on this loop
+                $subContent = $content;
+                // Index of loop
+                $loopIndex = 0;
+                while ($loopIndex < count($argumentElementKeys)) {
+                    // BaseArray-ValueNameInForeach-KeyInBaseArray
+                    $nameOfValueInMemoryVar = $variableNames[$i] . $valueName . $argumentElementKeys[$loopIndex];
+                    // Create memory arg in the base arg array with the good value
+                    self::$args[$nameOfValueInMemoryVar] =  &$argument[$argumentElementKeys[$loopIndex]];
+                    $subContent = str_replace("{" . $valueName . "}", "{" . $nameOfValueInMemoryVar . "}", $subContent);
+
+                    // BaseArray-ValueNameInForeach-KeyInBaseArray
+                    $nameOfKeyInMemoryVar = $variableNames[$i] . $keyName . $argumentElementKeys[$loopIndex];
+                    // Create memory arg in the base arg array with the good value
+                    self::$args[$nameOfKeyInMemoryVar] =  &$argumentElementKeys[$loopIndex];
+                    $subContent = str_replace("{" . $keyName . "}", "{" . $nameOfKeyInMemoryVar . "}", $subContent);
+                    $loopIndex++;
+                }
+                $buffer = str_replace($contentToReplace, $subContent, $buffer);
+            }
+            $i++;
+        }
+    }
 
     static function setLoop(&$buffer) {
         $matches = [];
@@ -138,27 +190,18 @@ class Template implements Base
     static function setVars(&$buffer)
     {
         $matches = [];
-        preg_match_all("/\{(.*)\}/", $buffer, $matches);
+        preg_match_all("/{([\w|\w.\w+]*)}/", $buffer, $matches);
         foreach ($matches[1] as $vars) {
             // On match les tableaux
-            if (count($varsIsArrayElement = explode(".", $vars)) > 1) {
-                $i = 1;
-                $indices = "";
-                while ($i < count($varsIsArrayElement)) {
-                        $indices .= ((is_numeric($varsIsArrayElement[$i])) ?
-                                $varsIsArrayElement[$i]
-                                : "'" . $varsIsArrayElement[$i] . "'");
-                    $i++;
-                }
+            if (count($varsIsArrayElement = explode(".", $vars)) === 2) {
                 $argumentName = $varsIsArrayElement[0];
-                $argument = self::$args[$argumentName];
-                $value = $argument{$indices};
-                $buffer = str_replace("{" . $vars . "}", $value, $buffer);
+                $argument = self::$args[$argumentName][$varsIsArrayElement[1]];
+                $buffer = str_replace("{" . $vars . "}", $argument, $buffer);
             } else {
                 $argument = self::$args[$vars];
                 if (is_array($argument))
                     $buffer = str_replace("{" . $vars . "}", implode(", ", $argument), $buffer);
-                if (is_string($argument))
+                if (is_string($argument) || is_int($argument))
                     $buffer = str_replace("{" . $vars . "}", $argument, $buffer);
             }
         }

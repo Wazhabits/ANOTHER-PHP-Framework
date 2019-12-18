@@ -134,6 +134,8 @@ Our team is composed by 2 developper : François Gazaube as PHP developper and A
     {var} : Show a variable named var, it can be a string or an array, if it is an array, it is convert to a comma separated list
             If var is an array, you can show a single element by using {var[INDEX]}
     {section:sectionPath} : Include a section (sub-template) into template
-
+    {foreach:message as key => element}
+        {key} => {element}
+    {end}
 
     

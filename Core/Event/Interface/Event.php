@@ -18,5 +18,5 @@ interface Event
      * @param $args
      * @return mixed
      */
-    static function exec($eventName, &$args);
+    static function exec($eventName, &$args = null);
 }

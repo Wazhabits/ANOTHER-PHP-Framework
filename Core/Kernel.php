@@ -32,7 +32,8 @@ class Kernel
         self::$annotation = new Annotation();
         self::$routing = new Routing();
         Logger::log("general", "KERNEL|Initialize", Logger::$DEFAULT_LEVEL);
-        Event::add("core/kernel.boot");
+        Event::addEventByAnnotation();
+        Event::exec("core/kernel.boot");
         if (self::$routing->getCurrent()["status"] === 200) {
             self::makeControllerCall(self::$routing->getCurrent());
         }

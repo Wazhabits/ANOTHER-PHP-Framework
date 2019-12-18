@@ -45,10 +45,25 @@ class Annotation implements Base
     public function getByMarker($marker)
     {
         $result = [];
+        /**
+         * Read all annotation by classes
+         */
         foreach ($this->documentation as $classes => $configuration) {
+            /**
+             * Read all annotation by method
+             */
             foreach ($configuration as $method => $comment) {
+                /**
+                 * If comment exist
+                 */
                 if ($comment) {
+                    /**
+                     * If marker exist in this method
+                     */
                     if (array_key_exists($marker, $comment)) {
+                        /**
+                         * Parse all marker set into the doc of method
+                         */
                         foreach ($comment[$marker] as $markerValue) {
                             $result[$classes][$method] = trim($markerValue);
                         }
@@ -64,11 +79,20 @@ class Annotation implements Base
      */
     private function getClasses()
     {
+        /**
+         * Get all namespace loaded
+         */
         $loadedClasses = get_declared_classes();
         foreach ($loadedClasses as $class) {
+            /**
+             * If it is a class of framework (multi part namespace)
+             */
             if (strpos($class, "\\") !== false) {
                 try {
                     try {
+                        /**
+                         * Reflect this class to extract documentation
+                         */
                         $reflectedClass = new \ReflectionClass($class);
                         $namespace = explode("\\", $class)[0];
                         $this->document($class, $reflectedClass);
@@ -124,6 +148,9 @@ class Annotation implements Base
         foreach ($comments as $comment) {
             if (strpos($comment, "@") !== false) {
                 $matches = [];
+                /**
+                 * Select by key=>value into the doc string
+                 */
                 preg_match_all("/\@(\w*)\s(.*)/", $comment, $matches);
                 if (count($matches[1])) {
                     $varsName = $matches[1][0];
@@ -131,6 +158,9 @@ class Annotation implements Base
                     $classDocumentation[$varsName][] = $varsComment;
                 }
             } else {
+                /**
+                 * If there is no marker, it is the description of method
+                 */
                 $classDocumentation["description"] = $comment;
             }
         }

@@ -5,6 +5,31 @@ This project want to provide the lighter PHP framework developer-oriented, multi
 
 ***Team*** Our team is composed by 2 developper : François Gazaube as PHP developper and Anatole Piveteau as Project Maintainer 
 
+* Settings
+
+
+    APPLICATION_ID : Usefull for API app
+    
+    APPLICATION_NAME : /
+    
+    SITES_DOMAINS : Comma separated list to declare mutli-domain app
+    
+    DATABASE_USER : User for DB
+    
+    DATABASE_PASS : Password for DB
+    
+    DATABASE_HOST : Host of DB
+    
+    DATABASE_PORT : Port of DB
+    
+    DATABASE_NAME : Database name
+    
+    LOG_FORMAT : Log file format name (to split by date)
+    
+    LOG_LEVEL : Write all log who had a level under this constant
+    
+    
+
 * Stack 
     
     
@@ -34,7 +59,10 @@ This project want to provide the lighter PHP framework developer-oriented, multi
         Class : Core
         
     4 : LOG :
-        Format : CLASS|Message of log
+        Format : 
+            Key = class
+            Message : CLASS|Message of log
+            Status : 0 = Normal, 1 = Warning, 2 = Error
         
     5 : Routing :
         Format : 

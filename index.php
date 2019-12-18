@@ -11,9 +11,10 @@
 /**
  * Base environment vars
  */
+define("PATH_ROOT", __DIR__ . DIRECTORY_SEPARATOR);
+define("PATH_PUBLIC", __DIR__ . DIRECTORY_SEPARATOR . "Public");
 define("PATH_CORE", __DIR__ . DIRECTORY_SEPARATOR . "Core");
 define("PATH_SITE", __DIR__ . DIRECTORY_SEPARATOR . "Site");
-define("PATH_ROOT", __DIR__ . DIRECTORY_SEPARATOR);
 define("PATH_LOG", __DIR__ . DIRECTORY_SEPARATOR . "Log");
 define("PATH_CACHE", __DIR__ . DIRECTORY_SEPARATOR . "Cache");
 

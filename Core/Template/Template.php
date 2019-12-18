@@ -71,6 +71,11 @@ class Template implements Base
          */
         self::setVars($buffer);
         /**
+         * Show fully a var, only available in develop context
+         */
+        if (Kernel::getEnvironment()->getConfiguration("APPLICATION_CONTEXT") === "Develop")
+            self::debug($buffer);
+        /**
          * Exec event postRender
          */
         Event::exec("core/template.postRender", $buffer);
@@ -89,7 +94,6 @@ class Template implements Base
      */
     static function makeLoop(&$buffer) {
         $matches = [];
-        //    /(({foreach: (.*?) \s as \s (.*?) \s \=\> \s (.*?) })(.*?){end}) /s
         preg_match_all("/({foreach:(.*?)>(.*?)=(.*?)}(.*?){end})/s", $buffer, $matches);
         /**
          * Matches vars
@@ -178,6 +182,50 @@ class Template implements Base
                     $buffer = str_replace("{" . $vars . "}", $argument, $buffer);
             }
         }
+    }
+
+    /**
+     * This function add the {debug:Vars} to frontend, this flag show a vars in html (each kind of var)
+     * use :
+     *  - {debug:varname}
+     * special :
+     *  - {debug:__all} this marker show all vars accessible in template
+     * @param $buffer
+     */
+    static function debug(&$buffer) {
+        $matches = [];
+        preg_match_all("/{debug:(.*?)}/s", $buffer, $matches);
+        $i = 0;
+        while ($i < count($matches[1])) {
+            switch ($matches[1][$i]) {
+                case "__args":
+                    $buffer = str_replace("{debug:" . $matches[1][$i] . "}", self::showArray(self::$args), $buffer);
+                    break;
+                default:
+                    $buffer = str_replace("{debug:" . $matches[1][$i] . "}", self::showArray(self::$args[$matches[1][$i]]), $buffer);
+                    break;
+            }
+            $i++;
+        }
+    }
+
+    /**
+     * This function show recursively an array as ul>li in html string
+     * @param $array
+     * @return string
+     */
+    private static function showArray($array) {
+        $result = "<ul class='array'>";
+        $keys = array_keys($array);
+        $i = 0;
+        while ($i < count($array)) {
+            if (is_array($array[$keys[$i]]))
+                $result .= "<li><span class='key'>" . $keys[$i] . "</span>: " . self::showArray($array[$keys[$i]]) . "</li>";
+            else
+                $result .= "<li><span class='key'>" . $keys[$i] . "</span>: '<span class='value'>" . $array[$keys[$i]] . "</span>'</li>";
+            $i++;
+        }
+        return $result . "</ul>";
     }
 
     /**

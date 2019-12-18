@@ -46,10 +46,8 @@ class Kernel
      */
     static function makeControllerCall($current) {
         $controller = explode("->", $current["route"]["controller"]);
-        $controllerClassName = $controller[0];
-        $controllerMethod = $controller[1];
-        $class = new $controllerClassName();
-        return $class->{$controllerMethod}();
+        self::$controller = new $controller[0]();
+        return self::$controller->{$controller[1]}();
     }
 
     /**

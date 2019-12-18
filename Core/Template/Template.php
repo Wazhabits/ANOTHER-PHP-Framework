@@ -77,6 +77,13 @@ class Template implements Base
         return $buffer;
     }
 
+    /**
+     * Entrée :
+     * ...
+     * {foreach:vars>key=var}
+     * @param $buffer
+     */
+
     static function setLoop(&$buffer) {
         $matches = [];
         preg_match_all("/(({foreach:(.*?)\sas\s(.*?)\s\=\>\s(.*?)})(.*?){end})/s", $buffer, $matches);
@@ -131,18 +138,28 @@ class Template implements Base
     static function setVars(&$buffer)
     {
         $matches = [];
-        extract(self::$args);
         preg_match_all("/\{(.*)\}/", $buffer, $matches);
         foreach ($matches[1] as $vars) {
-            $matchesArray = [];
-            preg_match_all("/(.*)\[(.*)\]/", $vars, $matchesArray);
-            if (count($matchesArray[1]) > 0) {
-                $buffer = str_replace("{" . $matchesArray[1][0] . "[" . $matchesArray[2][0] . "]}", ${$matchesArray[1][0]}[$matchesArray[2][0]], $buffer);
+            // On match les tableaux
+            if (count($varsIsArrayElement = explode(".", $vars)) > 1) {
+                $i = 1;
+                $indices = "";
+                while ($i < count($varsIsArrayElement)) {
+                        $indices .= ((is_numeric($varsIsArrayElement[$i])) ?
+                                $varsIsArrayElement[$i]
+                                : "'" . $varsIsArrayElement[$i] . "'");
+                    $i++;
+                }
+                $argumentName = $varsIsArrayElement[0];
+                $argument = self::$args[$argumentName];
+                $value = $argument{$indices};
+                $buffer = str_replace("{" . $vars . "}", $value, $buffer);
             } else {
-                if (is_array(${$vars}))
-                    $buffer = str_replace("{" . $vars . "}", implode(", ", ${$vars}), $buffer);
-                if (is_string(${$vars}))
-                    $buffer = str_replace("{" . $vars . "}", ${$vars}, $buffer);
+                $argument = self::$args[$vars];
+                if (is_array($argument))
+                    $buffer = str_replace("{" . $vars . "}", implode(", ", $argument), $buffer);
+                if (is_string($argument))
+                    $buffer = str_replace("{" . $vars . "}", $argument, $buffer);
             }
         }
     }

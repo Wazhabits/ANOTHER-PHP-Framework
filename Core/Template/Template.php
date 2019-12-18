@@ -11,12 +11,23 @@ class Template implements Base
     private static $args = [];
     private static $baseTemplatePath = "";
 
-    static function render($templatePath = "index", $args = [])
+    /**
+     * This function render all template need from 1 master template
+     * @param string $templatePath
+     * @param array $args
+     */
+    static function render($templatePath = "index", &$args = [])
     {
+        /**
+         * Prepare args for event
+         */
         $argumentForEvent = [
             &$templatePath,
             &$args
         ];
+        /**
+         * Exec event preProcess
+         */
         Event::exec("core/template.preProcess", $argumentForEvent);
         self::$args = $args;
         foreach ($args as $name => $arg) {
@@ -30,6 +41,9 @@ class Template implements Base
         ob_start(Template::class . "::build");
         echo Files::read(self::$templatePath);
         ob_end_flush();
+        /**
+         * Exec event postProcess
+         */
         Event::exec("core/template.postProcess");
     }
 
@@ -40,11 +54,58 @@ class Template implements Base
      */
     static function build($buffer)
     {
+        /**
+         * Exec event preRender
+         */
         Event::exec("core/template.preRender", $buffer);
+        /**
+         * Include all section needed in templates
+         */
         self::sectionalize($buffer);
+        /**
+         * Template foreach in templates
+         */
+        self::setLoop($buffer);
+        /**
+         * Put vars at the place of markers in templates
+         */
         self::setVars($buffer);
+        /**
+         * Exec event postRender
+         */
         Event::exec("core/template.postRender", $buffer);
         return $buffer;
+    }
+
+    static function setLoop(&$buffer) {
+        $matches = [];
+        preg_match_all("/(({foreach:(.*?)\sas\s(.*?)\s\=\>\s(.*?)})(.*?){end})/s", $buffer, $matches);
+        foreach ($matches[2] as $index => $expression)  {
+            $variableName = $matches[3][$index];
+            $keyName = $matches[4][$index];
+            $valueName = $matches[5][$index];
+            $content = $matches[6][$index];
+            $subMatches = [];
+            $tmpContent = "";
+            preg_match_all("/\{(.*)\}/", $content, $subMatches);
+            // Pour chaque element du foreach
+            foreach (self::$args[$variableName] as $key => $element) {
+                // Pour chaque variable a l'interieur du foreach
+                foreach ($subMatches[1] as $subMatch) {
+                    $tmpContent .= $content;
+                    $tmpContent = str_replace("{" . $keyName . "}",  $key, $tmpContent);
+                    $tmpContent = str_replace("{" . $valueName . "}",  $element, $tmpContent);
+                    // Si tableau
+                    if (strpos($subMatch, ".") !== false) {
+                        if (explode(".", $subMatch)[0] === $valueName) {
+                            if (is_array($element) && isset($element[explode(".", $subMatch)[1]]))
+                                $tmpContent .= str_replace("{" . $subMatch . "}", $element[explode(".", $subMatch)[1]], $tmpContent);
+                        }
+                    }
+                }
+            }
+            $buffer = str_replace($matches[1][$index], $tmpContent, $buffer);
+        }
     }
 
     /**

@@ -12,4 +12,9 @@ interface Annotation
      * @param string $method
      */
     public function getDocumentation($classname = "", $method = "");
+    /**
+     * @param $marker
+     * @return array
+     */
+    public function getByMarker($marker);
 }

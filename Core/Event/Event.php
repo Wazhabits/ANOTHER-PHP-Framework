@@ -12,16 +12,9 @@ class Event implements Base
      * This function read the annotation entry and add event listener if find method containing the @ event marker
      */
     public static function addEventByAnnotation() {
-        $annotation = Kernel::getAnnotation()->getDocumentation();
-        foreach ($annotation as $classes => $configuration) {
-            foreach ($configuration as $method => $comment) {
-                if ($comment) {
-                    if (array_key_exists("event", $comment)) {
-                        foreach ($comment["event"] as $listenEvent) {
-                            self::add(trim($listenEvent), $classes . "::" . $method);
-                        }
-                    }
-                }
+        foreach (Kernel::getAnnotation()->getByMarker("event") as $classes => $methodElement) {
+            foreach ($methodElement as $method => $event) {
+                self::add($event, $classes . "::" . $method);
             }
         }
     }

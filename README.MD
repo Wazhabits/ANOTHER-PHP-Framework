@@ -13,6 +13,8 @@ Our team is composed by 2 developper : François Gazaube as PHP developper and A
     
     APPLICATION_NAME : /
     
+    APPLICATION_CONTEXT : Define the current context, Production by default, use Develop to get debug access
+    
     SITES_DOMAINS : Comma separated list to declare mutli-domain app
     
     DATABASE_USER : User for DB
@@ -125,7 +127,9 @@ Our team is composed by 2 developper : François Gazaube as PHP developper and A
         static function build($buffer) | This function take a parameter containing the Template content and call other method to search and replace values
         static function setVars($buffer) | This function search and replace all {vars}/{vars[X]} into template
         static function sectionalize($buffer) | This function search and replace recursively section in templates
-        static function setLoop($buffer) | This function do a foreach in templates
+        static function makeLoop($buffer) | This function do a foreach in templates
+        static function showArray($array) | This function show an array as ul>li HTML recursively
+        static function debug(&$buffer) | This function add the marker {debug:varname} to frontend
         static function object_to_array($obj) | This function convert an object to an array recursively
         
         

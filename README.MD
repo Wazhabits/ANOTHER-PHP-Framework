@@ -125,6 +125,7 @@ Our team is composed by 2 developper : François Gazaube as PHP developper and A
         static function build($buffer) | This function take a parameter containing the Template content and call other method to search and replace values
         static function setVars($buffer) | This function search and replace all {vars}/{vars[X]} into template
         static function sectionalize($buffer) | This function search and replace recursively section in templates
+        static function setLoop($buffer) | This function do a foreach in templates
         static function object_to_array($obj) | This function convert an object to an array recursively
         
         

@@ -163,5 +163,6 @@ Our team is composed by 2 developper : François Gazaube as PHP developper and A
     {foreach:message as key => element}
         {key} => {element}
     {end}
+    {debug:var} : Show a full var, special value is __args who show all arguments in template
 
     

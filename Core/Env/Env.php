@@ -10,11 +10,11 @@ class Env implements Base
 
     public function __construct($path)
     {
+        define("EXECUTION_BEGIN", $this->getMicrotime());
         if (file_exists($path))
             $this->read($path);
         else
             return false;
-        define("EXECUTION_BEGIN", $this->getMicrotime());
         return $this;
     }
 

@@ -128,14 +128,14 @@ class Template implements Base
                     // BaseArray-ValueNameInForeach-KeyInBaseArray
                     $nameOfValueInMemoryVar = $variableNames[$i] . $valueName . $argumentElementKeys[$loopIndex];
                     // Create memory arg in the base arg array with the good value
-                    self::$args[$nameOfValueInMemoryVar] =  &$argument[$argumentElementKeys[$loopIndex]];
-                    $subContent = str_replace("{" . $valueName . "}", "{" . $nameOfValueInMemoryVar . "}", $subContent);
+                    self::$args["__temp"][$nameOfValueInMemoryVar] =  &$argument[$argumentElementKeys[$loopIndex]];
+                    $subContent = str_replace("{" . $valueName . "}", "{__temp." . $nameOfValueInMemoryVar . "}", $subContent);
 
                     // BaseArray-ValueNameInForeach-KeyInBaseArray
                     $nameOfKeyInMemoryVar = $variableNames[$i] . $keyName . $argumentElementKeys[$loopIndex];
                     // Create memory arg in the base arg array with the good value
-                    self::$args[$nameOfKeyInMemoryVar] =  &$argumentElementKeys[$loopIndex];
-                    $subContent = str_replace("{" . $keyName . "}", "{" . $nameOfKeyInMemoryVar . "}", $subContent);
+                    self::$args["__temp"][$nameOfKeyInMemoryVar] =  &$argumentElementKeys[$loopIndex];
+                    $subContent = str_replace("{" . $keyName . "}", "{__temp." . $nameOfKeyInMemoryVar . "}", $subContent);
                     $loopIndex++;
                 }
                 $buffer = str_replace($contentToReplace, $subContent, $buffer);
@@ -197,6 +197,7 @@ class Template implements Base
         preg_match_all("/{debug:(.*?)}/s", $buffer, $matches);
         $i = 0;
         while ($i < count($matches[1])) {
+            self::$args["execution_time"] = Kernel::getEnvironment()->getConfiguration("TIME");
             switch ($matches[1][$i]) {
                 case "__args":
                     $buffer = str_replace("{debug:" . $matches[1][$i] . "}", self::showArray(self::$args), $buffer);

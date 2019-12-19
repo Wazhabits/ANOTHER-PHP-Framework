@@ -6,6 +6,8 @@ This project want to provide the lighter PHP framework developer-oriented, multi
 ***Team***
 Our team is composed by 2 developper : François Gazaube as PHP developper and Anatole Piveteau as Project Maintainer 
 
+*TODO:Add a route /status to get informations about application performances* 
+
 * Settings
 
 
@@ -163,5 +165,6 @@ Our team is composed by 2 developper : François Gazaube as PHP developper and A
     {foreach:message as key => element}
         {key} => {element}
     {end}
+    {debug:var} : Show a full var, special value is __args who show all arguments in template
 
     

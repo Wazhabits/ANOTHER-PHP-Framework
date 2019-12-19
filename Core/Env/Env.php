@@ -10,11 +10,11 @@ class Env implements Base
 
     public function __construct($path)
     {
+        define("EXECUTION_BEGIN", $this->getMicrotime());
         if (file_exists($path))
             $this->read($path);
         else
             return false;
-        define("EXECUTION_BEGIN", $this->getMicrotime());
         return $this;
     }
 
@@ -42,9 +42,13 @@ class Env implements Base
      * This function set a configuration pear key/value
      * @param $key
      * @param $value
+     * @param $addToArray = false
      */
-    private function set($key, $value) {
-        $this->configuration[strtoupper($key)] = trim($value);
+    public function set($key, $value, $addToArray = false) {
+        if ($addToArray)
+            $this->configuration[strtoupper($key)][] = trim($value);
+        else
+            $this->configuration[strtoupper($key)] = trim($value);
     }
 
     /**

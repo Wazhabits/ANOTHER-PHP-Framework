@@ -24,4 +24,12 @@ interface Env
      * @return int
      */
     public function getMicrotime();
+
+    /**
+     * This function set a configuration pear key/value
+     * @param $key
+     * @param $value
+     * @param $addToArray = false
+     */
+    public function set($key, $value, $addToArray = false);
 }

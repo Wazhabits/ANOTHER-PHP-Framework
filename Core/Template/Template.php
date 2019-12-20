@@ -3,6 +3,7 @@
 
 namespace Core;
 
+use Core\Template\Parts\Conditions;
 use Core\Template\Template as Base;
 
 class Template implements Base
@@ -66,6 +67,11 @@ class Template implements Base
          * Template foreach in templates
          */
         self::makeLoop($buffer);
+        /**
+         * Make condition
+         */
+        $conditionBuilder = new Conditions($buffer, self::$args );
+        $conditionBuilder->build();
         /**
          * Put vars at the place of markers in templates
          */

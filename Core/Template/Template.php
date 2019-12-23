@@ -3,6 +3,8 @@
 
 namespace Core;
 
+use Core\Template\Parts\Conditions;
+use Core\Template\Parts\Vars;
 use Core\Template\Template as Base;
 
 class Template implements Base
@@ -10,6 +12,15 @@ class Template implements Base
     private static $templatePath = "";
     private static $args = [];
     private static $baseTemplatePath = "";
+    private static $conditionBuilder;
+    private static $loopBuilder;
+    private static $varsBuilder;
+
+    static function boot(&$buffer, &$args) {
+        self::$conditionBuilder = new Conditions($buffer, $args);
+        //self::$loopBuilder = new Conditions($buffer, $args);
+        self::$varsBuilder = new Vars($buffer, $args);
+    }
 
     /**
      * This function render all template need from 1 master template
@@ -62,14 +73,21 @@ class Template implements Base
          * Include all section needed in templates
          */
         self::sectionalize($buffer);
+
+        self::boot($buffer, self::$args);
         /**
          * Template foreach in templates
          */
-        self::makeLoop($buffer);
+        //self::makeLoop($buffer);
+        /**
+         * Make condition
+         */
+        //$conditionBuilder = new Conditions($buffer, self::$args );
+        //$conditionBuilder->build();
         /**
          * Put vars at the place of markers in templates
          */
-        self::setVars($buffer);
+        //self::setVars($buffer);
         /**
          * Show fully a var, only available in develop context
          */

@@ -5,15 +5,25 @@
     <title>Title</title>
 </head>
 <body>
-    {foreach:message>key=element}
-        {key} {element}
-    {end}
     {section:section/section}
     {coucou}
-    {liste}
+    {liste.0.0}
+    {liste.1}
+    {liste.2}
+    {liste.3}
+    {liste.4}
     <h1>
         {message.0}
+        {message.1}
     </h1>
     {debug:__args}
+    [if:{liste.3} === "Virgule"]
+        {then}
+            A{liste.1}B
+        {then}
+        {else}
+            DEF{liste.0.0}
+        {else}
+    [if]
 </body>
 </html>

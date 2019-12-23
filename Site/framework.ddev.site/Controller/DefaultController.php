@@ -13,6 +13,6 @@ class DefaultController extends Controller
      */
     public function index()
     {
-        $this->render("index", ["coucou" => "Bonjour", "liste" => ["Ma", "Liste", "A", "Virgule"], "message" => ["coucou", "babtou"]]);
+        $this->render("index", ["coucou" => "Bonjour", "liste" => [["Ma"], "Liste", "A", "Virgule"], "message" => ["coucou", "babtou"]]);
     }
 }

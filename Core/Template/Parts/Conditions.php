@@ -41,7 +41,6 @@ class Conditions
             preg_match_all($regElse, $content, $matchElse, PREG_SET_ORDER, 0);
             $else = $matchElse[0];
             if ($this->exec( $condition, $args)) {
-                $buffer = $buffer . count($then) . $condition . "'" . $content . "'";
                 if (count($then[0]) > 0)
                     $buffer = str_replace($full, $then[1], $buffer);
             } else {

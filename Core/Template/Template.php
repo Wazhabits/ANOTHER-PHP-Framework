@@ -77,7 +77,7 @@ class Template implements Base
         /**
          * Exec event preRender
          */
-        Event::exec("core/template.preRender", $buffer);
+        Event::exec("core/template.preBuild", $buffer);
         /**
          *
          */
@@ -90,7 +90,7 @@ class Template implements Base
         /**
          * Exec event postRender
          */
-        Event::exec("core/template.postRender", $buffer);
+        Event::exec("core/template.postBuild", $buffer);
         return $buffer;
     }
 

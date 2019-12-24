@@ -42,7 +42,5 @@ class Loop
     private function putValue(&$buffer,  $replace, $value) {
         if (!is_array($value))
             $buffer = str_replace($replace, $value, $buffer);
-        else
-            $buffer = str_replace($replace, "RATER", $buffer);
     }
 }

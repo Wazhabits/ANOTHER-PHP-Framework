@@ -4,6 +4,7 @@
 namespace Core;
 
 use Core\Template\Parts\Conditions;
+use Core\Template\Parts\Loop;
 use Core\Template\Parts\Vars;
 use Core\Template\Template as Base;
 
@@ -12,13 +13,16 @@ class Template implements Base
     private static $templatePath = "";
     private static $args = [];
     private static $baseTemplatePath = "";
+
+    private static $varsBuilder;
     private static $conditionBuilder;
     private static $loopBuilder;
-    private static $varsBuilder;
 
     static function boot(&$buffer, &$args) {
+        $buffer = str_replace("\n", "", $buffer);
+        Files::put("tmp.text", $buffer);
+        self::$loopBuilder = new Loop($buffer, $args);
         self::$conditionBuilder = new Conditions($buffer, $args);
-        //self::$loopBuilder = new Conditions($buffer, $args);
         self::$varsBuilder = new Vars($buffer, $args);
     }
 

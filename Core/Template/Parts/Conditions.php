@@ -28,17 +28,25 @@ class Conditions
      * @param $args
      */
     private function build(&$buffer, &$args) {
-        preg_match_all("/\[if:(.*)\](.*)\[if\]/s", $buffer, $matches);
-        $conditions = $matches[1];
-        foreach ($conditions as $index => $condition) {
-            preg_match_all("/{then}(.*){then}/s", $buffer, $then);
-            $then = $then[1];
-            preg_match_all("/{else}(.*){else}/s", $buffer, $else);
-            $else = $else[1];
+        $regExp = '/\[if:([a-zA-Z0-9.=+\-* {}"\'!]*)](.*)\[if]/U';
+        preg_match_all($regExp, $buffer, $matches,PREG_SET_ORDER, 0);
+        foreach ($matches as $index => $match) {
+            $full = $match[0];
+            $condition = $match[1];
+            $content = $match[2];
+            $regThen = '/{then}(.*){:then}/U';
+            preg_match_all($regThen, $content, $matchThen, PREG_SET_ORDER, 0);
+            $then = $matchThen[0];
+            $regElse = '/{else}(.*){:else}/U';
+            preg_match_all($regElse, $content, $matchElse, PREG_SET_ORDER, 0);
+            $else = $matchElse[0];
             if ($this->exec( $condition, $args)) {
-                $buffer = str_replace($matches[0][$index], $then[0], $buffer);
+                $buffer = $buffer . count($then) . $condition . "'" . $content . "'";
+                if (count($then[0]) > 0)
+                    $buffer = str_replace($full, $then[1], $buffer);
             } else {
-                $buffer = str_replace($matches[0][$index], $else[0], $buffer);
+                if (count($else[0]) >  0)
+                    $buffer = str_replace($full, $else[1], $buffer);
             }
         }
     }

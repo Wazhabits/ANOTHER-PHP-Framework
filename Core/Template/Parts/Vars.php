@@ -4,6 +4,8 @@
 namespace Core\Template\Parts;
 
 
+use Core\Files;
+
 class Vars
 {
 
@@ -42,9 +44,11 @@ class Vars
         preg_match_all("/{([\w|\w.\w+]*)}/", $buffer, $matches);
         foreach ($matches[1] as $vars) {
             $path = explode(".", $vars);
-            if (count($path) === 1)
-                $path = $path[0];
-            $buffer = str_replace("{" . $vars . "}", $this->getVarsValue($args, $path, 0, $quote), $buffer);
+            $value = $this->getVarsValue($args, $path, 0, $quote);
+            if ($value !== false)
+                $buffer = str_replace("{" . $vars . "}", $value, $buffer);
+            else
+                $buffer = str_replace("{" . $vars . "}", "false", $buffer);
         }
     }
 }

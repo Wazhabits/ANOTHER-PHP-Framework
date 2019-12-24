@@ -18,9 +18,14 @@ class Template implements Base
     private static $conditionBuilder;
     private static $loopBuilder;
 
-    static function boot(&$buffer, &$args) {
+    /**
+     * This function build a template
+     * @param $buffer
+     * @param $args
+     */
+    static function build(&$buffer, &$args) {
+        self::sectionalize($buffer);
         $buffer = str_replace("\n", "", $buffer);
-        Files::put("tmp.text", $buffer);
         self::$loopBuilder = new Loop($buffer, $args);
         self::$conditionBuilder = new Conditions($buffer, $args);
         self::$varsBuilder = new Vars($buffer, $args);
@@ -53,7 +58,7 @@ class Template implements Base
             . $_SERVER["HTTP_HOST"] . DIRECTORY_SEPARATOR . "Resource" . DIRECTORY_SEPARATOR;
         self::$templatePath = self::$baseTemplatePath
             . $templatePath . Kernel::getEnvironment()->getConfiguration("TEMPLATE_EXT");
-        ob_start(Template::class . "::build");
+        ob_start(Template::class . "::boot");
         echo Files::read(self::$templatePath);
         ob_end_flush();
         /**
@@ -63,35 +68,20 @@ class Template implements Base
     }
 
     /**
-     * This function build a template
+     * This function initialize the template engine
      * @param $buffer
      * @return mixed
      */
-    static function build($buffer)
+    static function boot($buffer)
     {
         /**
          * Exec event preRender
          */
         Event::exec("core/template.preRender", $buffer);
         /**
-         * Include all section needed in templates
+         *
          */
-        self::sectionalize($buffer);
-
-        self::boot($buffer, self::$args);
-        /**
-         * Template foreach in templates
-         */
-        //self::makeLoop($buffer);
-        /**
-         * Make condition
-         */
-        //$conditionBuilder = new Conditions($buffer, self::$args );
-        //$conditionBuilder->build();
-        /**
-         * Put vars at the place of markers in templates
-         */
-        //self::setVars($buffer);
+        self::build($buffer, self::$args);
         /**
          * Show fully a var, only available in develop context
          */

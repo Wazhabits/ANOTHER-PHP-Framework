@@ -98,10 +98,10 @@ class Template implements Base
      * This function make a foreach in templates.
      * Entry :
      * ...
-     * {foreach:vars>key=var}
-     * <h1>My super {key}</h1>
+     * [foreach:liste as element]
+     * <li>bou:'{key:element}:{element}'</li>
+     * [foreach]
      * ....
-     * {end}
      * @param &$buffer
      */
     static function makeLoop(&$buffer) {

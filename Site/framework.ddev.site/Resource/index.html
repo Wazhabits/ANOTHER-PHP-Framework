@@ -26,17 +26,42 @@
         </ul>
         <ul>
             [foreach:liste as element]
-            <li>bou:'{key:element}:{element}'</li>
+            <li>bou:'{key:element}:{element}'
+                [if:{coucou} === "Bonjour"]
+                {then}
+                Batbtithen
+                {:then}
+                {else}
+                Batbtielse
+                {:else}
+                [if]</li>
             [foreach]
         </ul>
         <ul>
             [foreach:liste as element]
-            <li>bou:'{key:element}:{element}'</li>
+            <li>bou:'{key:element}:{element}'
+                [if:{coucou} === "Bonjours"]
+                {then}
+                {liste.0.0}
+                {:then}
+                {else}
+                {liste.0.0}
+                {:else}
+                [if]</li>
             [foreach]
         </ul>
         <ul>
             [foreach:liste as element]
-            <li>bou:'{key:element}:{element}'</li>
+            <li>bou:'{key:element}:{element}'
+
+                [if:{coucou} === "Bonjour"]
+                {then}
+                {coucou}
+                {:then}
+                {else}
+                Batbtielse
+                {:else}
+                [if]</li>
             [foreach]
         </ul>
     </h2>

@@ -17,7 +17,7 @@ class Loop
      * @param $args
      */
     private function build(&$buffer, &$args) {
-        preg_match_all("/\[foreach:(.*)\sas\s(\w*)](.*)\[foreach]/", $buffer, $matches);
+        preg_match_all("/\[foreach:(.*)\sas\s(\w*)](.*)\[foreach]/U", $buffer, $matches);
         $index = 0;
         while ($index < count($matches[0])) {
             $var = $matches[1][$index];

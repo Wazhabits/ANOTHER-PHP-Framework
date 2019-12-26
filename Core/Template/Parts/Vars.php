@@ -3,9 +3,6 @@
 
 namespace Core\Template\Parts;
 
-
-use Core\Files;
-
 class Vars
 {
 

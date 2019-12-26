@@ -43,6 +43,17 @@ class Template implements Base
      */
     static function render($templatePath = "index", &$args = [])
     {
+        self::init($templatePath, $args);
+        ob_start(Template::class . "::boot");
+        echo Files::read(self::$templatePath);
+        ob_end_flush();
+        /**
+         * Exec event postProcess
+         */
+        Event::exec("core/template.postProcess");
+    }
+
+    private static function init(&$templatePath, &$args) {
         /**
          * Prepare args for event
          */
@@ -63,13 +74,6 @@ class Template implements Base
             . $_SERVER["HTTP_HOST"] . DIRECTORY_SEPARATOR . "Resource" . DIRECTORY_SEPARATOR;
         self::$templatePath = self::$baseTemplatePath
             . $templatePath . Kernel::getEnvironment()->getConfiguration("TEMPLATE_EXT");
-        ob_start(Template::class . "::boot");
-        echo Files::read(self::$templatePath);
-        ob_end_flush();
-        /**
-         * Exec event postProcess
-         */
-        Event::exec("core/template.postProcess");
     }
 
     /**
@@ -106,30 +110,6 @@ class Template implements Base
                 . Kernel::getEnvironment()->getConfiguration("TEMPLATE_EXT"));
             self::sectionalize($sectionContent);
             $buffer = str_replace("{section:" . $sectionPath . "}", $sectionContent, $buffer);
-        }
-    }
-
-    /**
-     * This function replace vars call in template by his value
-     * @param $buffer
-     */
-    static function setVars(&$buffer)
-    {
-        $matches = [];
-        preg_match_all("/{([\w|\w.\w+]*)}/", $buffer, $matches);
-        foreach ($matches[1] as $vars) {
-            // On match les tableaux
-            if (count($varsIsArrayElement = explode(".", $vars)) === 2) {
-                $argumentName = $varsIsArrayElement[0];
-                $argument = self::$args[$argumentName][$varsIsArrayElement[1]];
-                $buffer = str_replace("{" . $vars . "}", $argument, $buffer);
-            } else {
-                $argument = self::$args[$vars];
-                if (is_array($argument))
-                    $buffer = str_replace("{" . $vars . "}", implode(", ", $argument), $buffer);
-                if (is_string($argument) || is_int($argument))
-                    $buffer = str_replace("{" . $vars . "}", $argument, $buffer);
-            }
         }
     }
 

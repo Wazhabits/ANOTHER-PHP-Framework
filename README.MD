@@ -8,7 +8,7 @@ Our team is composed by 2 developper : François Gazaube as PHP developper and A
 
 *TODO:Add a route /status to get informations about application performances* 
 
-* Settings
+# Settings
 
 
     APPLICATION_ID : Usefull for API app
@@ -35,7 +35,7 @@ Our team is composed by 2 developper : François Gazaube as PHP developper and A
     
     
 
-* Stack 
+# Stack 
     
     
     FRONT RENDERING
@@ -62,7 +62,7 @@ Our team is composed by 2 developper : François Gazaube as PHP developper and A
         B : setVars
         D : [Context=Develop]Debug
     
-* Event Stack
+# Event Stack
 
 
     sort by execution
@@ -77,7 +77,7 @@ Our team is composed by 2 developper : François Gazaube as PHP developper and A
     core/template.postRender
     core/template.postProcess
     
-* Norm
+## Norm
 
 
     1 : Upper Camel Case for classes
@@ -106,7 +106,7 @@ Our team is composed by 2 developper : François Gazaube as PHP developper and A
     6 : Event :
          use the "@event Namespace/class.event" flag into your phpdoc static method or the Event::add($eventName, &$args)
 
-* Documentation
+# Documentation
 
 
     0 : Kernel -
@@ -146,25 +146,33 @@ Our team is composed by 2 developper : François Gazaube as PHP developper and A
         
     7 : Template
         static class
+        static function boot(&$buffer, &$args) | Make the template dynamic
         static function render($templatePath, $args) | This function render a template defined by path with given args
         static function build($buffer) | This function take a parameter containing the Template content and call other method to search and replace values
-        static function setVars($buffer) | This function search and replace all {vars}/{vars[X]} into template
         static function sectionalize($buffer) | This function search and replace recursively section in templates
-        static function makeLoop($buffer) | This function do a foreach in templates
         static function showArray($array) | This function show an array as ul>li HTML recursively
         static function debug(&$buffer) | This function add the marker {debug:varname} to frontend
         static function object_to_array($obj) | This function convert an object to an array recursively
         
         
-* Template :
+# Template :
 
-    
-    {var} : Show a variable named var, it can be a string or an array, if it is an array, it is convert to a comma separated list
-            If var is an array, you can show a single element by using {var[INDEX]}
-    {section:sectionPath} : Include a section (sub-template) into template
-    {foreach:message as key => element}
-        {key} => {element}
-    {end}
+
+    # DIPLAY :
+    {vars} / {vars.subkey} / {vars.subkey.subkey.[...].sunkey} : Display a var
     {debug:var} : Show a full var, special value is __args who show all arguments in template
-
+    
+    # IF :
+    [if:Condition]
+        [then]
+            ... TRUE
+        [then]
+        [else]
+            ... FALSE
+        [else]
+    [if]
+    
+    Condition format : {var} === "blabla" || {var} === "0"        
+        - All dynamic value will be compared as string, so if you use boolean or int do that
+            {var} === "false" ...
     

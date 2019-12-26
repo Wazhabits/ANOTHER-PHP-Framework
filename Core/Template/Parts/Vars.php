@@ -45,10 +45,9 @@ class Vars
         foreach ($matches[1] as $vars) {
             $path = explode(".", $vars);
             $value = $this->getVarsValue($args, $path, 0, $quote);
-            if ($value !== false)
-                $buffer = str_replace("{" . $vars . "}", $value, $buffer);
-            else
-                $buffer = str_replace("{" . $vars . "}", "false", $buffer);
+            $buffer = ($value !== false) ?
+                str_replace("{" . $vars . "}", $value, $buffer)
+                : $buffer = str_replace("{" . $vars . "}", "false", $buffer);
         }
     }
 }

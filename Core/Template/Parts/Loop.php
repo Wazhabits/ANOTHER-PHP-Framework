@@ -12,11 +12,19 @@ class Loop
     }
 
     /**
-     * This function build a foreach in template
-     * @param $buffer
-     * @param $args
+
+    /**
+     * This function make a foreach in templates.
+     * Entry :
+     * ...
+     * [foreach:liste as element]
+     * <li>bou:'{key:element}:{element}'</li>
+     * [foreach]
+     * ....
+     * @param &$buffer
+     * @param &$args
      */
-    private function build(&$buffer, &$args) {
+    function build(&$buffer, &$args) {
         preg_match_all("/\[foreach:(.*)\sas\s(\w*)](.*)\[foreach]/U", $buffer, $matches);
         $index = 0;
         while ($index < count($matches[0])) {

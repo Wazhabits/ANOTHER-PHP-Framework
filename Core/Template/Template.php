@@ -93,69 +93,6 @@ class Template implements Base
         Event::exec("core/template.postBuild", $buffer);
         return $buffer;
     }
-
-    /**
-     * This function make a foreach in templates.
-     * Entry :
-     * ...
-     * [foreach:liste as element]
-     * <li>bou:'{key:element}:{element}'</li>
-     * [foreach]
-     * ....
-     * @param &$buffer
-     */
-    static function makeLoop(&$buffer) {
-        $matches = [];
-        preg_match_all("/({foreach:(.*?)>(.*?)=(.*?)}(.*?){end})/s", $buffer, $matches);
-        /**
-         * Matches vars
-         */
-        $contentsToReplace = &$matches[1];
-        $variableNames = &$matches[2];
-        $keyNames = &$matches[3];
-        $valueNames = &$matches[4];
-        $contents = &$matches[5];
-        $i = 0;
-        while ($i < count($variableNames)) {
-            /**
-             * Match elements
-             */
-            // Name of the key of foreach
-            $keyName = &$keyNames[$i];
-            // Name of value
-            $valueName = &$valueNames[$i];
-            // Argument array gave by controller
-            $argument = &self::$args[$variableNames[$i]];
-            // Keys of argument array
-            $argumentElementKeys = array_keys($argument);
-            // Content to replace into loop
-            $content = &$contents[$i];
-            $contentToReplace = $contentsToReplace[$i];
-            if (isset($argument) && is_array($argument)) {
-                // Content to replace on this loop
-                $subContent = $content;
-                // Index of loop
-                $loopIndex = 0;
-                while ($loopIndex < count($argumentElementKeys)) {
-                    // BaseArray-ValueNameInForeach-KeyInBaseArray
-                    $nameOfValueInMemoryVar = $variableNames[$i] . $valueName . $argumentElementKeys[$loopIndex];
-                    // Create memory arg in the base arg array with the good value
-                    self::$args["__temp"][$nameOfValueInMemoryVar] =  &$argument[$argumentElementKeys[$loopIndex]];
-                    $subContent = str_replace("{" . $valueName . "}", "{__temp." . $nameOfValueInMemoryVar . "}", $subContent);
-
-                    // BaseArray-ValueNameInForeach-KeyInBaseArray
-                    $nameOfKeyInMemoryVar = $variableNames[$i] . $keyName . $argumentElementKeys[$loopIndex];
-                    // Create memory arg in the base arg array with the good value
-                    self::$args["__temp"][$nameOfKeyInMemoryVar] =  &$argumentElementKeys[$loopIndex];
-                    $subContent = str_replace("{" . $keyName . "}", "{__temp." . $nameOfKeyInMemoryVar . "}", $subContent);
-                    $loopIndex++;
-                }
-                $buffer = str_replace($contentToReplace, $subContent, $buffer);
-            }
-            $i++;
-        }
-    }
-
     /**
      * This function replace section call to the associated section recursively
      * @param $buffer

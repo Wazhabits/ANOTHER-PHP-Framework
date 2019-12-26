@@ -104,7 +104,7 @@ class Template implements Base
     static function sectionalize(&$buffer)
     {
         $matches = [];
-        preg_match_all("/\{section\:(.*)\}/", $buffer, $matches);
+        preg_match_all("/{section:([\w|\w\/\w+]*)}/", $buffer, $matches);
         foreach ($matches[1] as $sectionPath) {
             $sectionContent = Files::read(self::$baseTemplatePath . $sectionPath
                 . Kernel::getEnvironment()->getConfiguration("TEMPLATE_EXT"));

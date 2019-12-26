@@ -29,6 +29,11 @@ class Template implements Base
         self::$loopBuilder = new Loop($buffer, $args);
         self::$conditionBuilder = new Conditions($buffer, $args);
         self::$varsBuilder = new Vars($buffer, $args);
+        /**
+         * Show fully a var, only available in develop context
+         */
+        if (Kernel::getEnvironment()->getConfiguration("APPLICATION_CONTEXT") === "Develop")
+            self::debug($buffer);
     }
 
     /**
@@ -82,11 +87,6 @@ class Template implements Base
          *
          */
         self::build($buffer, self::$args);
-        /**
-         * Show fully a var, only available in develop context
-         */
-        if (Kernel::getEnvironment()->getConfiguration("APPLICATION_CONTEXT") === "Develop")
-            self::debug($buffer);
         /**
          * Exec event postRender
          */

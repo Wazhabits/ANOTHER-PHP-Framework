@@ -1,11 +1,15 @@
 <?php
 
-
 namespace Core\Template\Parts;
 
 class Vars
 {
-
+    /**
+     * Vars constructor.
+     * @param $buffer
+     * @param $args
+     * @param string $quote
+     */
     public function __construct(&$buffer, &$args, $quote = "")
     {
         $matches = [];
@@ -29,12 +33,10 @@ class Vars
     private function getVarsValue($args, $path, $index = 0, $quote = "")
     {
         if (count($path) - 1 > $index) {
-            if (isset($args[$path[$index]]))
-                return $this->getVarsValue($args[$path[$index]], $path, $index + 1, $quote);
-            else
-                return false;
-        } else {
+            return (isset($args[$path[$index]])) ?
+                $this->getVarsValue($args[$path[$index]], $path, $index + 1, $quote)
+                : false;
+        } else
             return $quote . str_replace($quote, "\\" . $quote, $args[$path[$index]]) . $quote;
-        }
     }
 }

@@ -11,7 +11,15 @@ class Vars
 
     public function __construct(&$buffer, &$args, $quote = "")
     {
-        $this->put($buffer, $args, $quote);
+        $matches = [];
+        preg_match_all("/{([\w|\w.\w+]*)}/", $buffer, $matches);
+        foreach ($matches[1] as $vars) {
+            $path = explode(".", $vars);
+            $value = $this->getVarsValue($args, $path, 0, $quote);
+            $buffer = ($value !== false) ?
+                str_replace("{" . $vars . "}", $value, $buffer)
+                : $buffer = str_replace("{" . $vars . "}", "false", $buffer);
+        }
     }
 
     /**
@@ -30,24 +38,6 @@ class Vars
                 return false;
         } else {
             return $quote . str_replace($quote, "\\" . $quote, $args[$path[$index]]) . $quote;
-        }
-    }
-
-    /**
-     * @param $buffer
-     * @param $args
-     * @param string $quote
-     */
-    private function put(&$buffer, &$args, $quote = "")
-    {
-        $matches = [];
-        preg_match_all("/{([\w|\w.\w+]*)}/", $buffer, $matches);
-        foreach ($matches[1] as $vars) {
-            $path = explode(".", $vars);
-            $value = $this->getVarsValue($args, $path, 0, $quote);
-            $buffer = ($value !== false) ?
-                str_replace("{" . $vars . "}", $value, $buffer)
-                : $buffer = str_replace("{" . $vars . "}", "false", $buffer);
         }
     }
 }

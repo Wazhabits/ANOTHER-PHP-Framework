@@ -45,6 +45,8 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
+    height: 100vh;
+    width: 100vw;
     background: #1D1D1D;
     transition: 0.5s;
     opacity: 0;
@@ -55,6 +57,13 @@ body {
     z-index: 99;
     opacity: 1;
     transition: 1s;
+}
+
+#scene video {
+    height: 100vh;
+    width: auto;
+    margin: auto;
+    display: block;
 }
 
 a.exit {
@@ -69,4 +78,5 @@ a.exit {
     right: 25px;
     top: 25px;
     color: red;
+    z-index: 9999;
 }

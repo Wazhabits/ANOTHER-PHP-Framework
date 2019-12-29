@@ -16,13 +16,15 @@ body {
 .list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: space-around;
+    width: 90%;
+    margin: auto;
 }
 
 .element {
     width: 250px;
     height: 250px;
-    border: 5px solid black;
+    margin: 10px;
 }
 
 .element:hover {

@@ -24,9 +24,15 @@
 <main>
     <div class="list">
         [foreach:videos as video]
-        <div class="element" style='background: url("{video.image}"); background-position: center center; background-size: cover; background-repeat: no-repeat' data-src="{key:video}">
+        <div class="element" style='background: url("http://91.162.251.47:80/{video.image}"); background-position: center center; background-size: cover; background-repeat: no-repeat' data-src="{key:video}">
             <h2>
+                [if:{video.title}]
+                {then}
+                {then}
+                {else}
                 {video.title}
+                {else}
+                [if]
             </h2>
             <p>
                 {video.description}

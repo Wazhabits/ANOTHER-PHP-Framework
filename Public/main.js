@@ -6,5 +6,6 @@ $(document).ready(function () {
     }).on("click", ".exit", function (event) {
         event.preventDefault();
         $($(this).attr("href")).toggleClass("show");
+        $("#scene>.screen").html()
     })
 });

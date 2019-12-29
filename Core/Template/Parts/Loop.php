@@ -34,13 +34,13 @@ class Loop
             $final = "";
             foreach ($args[$var] as $key => $value) {
                 $tempContent = $content;
+                $this->putKey($tempContent, "{key:" . $matches[2][$index] . "}", $key);
                 if (is_array($value)) {
                     foreach ($value as $subkey => $subvalue) {
                         $this->putKey($tempContent, "{key:" . $matches[2][$index] . "." . $subkey . "}", $subkey);
                         $this->putValue($tempContent, "{" . $matches[2][$index] . "." . $subkey . "}", $subvalue);
                     }
                 } else {
-                    $this->putKey($tempContent, "{key:" . $matches[2][$index] . "}", $key);
                     $this->putValue($tempContent, "{" . $matches[2][$index] . "}", $value);
                 }
                 $final .= $tempContent;

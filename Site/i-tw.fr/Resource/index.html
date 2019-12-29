@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>South Park Streaming - By Wazhabits</title>
     <link rel="stylesheet" href="Public/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:900|Open+Sans|Roboto:300&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="Public/main.js"></script>
 </head>
@@ -22,31 +23,8 @@
     <div class="screen"></div>
 </div>
 <main>
+    <a href="" id="refresh">Refresh</a>
     <div class="list">
-        [foreach:videos as video]
-        <div class="element" style='background: url("http://91.162.251.47:80/{video.image}"); background-position: center center; background-size: cover; background-repeat: no-repeat' data-src="{key:video}">
-            <h2>
-                [if:{video.title}]
-                {then}
-                {then}
-                {else}
-                {video.title}
-                {else}
-                [if]
-            </h2>
-            <p>
-                {video.description}
-            </p>
-            <h3>
-                {video.author}
-            </h3>
-        </div>
-        <!--
-            <video width="800" height="600" controls="controls" preload="metadata">
-                <source src="http://91.162.251.47:80/{key:video}" type="video/mp4">
-            </video>
-        -->
-        [foreach]
     </div>
 </main>
 <footer>

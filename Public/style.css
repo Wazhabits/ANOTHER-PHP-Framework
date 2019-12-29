@@ -18,17 +18,73 @@ body {
     flex-wrap: wrap;
     justify-content: space-around;
     width: 90%;
+    padding: 50px 20px;
     margin: auto;
 }
 
 .element {
+    width: 300px;
+    height: 400px;
+    margin-bottom: 20px;
+    padding: 10px;
+    padding-top: 110px;
+}
+
+.element h2 {
+    font-size: 3rem;
+    color: white;
+    text-align: left;
+    display: block;
+    position: absolute;
+    bottom: 0;
+    top: 170px;
+    left: 0;
+    right: 0;
+    height: 230px;
+    word-break: break-all;
+    text-transform: uppercase;
+    font-family: 'Catamaran', sans-serif;
+    background-color: rgba(0,0,0,0.2);
+}
+
+.element p {
+    display: block;
+    position: absolute;
+
+    font-family: 'Roboto', sans-serif;
+    background-color: rgba(0,0,0,0.4);
+    font-size: 1.2rem;
+
+    padding: 10px;
+
+    left: 0;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
     width: 250px;
-    height: 250px;
-    margin: 10px;
+
+    opacity: 0;
+    visibility: hidden;
+
+    overflow-y: auto;
+}
+
+.element p strong {
+    font-family: 'Open Sans', sans-serif;
 }
 
 .element:hover {
     cursor: pointer;
+}
+
+.element:hover p {
+    visibility: visible;
+    opacity: 1;
+    left: 300px;
+    z-index: 9;
+    transition: 0.2s ease-in-out;
+    background: #1D1D1D;
+    color: #F6F6F6;
 }
 
 .element:hover:before {
@@ -42,7 +98,7 @@ body {
     content: "";
 }
 #scene {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;

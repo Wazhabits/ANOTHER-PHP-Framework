@@ -6,14 +6,25 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>South Park Streaming - By Wazhabits</title>
+    <link rel="stylesheet" href="Public/style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="Public/main.js"></script>
 </head>
 <body>
 <header>
-
+    <div id="search-form">
+        <label for="search-input">Rechercher</label>
+        <input id="search-input" type="text" placeholder="South park ...">
+    </div>
 </header>
+<div id="scene">
+    <a class="exit" href="#scene">&times;</a>
+    <div class="screen"></div>
+</div>
 <main>
-    [foreach:videos as video]
-        <div class="info">
+    <div class="list">
+        [foreach:videos as video]
+        <div class="element" style='background: url("{video.image}"); background-position: center center; background-size: cover; background-repeat: no-repeat' data-src="{key:video}">
             <h2>
                 {video.title}
             </h2>
@@ -24,12 +35,13 @@
                 {video.author}
             </h3>
         </div>
-    <!--
-        <video width="800" height="600" controls="controls" preload="metadata">
-            <source src="http://91.162.251.47:80/{key:video}" type="video/mp4">
-        </video>
-    -->
-    [foreach]
+        <!--
+            <video width="800" height="600" controls="controls" preload="metadata">
+                <source src="http://91.162.251.47:80/{key:video}" type="video/mp4">
+            </video>
+        -->
+        [foreach]
+    </div>
 </main>
 <footer>
 

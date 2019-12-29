@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>South Park Streaming - By Wazhabits</title>
+</head>
+<body>
+<header>
+
+</header>
+<main>
+    [foreach:videos as video]
+        <div class="info">
+            <h2>
+                {video.title}
+            </h2>
+            <p>
+                {video.description}
+            </p>
+            <h3>
+                {video.author}
+            </h3>
+        </div>
+    <!--
+        <video width="800" height="600" controls="controls" preload="metadata">
+            <source src="http://91.162.251.47:80/{key:video}" type="video/mp4">
+        </video>
+    -->
+    [foreach]
+</main>
+<footer>
+
+</footer>
+</body>
+</html>

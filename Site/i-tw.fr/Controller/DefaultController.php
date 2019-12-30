@@ -13,8 +13,6 @@ class DefaultController extends Controller
      */
     public function index()
     {
-        $json = file_get_contents("http://91.162.251.47:80/");
-        $videos = json_decode($json, true);
-        $this->render("index", ["videos" => $videos]);
+        $this->render("index", []);
     }
 }

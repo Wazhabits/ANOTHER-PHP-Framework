@@ -8,25 +8,27 @@
     <title>South Park Streaming - By Wazhabits</title>
     <link rel="stylesheet" href="Public/style.css">
     <link href="https://fonts.googleapis.com/css?family=Catamaran:900|Open+Sans|Roboto:300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Public/all.min.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="Public/main.js"></script>
 </head>
 <body>
-<header>
+<header style=''>
+    <a href="" id="refresh"><i class="fas fa-sync"></i></a>
     <div id="search-form">
-        <label for="search-input">Rechercher</label>
+        <label for="search-input"><i class="fas fa-search"></i></label>
         <input id="search-input" type="text" placeholder="South park ...">
     </div>
 </header>
-<div id="scene">
-    <a class="exit" href="#scene">&times;</a>
-    <div class="screen"></div>
-</div>
 <main>
-    <a href="" id="refresh">Refresh</a>
     <div class="list">
     </div>
 </main>
+<div id="scene">
+    <a class="exit" href="#scene">&times;</a>
+    <select class='qualitypick' autocomplete='off'><option selected>high</option><option>medium</option><option>low</option></select>
+    <div class="screen"></div>
+</div>
 <footer>
 
 </footer>

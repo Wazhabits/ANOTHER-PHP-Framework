@@ -30,6 +30,7 @@ function updateList() {
 }
 
 $(document).ready(function () {
+    var apiURL = "http://91.162.251.47/";
     updateList();
     $('select').on("change", function() {
         var src = $(this).next().attr("data-src");
@@ -40,19 +41,28 @@ $(document).ready(function () {
     });
     $("body").on("click", "a.edit", function (event) {
         event.preventDefault();
+        $.ajax({
+            type: "GET",
+            url: apiURL + "?action=get&file=" + encodeURI($(this).parent().attr("data-src")),
+            success: function (data) {
+                $('#edition input[type="text"]').each(function () {
+                    if (data[$(this).attr("id")] !== undefined)
+                        $('#edition input#' + $(this).attr("id")).val(data[$(this).attr("id")]);
+                })
+            }
+        });
         $("#edition").attr("data-name", $(this).attr("data-name")).fadeIn().find("#name").val($(this).attr("data-name"));
     }).on("click", "#edit", function (event) {
         event.preventDefault();
-        var urlFinal = "http://91.162.251.47/?action=update";
+        var urlFinal = "?action=update";
         $(this).parent().find('input[type="text"]').each(function () {
             urlFinal += "&" + $(this).attr("id") + "=" + encodeURI($(this).val());
         });
         $.ajax({
             type: "GET",
-            url: urlFinal,
+            url: apiURL + urlFinal,
             success: function (data) {
-                alert(data);
-                //window.location.reload();
+                window.location.reload();
             }
         })
     }).on("click", ".element", function () {

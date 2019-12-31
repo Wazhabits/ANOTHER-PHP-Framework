@@ -6,11 +6,12 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>South Park Streaming - By Wazhabits</title>
-    <link rel="stylesheet" href="Public/style.css">
+    <link rel="stylesheet" href="//i-tw.fr/Public/style.css">
     <link href="https://fonts.googleapis.com/css?family=Catamaran:900|Open+Sans|Roboto:300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="Public/all.min.css">
+    <link rel="stylesheet" href="//i-tw.fr/Public/all.min.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="Public/main.js"></script>
+        <script src="//i-tw.fr/Public/form.js"></script>
+    <script src="//i-tw.fr/Public/main.js"></script>
 </head>
 <body>
 <header style=''>
@@ -26,8 +27,31 @@
 </main>
 <div id="scene">
     <a class="exit" href="#scene">&times;</a>
-    <select class='qualitypick' autocomplete='off'><option selected>high</option><option>medium</option><option>low</option></select>
+    <select class='qualitypick' autocomplete='off'><option selected value="">high</option><option value=".medium">medium</option><option value=".low">low</option></select>
     <div class="screen"></div>
+</div>
+<div id="edition">
+    <a href="#edition" class="exit">&times;</a>
+    <form action="http://91.162.251.47:80/?action=update" method="post">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" required="required">
+
+        <label for="author">Author</label>
+        <input type="text" id="author" name="author" required="required">
+
+        <label for="description">Description</label>
+        <input type="text" id="description" name="description" required="required">
+
+        <label for="date">Date</label>
+        <input type="text" id="date" name="date" required="required">
+
+        <label for="season">Season</label>
+        <input type="text" id="season" name="season" value="1" required="required">
+
+        <input type="text" id="name" name="name" readonly="readonly">
+
+        <input type="submit" id="edit" value="Update">
+    </form>
 </div>
 <footer>
 

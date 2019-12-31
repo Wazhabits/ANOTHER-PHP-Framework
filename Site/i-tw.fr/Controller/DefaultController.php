@@ -9,7 +9,7 @@ class DefaultController extends Controller
 {
     /**
      * @site i-tw.fr
-     * @route /
+     * @route /south-park/stream
      */
     public function index()
     {

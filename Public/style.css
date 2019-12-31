@@ -146,6 +146,22 @@ a.edit {
     font-size: 2.5rem;
     text-decoration: none;
     color: mediumpurple;
+    display: none;
+}
+.element:hover a.edit {
+    display: block;
+}
+a.delete {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 2.5rem;
+    text-decoration: none;
+    color: red;
+    display: none;
+}
+.element:hover a.delete {
+    display: block;
 }
 a.exit {
     width: 3rem;

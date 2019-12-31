@@ -9,7 +9,7 @@ function buildElement(element) {
     if (element.date !== undefined)
         string += "<strong>" + element.date + "</strong><br>";
     string += element.description;
-    return string + "</p><a href='#editInformations' class='edit' data-name='" + element.path + "'><i class=\"fas fa-edit\"></i></a></div>"
+    return string + "</p><a href='#editInformations' class='edit' data-name='" + element.path + "'><i class=\"fas fa-edit\"></i></a><a href='#editInformations' class='delete' data-name='" + element.path + "'><i class=\"fas fa-trash\"></i></a></div>"
 }
 
 function updateList() {
@@ -52,6 +52,18 @@ $(document).ready(function () {
             }
         });
         $("#edition").attr("data-name", $(this).attr("data-name")).fadeIn().find("#name").val($(this).attr("data-name"));
+    }).on("click", "a.delete", function (event) {
+        event.preventDefault();
+        if (confirm("Delete file ?")) {
+            $.ajax({
+                type: "GET",
+                url: apiURL + "?action=delete&file=" + encodeURI($(this).parent().attr("data-src")),
+                success: function (data) {
+                    //alert("Success");
+                    //window.location.reload();
+                }
+            });
+        }
     }).on("click", "#edit", function (event) {
         event.preventDefault();
         var urlFinal = "?action=update";
@@ -61,7 +73,7 @@ $(document).ready(function () {
         $.ajax({
             type: "GET",
             url: apiURL + urlFinal,
-            success: function (data) {
+            complete: function (data) {
                 window.location.reload();
             }
         })

@@ -1,7 +1,12 @@
-function buildElement(element) {
+function buildElement(element, index) {
     let string = "<div class='element' data-src='" + element.path + "'" +
-    "style='background-image: url(\"http://91.162.251.47:80/" + element.image + "\");'><h2>" + element.title + "</h2><p>";
-    string += "<strong>" + element.title + "</strong><br>";
+    "style='background-image: url(\"http://91.162.251.47:80/" + element.image + "\");'>" +
+        "<img src='http://91.162.251.47:80/" + element.image + "'>";
+    if (index === 0)
+        string +="<video controls=\"controls\" preload=\"metadata\">" +
+        "<source data-quality=\"high\" src='http://91.162.251.47:80/" + element.path +"' type='video/mp4'>" +
+        "</video>";
+    string += "<div class='informations'><h2>" + element.title + "</h2><p><strong>" + element.title + "</strong><br>";
     if (element.author !== undefined)
         string += "<strong>" + element.author + "</strong><br>";
     if (element.season !== undefined)
@@ -9,10 +14,14 @@ function buildElement(element) {
     if (element.date !== undefined)
         string += "<strong>" + element.date + "</strong><br>";
     string += element.description;
-    return string + "</p><a href='#editInformations' class='edit' data-name='" + element.path + "'><i class=\"fas fa-edit\"></i></a><a href='#editInformations' class='delete' data-name='" + element.path + "'><i class=\"fas fa-trash\"></i></a></div>"
+    return string + "</p>" +
+        "<a href='#editInformations' class='edit' data-name='" + element.path + "'><i class=\"fas fa-edit\"></i></a>" +
+        "<a href='#editInformations' class='delete' data-name='" + element.path + "'><i class=\"fas fa-trash\"></i></a>" +
+        "</div></div>"
 }
 
 function updateList() {
+    unsplash();
     $.ajax({
         type: "GET",
         url: "http://91.162.251.47:80/",
@@ -21,12 +30,22 @@ function updateList() {
                 i = 0,
                 result = Object.values(data);
             while (i < result.length) {
-                string += buildElement(result[i]);
+                string += buildElement(result[i], i);
                 i++;
             }
             $(".list").html(string);
-        }
+        },
+        complete: splash()
     });
+}
+
+function splash() {
+    setTimeout(function () {
+        $("#splash").fadeOut(500);
+    }, 2000)
+}
+function unsplash() {
+    $("#splash").fadeIn(250);
 }
 
 $(document).ready(function () {
@@ -77,7 +96,7 @@ $(document).ready(function () {
                 window.location.reload();
             }
         })
-    }).on("click", ".element", function () {
+    }).on("click", ".element:not(:first-child)", function () {
         var src = $(this).attr("data-src");
         $("#scene>.screen").html();
         $("#scene").show().addClass("show");
@@ -90,5 +109,5 @@ $(document).ready(function () {
     $("#refresh").on("click", function (event) {
         event.preventDefault();
         updateList();
-    })
+    });
 });

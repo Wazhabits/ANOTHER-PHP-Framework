@@ -97,10 +97,18 @@ $(document).ready(function () {
             }
         })
     }).on("click", ".element:not(:first-child)", function () {
+        $("video").remove();
+        $(this).prepend("<video controls=\"controls\" preload=\"metadata\">" +
+            "<source data-quality=\"high\" src='http://91.162.251.47:80/" + $(this).attr("data-src") +"' type='video/mp4'>" +
+            "</video>");
+        $(this).prependTo($(this).parent());
+        window.scrollTo({top: 0, behavior: 'smooth'});
+        /*
         var src = $(this).attr("data-src");
         $("#scene>.screen").html();
         $("#scene").show().addClass("show");
         $("#scene>.screen").attr("data-src", src);
+        */
     }).on("click", ".exit", function (event) {
         event.preventDefault();
         $("#scene").removeClass("show");

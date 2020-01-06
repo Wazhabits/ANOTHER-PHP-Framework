@@ -103,12 +103,6 @@ $(document).ready(function () {
             "</video>");
         $(this).prependTo($(this).parent());
         window.scrollTo({top: 0, behavior: 'smooth'});
-        /*
-        var src = $(this).attr("data-src");
-        $("#scene>.screen").html();
-        $("#scene").show().addClass("show");
-        $("#scene>.screen").attr("data-src", src);
-        */
     }).on("click", ".exit", function (event) {
         event.preventDefault();
         $("#scene").removeClass("show");

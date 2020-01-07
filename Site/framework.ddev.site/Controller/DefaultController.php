@@ -45,4 +45,21 @@ class DefaultController extends Controller
     public function condition() {
         $this->render("condition", ["coucou" => "Bonjour"]);
     }
+
+    /**
+     * @site framework.ddev.site
+     * @route /vars
+     */
+    public function variables() {
+        $this->render("vars", [
+            "message" => "bonjour",
+            "submessage" => [
+                "ceci",
+                "est",
+                "une",
+                "suite" => "suite de message",
+                "suite2" => ["de manière", "recusrive", "et sous forme de tableau"]
+            ]
+        ]);
+    }
 }

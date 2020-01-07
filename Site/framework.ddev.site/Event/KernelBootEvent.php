@@ -11,5 +11,8 @@ class KernelBootEvent
      */
     static function sayHello()
     {
+        if (isset($_GET["doKernelBootEvent"]) && (int)$_GET["doKernelBootEvent"] === 1) {
+            echo "Hello from boot kernel";
+        }
     }
 }

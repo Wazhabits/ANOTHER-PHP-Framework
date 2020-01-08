@@ -12,9 +12,9 @@ namespace Core\Connection\Mysql\QueryType;
  *
  *      ],
  *      "where": [
- *          "AND" => ["fieldname", "operator", "value"],
- *          "AND" => ["fieldname", "operator", "value"],
- *          "OR" => ["fieldname", "operator", "value"]
+ *          ["fieldname", "operator", "value"],
+ *          ["fieldname", "operator", "value", "concatenator": "AND"],
+ *          ["fieldname", "operator", "value", "concatenator": "OR"]
  *      ]
  * ]
  */

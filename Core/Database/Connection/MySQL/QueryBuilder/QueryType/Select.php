@@ -81,7 +81,14 @@ class Select
      * @return string $sql
      */
     public function getQuery() {
-        return $this->configuration["fields"]["sql"] . $this->configuration["from"]["sql"] . $this->configuration["where"]["sql"];
+        $query = "";
+        if (isset($this->configuration["fields"]["sql"]))
+            $query .= $this->configuration["fields"]["sql"];
+        if (isset($this->configuration["from"]["sql"]))
+            $query .= $this->configuration["from"]["sql"];
+        if (isset($this->configuration["where"]["sql"]))
+            $query .= $this->configuration["where"]["sql"];
+        return $query;
     }
 
     /**

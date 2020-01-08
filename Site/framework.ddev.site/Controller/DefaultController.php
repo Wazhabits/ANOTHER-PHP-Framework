@@ -52,7 +52,7 @@ class DefaultController extends Controller
      * @route /connection
      */
     public function connection() {
-        $this->render("connection", ["connection" => Kernel::get("database")]);
+        $this->render("connection", ["connection" => Kernel::get("database")->getConnection()]);
     }
 
     /**

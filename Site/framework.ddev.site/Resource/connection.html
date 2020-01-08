@@ -8,7 +8,25 @@
     <h2>
         Connection to database <br>
     </h2>
-    Coucou
-    {debug:__args}
+    <p>This is the way to make an instance of database into your application, we choose to exclude it by default for performances</p>
+    <pre><code>namespace Framework\Event;
+
+use Core\Database;
+
+class KernelBootEvent
+{
+    /**
+     * @event core/kernel.boot
+     */
+    static function sayHello(&$injection)
+    {
+        if (!isset($_GET["excludeDatabase"]))
+            $injection["database"] = new Database();
+    }
+}</code></pre>
+    <p>To get it back later, you need to do that from anywhere you want</p>
+    <pre><code>Kernel::get("database");</code></pre>
+    <p>This is what the connection object looks like for type <strong>Mysql</strong> :</p>
+    <pre><code>{debug:connection}</code></pre>
 </body>
 </html>

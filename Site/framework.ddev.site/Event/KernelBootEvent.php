@@ -13,6 +13,7 @@ class KernelBootEvent
      */
     static function sayHello(&$injection)
     {
-        $injection["database"] = new Database();
+        if (!isset($_GET["excludeDatabase"]))
+            $injection["database"] = new Database();
     }
 }

@@ -60,5 +60,6 @@ class Database implements base
             default:
                 break;
         }
+        $this->identity = null;
     }
 }

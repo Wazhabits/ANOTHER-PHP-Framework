@@ -80,6 +80,10 @@ class Select
         return $this->configuration["fields"]["sql"] . $this->configuration["from"]["sql"] . $this->configuration["where"]["sql"];
     }
 
+    /**
+     * @param $string
+     * @return mixed
+     */
     private function quote($string) {
         $string = str_replace('"', '\"', $string);
         $string = str_replace('\\', '/', $string);

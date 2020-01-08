@@ -61,10 +61,14 @@ class Select
     public function where(array $whereConfiguration) {
         $i = 0;
         $this->configuration["where"] = $whereConfiguration;
-        $sql = "WHERE ";
-        foreach ($whereConfiguration as $concat => $condition) {
-            if ($i !== 0)
-                $sql .= " " . $concat . " `" . $condition[0] . "` " . $condition[1] . " \"" . $this->quote($condition[2]) . "\"";
+        $sql = " WHERE ";
+        foreach ($whereConfiguration as $condition) {
+            if ($i !== 0) {
+                if (isset($condition["concatenator"]))
+                    $sql .= " " . $condition["concatenator"] . " `" . $condition[0] . "` " . $condition[1] . " \"" . $this->quote($condition[2]) . "\"";
+                else
+                    $sql .= " AND `" . $condition[0] . "` " . $condition[1] . " \"" . $this->quote($condition[2]) . "\"";
+            }
             else
                 $sql .= "`" . $condition[0] . "` " . $condition[1] . " \"" . $this->quote($condition[2]) . "\"";
             $i++;

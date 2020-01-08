@@ -25,6 +25,11 @@ class Kernel
     static $controller;
 
     /**
+     * @var array
+     */
+    static $injected = [];
+
+    /**
      * This function define environment
      */
     static function boot() {
@@ -37,12 +42,39 @@ class Kernel
         Logger::log("general", "KERNEL|Initialize", Logger::$DEFAULT_LEVEL);
         Event::addEventByAnnotation();
         self::$environment->set("time", "EventInit:" .($eventTime = self::$environment->getExecutionTime() - $routingTime). "ms", true);
-        Event::exec("core/kernel.boot");
+        Event::exec("core/kernel.boot", $injection);
+        if (is_array($injection))
+            self::inject($injection);
         if (self::$routing->getCurrent()["status"] === 200) {
             self::makeControllerCall(self::$routing->getCurrent());
         }
         http_response_code(self::$routing->getCurrent()["status"]);
         self::$environment->set("time", "ControllerCall:" .($controllerTime = self::$environment->getExecutionTime() - $routingTime). "ms", true);
+    }
+
+    /**
+     * Injection from the core/kernel.boot event
+     * @param $injection
+     */
+    static function inject($injection) {
+        foreach ($injection as $property => $value) {
+            self::$injected[$property] = $value;
+        }
+    }
+
+    /**
+     * Return a service
+     * @param $service
+     * @return bool|mixed
+     */
+    static function get($service) {
+        if (isset(self::$injected[$service]))
+            return self::$injected[$service];
+        else
+            if (isset(self::$$service))
+                return self::$$service;
+            else
+                return false;
     }
 
     /**

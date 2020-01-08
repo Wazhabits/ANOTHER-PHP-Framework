@@ -4,6 +4,7 @@
 namespace Framework\Controller;
 
 use Core\Controller;
+use Core\Kernel;
 
 class DefaultController extends Controller
 {
@@ -44,6 +45,14 @@ class DefaultController extends Controller
      */
     public function condition() {
         $this->render("condition", ["coucou" => "Bonjour"]);
+    }
+
+    /**
+     * @site framework.ddev.site
+     * @route /connection
+     */
+    public function connection() {
+        $this->render("connection", ["connection" => Kernel::get("database")]);
     }
 
     /**

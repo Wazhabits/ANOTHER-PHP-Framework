@@ -8,6 +8,12 @@ Our team is composed by 2 developper : François Gazaube as PHP developper and A
 
 *TODO:Add a route /status to get informations about application performances* 
 
+***Strategy*** 
+
+* We need to be lightest as we can, simple request execution time must be <5ms for the core including the templating engine without tiers dependancy
+
+* This project must not depend of database, if we want to get a database connection working, we need to inject it into the kernel.boot event
+
 # Settings
 
 
@@ -157,22 +163,44 @@ Our team is composed by 2 developper : François Gazaube as PHP developper and A
         
 # Template :
 
+    Template engine works as pseudo-execution code, [if] in template do a if in code, [foreach] too
+
+    # SECTION :
+    
+    {section:section/section}
+    {section:section/section2}
+    
+    Section can call other section recursively
 
     # DIPLAY :
+        {message}
+        {submessage.0}
+        {submessage.1}
+        {submessage.2}
+        {submessage.suite}
+        {submessage.suite2.0}
+        {submessage.suite2.1}
+        {submessage.suite2.2}
+        {debug:__args}
+    
     {vars} / {vars.subkey} / {vars.subkey.subkey.[...].sunkey} : Display a var
     {debug:var} : Show a full var, special value is __args who show all arguments in template
     
     # IF :
-    [if:Condition]
-        [then]
-            ... TRUE
-        [then]
-        [else]
-            ... FALSE
-        [else]
+    [if:{coucou} === "Bonjours"]
+        {then}
+            {coucou} === "Bonjours"
+        {:then}
+        {else}
+            {coucou} !== "Bonjours"
+        {:else}
     [if]
     
     Condition format : {var} === "blabla" || {var} === "0"        
         - All dynamic value will be compared as string, so if you use boolean or int do that
             {var} === "false" ...
     
+    # LOOP : 
+    [foreach:array as element]
+            <li>'{key:element}:{element}'</li>
+    [foreach]

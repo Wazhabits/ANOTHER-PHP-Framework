@@ -4,15 +4,15 @@
 namespace Framework\Event;
 
 
+use Core\Database;
+
 class KernelBootEvent
 {
     /**
      * @event core/kernel.boot
      */
-    static function sayHello()
+    static function sayHello(&$injection)
     {
-        if (isset($_GET["doKernelBootEvent"]) && (int)$_GET["doKernelBootEvent"] === 1) {
-            echo "Hello from boot kernel";
-        }
+        $injection["database"] = new Database();
     }
 }

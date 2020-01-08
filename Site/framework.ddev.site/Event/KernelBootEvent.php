@@ -11,7 +11,7 @@ class KernelBootEvent
     /**
      * @event core/kernel.boot
      */
-    static function sayHello(&$injection)
+    static function connectToDatabase(&$injection)
     {
         if (!isset($_GET["excludeDatabase"]))
             $injection["database"] = new Database();

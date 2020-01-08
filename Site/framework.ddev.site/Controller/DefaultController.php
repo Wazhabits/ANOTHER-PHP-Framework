@@ -52,7 +52,17 @@ class DefaultController extends Controller
      * @route /connection
      */
     public function connection() {
-        $this->render("connection", ["connection" => Kernel::get("database")->getConnection()]);
+        $this->render("connection", [
+            "connection" => Kernel::get("database")->getConnection(),
+            "queryBuilder" => Kernel::get("database")->getConnection()->getQueryBuilder(),
+            "query" => Kernel::get("database")->getConnection()->getQueryBuilder()->select("*")
+            ->from("user")
+            ->where([
+                ["name", "=", "babtou"],
+                "AND" => ["password", "LIKE", "%test%"]
+            ])
+            ->getQuery()
+        ]);
     }
 
     /**

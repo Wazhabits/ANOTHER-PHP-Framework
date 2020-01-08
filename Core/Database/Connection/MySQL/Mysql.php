@@ -3,6 +3,7 @@
 
 namespace Core\Connection;
 
+use Core\Connection\Mysql\QueryBuilder;
 use Core\Database\Connection;
 
 class Mysql implements Connection
@@ -17,6 +18,11 @@ class Mysql implements Connection
     private $queryResult;
 
     /**
+     * @var QueryBuilder
+     */
+    private $queryBuilder;
+
+    /**
      * Mysql constructor.
      * @param $identity
      */
@@ -27,6 +33,7 @@ class Mysql implements Connection
                 $identity["user"],
                 $identity["pass"]
             );
+            $this->queryBuilder = new QueryBuilder();
         } catch (\PDOException $exception) {
             //TODO: Create an exception thrower
             return null;
@@ -50,5 +57,12 @@ class Mysql implements Connection
             return $this->queryResult->fetchAll();
         else
             return false;
+    }
+
+    /**
+     * @return QueryBuilder
+     */
+    public function getQueryBuilder() {
+        return $this->queryBuilder;
     }
 }

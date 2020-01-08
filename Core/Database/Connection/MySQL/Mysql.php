@@ -31,7 +31,10 @@ class Mysql implements Connection
             $this->pdo = new \PDO(
                 'mysql:host=' . $identity["host"] . ':' . $identity["port"] .  ';dbname=' . $identity["name"],
                 $identity["user"],
-                $identity["pass"]
+                $identity["pass"],
+                [
+                    \PDO::ATTR_PERSISTENT => true
+                ]
             );
             $this->queryBuilder = new QueryBuilder();
         } catch (\PDOException $exception) {
@@ -39,7 +42,6 @@ class Mysql implements Connection
             return null;
         }
     }
-
     /**
      * @param string $query
      * @return $this
@@ -48,7 +50,6 @@ class Mysql implements Connection
         $this->queryResult =  $this->pdo->query($query);
         return $this;
     }
-
     /**
      * @return array|bool
      */
@@ -58,7 +59,6 @@ class Mysql implements Connection
         else
             return false;
     }
-
     /**
      * @return QueryBuilder
      */

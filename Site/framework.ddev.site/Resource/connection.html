@@ -97,7 +97,8 @@ class Mysql implements Connection
     <p>Generated query by queryBuilder</p>
     <pre><code>{query}</code></pre>
     <p>Use :</p>
-    <pre><code>Kernel::get("database")
+    <pre><code>Get the query :
+Kernel::get("database")
 ->getConnection()
 ->getQueryBuilder()->select("*")
 ->from("user")
@@ -105,6 +106,20 @@ class Mysql implements Connection
         ["name", "=", "babtou"],
         "AND" => ["password", "LIKE", "%test%"]
 ])
-->getQuery()</code></pre>
+->getQuery()
+
+Get Results
+    Kernel::get("database")->getConnection()->exec(
+                Kernel::get("database")
+                    ->getConnection()
+                    ->getQueryBuilder()
+                    ->select("*")
+                    ->from("user")
+                    ->getQuery()
+            )
+            ->fetchAll()</code></pre>
+    [foreach:result as row]
+        HERE : {row.name}
+    [foreach]
 </body>
 </html>

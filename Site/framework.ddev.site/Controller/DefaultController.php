@@ -59,9 +59,17 @@ class DefaultController extends Controller
             ->from("user")
             ->where([
                 ["name", "=", "babtou"],
-                "AND" => ["password", "LIKE", "%test%"]
             ])
-            ->getQuery()
+            ->getQuery(),
+            "result" => Kernel::get("database")->getConnection()->exec(
+                Kernel::get("database")
+                    ->getConnection()
+                    ->getQueryBuilder()
+                    ->select("*")
+                    ->from("user")
+                    ->getQuery()
+            )
+            ->fetchAll()
         ]);
     }
 

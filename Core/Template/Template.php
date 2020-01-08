@@ -118,7 +118,7 @@ class Template implements Base
      * use :
      *  - {debug:varname}
      * special :
-     *  - {debug:__all} this marker show all vars accessible in template
+     *  - {debug:__args} this marker show all vars accessible in template
      * @param $buffer
      */
     static function debug(&$buffer) {

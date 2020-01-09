@@ -54,6 +54,30 @@ class Select
         return $this;
     }
 
+    public function innerJoin(array $innerJoinConfiguration) {
+        $this->configuration["join"]["inner"] = $innerJoinConfiguration;
+        $this->configuration["join"]["inner"]["sql"] = "";
+        $i = 0;
+        foreach ($innerJoinConfiguration as $join) {
+            /**
+             * "join" => [
+             *      "inner" => [
+             *          [
+             *              ["table1" => "field"],
+             *              ["table2" => "field"],
+             *               "operator" => "="
+             *          ],
+             *       ],
+             * ]
+             */
+            $table1 = array_keys($join[0])[0];
+            $table2 = array_keys($join[1])[0];
+            $this->configuration["join"]["inner"]["sql"] .= " INNER JOIN `" . $table2 . "` ON `" . $table1 . "`.`" . $join[0][$table1] . "` " . $join["operator"] . " `" . $table2 . "`.`" . $join[1][$table2] . "`";
+            $i++;
+        }
+        return $this;
+    }
+
     /**
      * @param array $whereConfiguration
      * @return $this
@@ -86,6 +110,8 @@ class Select
             $query .= $this->configuration["fields"]["sql"];
         if (isset($this->configuration["from"]["sql"]))
             $query .= $this->configuration["from"]["sql"];
+        if (isset($this->configuration["join"]["inner"]["sql"]))
+            $query .= $this->configuration["join"]["inner"]["sql"];
         if (isset($this->configuration["where"]["sql"]))
             $query .= $this->configuration["where"]["sql"];
         return $query;

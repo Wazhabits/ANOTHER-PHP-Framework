@@ -56,11 +56,18 @@ class DefaultController extends Controller
             "connection" => Kernel::get("database")->getConnection(),
             "queryBuilder" => Kernel::get("database")->getConnection()->getQueryBuilder(),
             "query" => Kernel::get("database")->getConnection()->getQueryBuilder()->select("*")
-            ->from("user")
-            ->where([
-                ["name", "=", "babtou"],
-            ])
-            ->getQuery(),
+                ->from("user")
+                ->innerJoin([
+                    [
+                        ["user" => "groupid"],
+                        ["group" => "id"],
+                        "operator" => "!="
+                    ]
+                ])
+                ->where([
+                    ["name", "=", "babtou"],
+                ])
+                ->getQuery(),
             "result" => Kernel::get("database")->getConnection()->exec(
                 Kernel::get("database")
                     ->getConnection()

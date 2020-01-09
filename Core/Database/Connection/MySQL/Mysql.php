@@ -5,6 +5,7 @@ namespace Core\Connection;
 
 use Core\Connection\Mysql\QueryBuilder;
 use Core\Database\Connection;
+use Core\Logger;
 
 class Mysql implements Connection
 {
@@ -38,6 +39,7 @@ class Mysql implements Connection
             );
             $this->queryBuilder = new QueryBuilder();
         } catch (\PDOException $exception) {
+            Logger::log("database", "Connection error: " . $exception->getMessage(), Logger::$ERROR_LEVEL);
             //TODO: Create an exception thrower
             return null;
         }

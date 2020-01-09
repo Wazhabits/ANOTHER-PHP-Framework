@@ -3,8 +3,7 @@
 
 namespace Core\Connection\Mysql;
 
-
-use Core\Connection\Mysql\QueryType\Select;
+use Core\Database\Connection\Mysql\Type\Select;
 
 class QueryBuilder
 {

@@ -14,6 +14,6 @@ class KernelBootEvent
     static function connectToDatabase(&$injection)
     {
         if (!isset($_GET["excludeDatabase"]))
-            $injection["database"] = new Database();
+            $injection["mysql"] = new Database();
     }
 }

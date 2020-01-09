@@ -53,9 +53,9 @@ class DefaultController extends Controller
      */
     public function connection() {
         $this->render("connection", [
-            "connection" => Kernel::get("database")->getConnection(),
-            "queryBuilder" => Kernel::get("database")->getConnection()->getQueryBuilder(),
-            "query" => Kernel::get("database")->getConnection()->getQueryBuilder()->select("*")
+            "connection" => Kernel::get("mysql")->getConnection(),
+            "queryBuilder" => Kernel::get("mysql")->getConnection()->getQueryBuilder(),
+            "query" => Kernel::get("mysql")->getConnection()->getQueryBuilder()->select("*")
                 ->from("user")
                 ->innerJoin([
                     [
@@ -68,8 +68,8 @@ class DefaultController extends Controller
                     ["name", "=", "babtou"],
                 ])
                 ->getQuery(),
-            "result" => Kernel::get("database")->getConnection()->exec(
-                Kernel::get("database")
+            "result" => Kernel::get("mysql")->getConnection()->exec(
+                Kernel::get("mysql")
                     ->getConnection()
                     ->getQueryBuilder()
                     ->select("*")

@@ -1,8 +1,7 @@
 <?php
 
 
-namespace Core\Connection\Mysql\QueryType;
-
+namespace Core\Database\Connection\Mysql\Type;
 
 /**
  * Class Select
@@ -18,7 +17,7 @@ namespace Core\Connection\Mysql\QueryType;
  *      ]
  * ]
  */
-class Select
+class Select implements Type
 {
     private $configuration;
 

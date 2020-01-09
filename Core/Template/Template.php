@@ -118,7 +118,7 @@ class Template implements Base
      * use :
      *  - {debug:varname}
      * special :
-     *  - {debug:__all} this marker show all vars accessible in template
+     *  - {debug:__args} this marker show all vars accessible in template
      * @param $buffer
      */
     static function debug(&$buffer) {
@@ -129,10 +129,10 @@ class Template implements Base
             self::$args["execution_time"] = Kernel::getEnvironment()->getConfiguration("TIME");
             switch ($matches[1][$i]) {
                 case "__args":
-                    $buffer = str_replace("{debug:" . $matches[1][$i] . "}", self::showArray(self::$args), $buffer);
+                    $buffer = str_replace("{debug:" . $matches[1][$i] . "}", self::showArray(self::object_to_array(self::$args)), $buffer);
                     break;
                 default:
-                    $buffer = str_replace("{debug:" . $matches[1][$i] . "}", self::showArray(self::$args[$matches[1][$i]]), $buffer);
+                    $buffer = str_replace("{debug:" . $matches[1][$i] . "}", self::showArray(self::object_to_array(self::$args[$matches[1][$i]])), $buffer);
                     break;
             }
             $i++;
@@ -144,7 +144,7 @@ class Template implements Base
      * @param $array
      * @return string
      */
-    private static function showArray($array) {
+    static function showArray($array) {
         $result = "<ul class='array'>";
         $keys = array_keys($array);
         $i = 0;

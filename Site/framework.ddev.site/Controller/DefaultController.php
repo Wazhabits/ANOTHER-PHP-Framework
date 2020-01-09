@@ -4,6 +4,7 @@
 namespace Framework\Controller;
 
 use Core\Controller;
+use Core\Kernel;
 
 class DefaultController extends Controller
 {
@@ -44,6 +45,39 @@ class DefaultController extends Controller
      */
     public function condition() {
         $this->render("condition", ["coucou" => "Bonjour"]);
+    }
+
+    /**
+     * @site framework.ddev.site
+     * @route /connection
+     */
+    public function connection() {
+        $this->render("connection", [
+            "connection" => Kernel::get("database")->getConnection(),
+            "queryBuilder" => Kernel::get("database")->getConnection()->getQueryBuilder(),
+            "query" => Kernel::get("database")->getConnection()->getQueryBuilder()->select("*")
+                ->from("user")
+                ->innerJoin([
+                    [
+                        ["user" => "groupid"],
+                        ["group" => "id"],
+                        "operator" => "!="
+                    ]
+                ])
+                ->where([
+                    ["name", "=", "babtou"],
+                ])
+                ->getQuery(),
+            "result" => Kernel::get("database")->getConnection()->exec(
+                Kernel::get("database")
+                    ->getConnection()
+                    ->getQueryBuilder()
+                    ->select("*")
+                    ->from("user")
+                    ->getQuery()
+            )
+            ->fetchAll()
+        ]);
     }
 
     /**

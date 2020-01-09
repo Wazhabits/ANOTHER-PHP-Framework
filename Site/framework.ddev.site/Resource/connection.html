@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h2>
+        Connection to database <br>
+    </h2>
+    <p>This is the way to make an instance of database into your application, we choose to exclude it by default for performances</p>
+    <pre><code>namespace Framework\Event;
+
+use Core\Database;
+
+class KernelBootEvent
+{
+    /**
+     * @event core/kernel.boot
+     */
+    static function sayHello(&$injection)
+    {
+        if (!isset($_GET["excludeDatabase"]))
+$injection["database"] = new Database();
+    }
+}</code></pre>
+    <p>To get it back later, you need to do that from anywhere you want</p>
+    <pre><code>Kernel::get("database");</code></pre>
+    <p>This is what the connection object looks like for type <strong>Mysql</strong> :</p>
+    <pre><code>
+namespace Core\Connection;
+
+use Core\Connection\Mysql\QueryBuilder;
+use Core\Database\Connection;
+
+class Mysql implements Connection
+{
+    /**
+     * @var \PDO|null
+     */
+    private $pdo = null;
+    /**
+     * @var \PDOStatement
+     */
+    private $queryResult;
+
+    /**
+     * @var QueryBuilder
+     */
+    private $queryBuilder;
+
+    /**
+     * Mysql constructor.
+     * @param $identity
+     */
+    public function __construct($identity) {
+        try {
+$this->pdo = new \PDO(
+    'mysql:host=' . $identity["host"] . ':' . $identity["port"] .  ';dbname=' . $identity["name"],
+    $identity["user"],
+    $identity["pass"]
+);
+$this->queryBuilder = new QueryBuilder();
+        } catch (\PDOException $exception) {
+//TODO: Create an exception thrower
+return null;
+        }
+    }
+
+    /**
+     * @param string $query
+     * @return $this
+     */
+    public function exec($query) {
+        $this->queryResult =  $this->pdo->query($query);
+        return $this;
+    }
+
+    /**
+     * @return array|bool
+     */
+    public function fetchAll() {
+        if ($this->queryResult)
+return $this->queryResult->fetchAll();
+        else
+return false;
+    }
+
+    /**
+     * @return QueryBuilder
+     */
+    public function getQueryBuilder() {
+        return $this->queryBuilder;
+    }
+}</code></pre>
+    <h2>QueryBuilder</h2>
+    <p>Generated query by queryBuilder</p>
+    <pre><code>{query}</code></pre>
+    <p>Use :</p>
+    <pre><code>Get the query :
+query = Kernel::get("database")->getConnection()->getQueryBuilder()->select("*")
+    ->from("user")
+    ->innerJoin([
+        [
+["user" => "groupid"],
+["group" => "id"],
+"operator" => "!="
+        ]
+    ])
+    ->where([
+        ["name", "=", "babtou"],
+    ])
+    ->getQuery(),
+
+Get Results
+    Kernel::get("database")->getConnection()->exec(
+    Kernel::get("database")
+        ->getConnection()
+        ->getQueryBuilder()
+        ->select("*")
+        ->from("user")
+        ->getQuery()
+)
+->fetchAll()</code></pre>
+    [foreach:result as row]
+        HERE : {row.name}
+    [foreach]
+</body>
+</html>

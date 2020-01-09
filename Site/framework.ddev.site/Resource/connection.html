@@ -21,7 +21,7 @@ class KernelBootEvent
     static function sayHello(&$injection)
     {
         if (!isset($_GET["excludeDatabase"]))
-            $injection["database"] = new Database();
+$injection["database"] = new Database();
     }
 }</code></pre>
     <p>To get it back later, you need to do that from anywhere you want</p>
@@ -55,15 +55,15 @@ class Mysql implements Connection
      */
     public function __construct($identity) {
         try {
-            $this->pdo = new \PDO(
-                'mysql:host=' . $identity["host"] . ':' . $identity["port"] .  ';dbname=' . $identity["name"],
-                $identity["user"],
-                $identity["pass"]
-            );
-            $this->queryBuilder = new QueryBuilder();
+$this->pdo = new \PDO(
+    'mysql:host=' . $identity["host"] . ':' . $identity["port"] .  ';dbname=' . $identity["name"],
+    $identity["user"],
+    $identity["pass"]
+);
+$this->queryBuilder = new QueryBuilder();
         } catch (\PDOException $exception) {
-            //TODO: Create an exception thrower
-            return null;
+//TODO: Create an exception thrower
+return null;
         }
     }
 
@@ -81,9 +81,9 @@ class Mysql implements Connection
      */
     public function fetchAll() {
         if ($this->queryResult)
-            return $this->queryResult->fetchAll();
+return $this->queryResult->fetchAll();
         else
-            return false;
+return false;
     }
 
     /**
@@ -98,26 +98,30 @@ class Mysql implements Connection
     <pre><code>{query}</code></pre>
     <p>Use :</p>
     <pre><code>Get the query :
-Kernel::get("database")
-->getConnection()
-->getQueryBuilder()->select("*")
-->from("user")
-->where([
+query = Kernel::get("database")->getConnection()->getQueryBuilder()->select("*")
+    ->from("user")
+    ->innerJoin([
+        [
+["user" => "groupid"],
+["group" => "id"],
+"operator" => "!="
+        ]
+    ])
+    ->where([
         ["name", "=", "babtou"],
-        "AND" => ["password", "LIKE", "%test%"]
-])
-->getQuery()
+    ])
+    ->getQuery(),
 
 Get Results
     Kernel::get("database")->getConnection()->exec(
-                Kernel::get("database")
-                    ->getConnection()
-                    ->getQueryBuilder()
-                    ->select("*")
-                    ->from("user")
-                    ->getQuery()
-            )
-            ->fetchAll()</code></pre>
+    Kernel::get("database")
+        ->getConnection()
+        ->getQueryBuilder()
+        ->select("*")
+        ->from("user")
+        ->getQuery()
+)
+->fetchAll()</code></pre>
     [foreach:result as row]
         HERE : {row.name}
     [foreach]

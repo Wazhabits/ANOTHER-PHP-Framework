@@ -34,6 +34,7 @@ class Template implements Base
          */
         if (Kernel::getEnvironment()->getConfiguration("APPLICATION_CONTEXT") === "Develop")
             self::debug($buffer);
+        Response::send();
     }
 
     /**
@@ -87,6 +88,7 @@ class Template implements Base
          * Exec event preRender
          */
         Event::exec("core/template.preBuild", $buffer);
+        Response::init();
         /**
          *
          */

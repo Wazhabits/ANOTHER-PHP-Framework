@@ -148,7 +148,7 @@ class Annotation implements Base
         $classDocumentation["description"] = "";
         foreach ($comments as $comment) {
 
-            if (strpos($comment, "@") !== false) {
+            if (strpos($comment, "@") === 0) {
                 $matches = [];
                 /**
                  * Select by key=>value into the doc string

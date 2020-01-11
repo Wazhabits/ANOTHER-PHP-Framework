@@ -7,6 +7,10 @@ use Core\Connection\Mysql\QueryBuilder;
 use Core\Database\Connection;
 use Core\Logger;
 
+/**
+ * Class Mysql
+ * @package Core\Connection
+ */
 class Mysql implements Connection
 {
     /**

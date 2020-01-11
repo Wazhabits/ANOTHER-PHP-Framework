@@ -52,31 +52,62 @@ class DefaultController extends Controller
      * @route /connection
      */
     public function connection() {
-        $this->render("connection", [
-            "connection" => Kernel::get("database")->getConnection(),
-            "queryBuilder" => Kernel::get("database")->getConnection()->getQueryBuilder(),
-            "query" => Kernel::get("database")->getConnection()->getQueryBuilder()->select("*")
+        $selectQueryAdvanced = Kernel::get("mysql")->getConnection()->getQueryBuilder()->select("*")
+            ->from("user")
+            ->innerJoin([
+                [
+                    ["user" => "groupid"],
+                    ["group" => "id"],
+                    "operator" => "!="
+                ]
+            ])
+            ->where([
+                ["name", "=", "babtou"],
+            ])
+            ->limit(1)
+            ->getQuery();
+        $deleteQuery = Kernel::get("mysql")
+            ->getConnection()
+            ->getQueryBuilder()
+            ->delete("user")
+            ->where([
+                ["name", "=", "babtou"],
+            ])
+            ->getQuery();
+        $selectQuery =
+            Kernel::get("mysql")
+                ->getConnection()
+                ->getQueryBuilder()
+                ->select("*")
                 ->from("user")
-                ->innerJoin([
-                    [
-                        ["user" => "groupid"],
-                        ["group" => "id"],
-                        "operator" => "!="
-                    ]
-                ])
-                ->where([
-                    ["name", "=", "babtou"],
-                ])
-                ->getQuery(),
-            "result" => Kernel::get("database")->getConnection()->exec(
-                Kernel::get("database")
-                    ->getConnection()
-                    ->getQueryBuilder()
-                    ->select("*")
-                    ->from("user")
-                    ->getQuery()
-            )
-            ->fetchAll()
+                ->getQuery();
+        $updateQuery = Kernel::get("mysql")->getConnection()->getQueryBuilder()->update("user")
+            ->fields([
+                "name" => "Lapinou",
+                "pseudo" => 'Qui fait "loulou"'
+            ])
+            ->where([
+                ["name", "=", "babtou"],
+            ])
+            ->getQuery();
+        $insertQuery = Kernel::get("mysql")->getConnection()->getQueryBuilder()->insert("user")
+            ->values([
+                "id" => "",
+                "name" => "Lapinou",
+                "pseudo" => 'Qui fait "loulou"',
+                "pass" => 'Marab--ouutou@#{""\\',
+            ])
+            ->getQuery();
+        $resultUpdate = Kernel::get("mysql")->getConnection()->exec($updateQuery);
+        $this->render("connection", [
+            "connection" => Kernel::get("mysql")->getConnection(),
+            "queryBuilder" => Kernel::get("mysql")->getConnection()->getQueryBuilder(),
+            "select" => $selectQueryAdvanced,
+            "update" => $updateQuery,
+            "delete" => $deleteQuery,
+            "insert" => $insertQuery,
+            "resultUpdate" => $resultUpdate,
+            "result" => Kernel::get("mysql")->getConnection()->exec($selectQuery)->fetchAll()
         ]);
     }
 

@@ -35,6 +35,7 @@ class Template implements Base
         if (Kernel::getEnvironment()->getConfiguration("APPLICATION_CONTEXT") === "Develop")
             self::debug($buffer);
         Response::send();
+        Kernel::$environment->set("time", "ControllerCall:" . Kernel::getEnvironment()->getExecutionTime(). "ms", true);
     }
 
     /**

@@ -24,6 +24,7 @@ class Select extends DefaultType
      * @param array $fields
      */
     public function __construct($fields) {
+        parent::$configuration = [];
         if ($fields !== "*") {
             parent::$configuration["fields"] = $fields;
             foreach ($fields as $field) {

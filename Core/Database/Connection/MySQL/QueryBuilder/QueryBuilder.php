@@ -8,6 +8,10 @@ use Core\Database\Connection\Mysql\Type\Select;
 use Core\Database\Connection\Mysql\Type\Update;
 use Core\Database\QueryBuilder as Base;
 
+/**
+ * Class QueryBuilder
+ * @package Core\Connection\Mysql
+ */
 class QueryBuilder implements Base
 {
     /**
@@ -31,6 +35,10 @@ class QueryBuilder implements Base
         // TODO: Implement create() method.
     }
 
+    /**
+     * @param $tablename
+     * @return Delete
+     */
     public function delete($tablename)
     {
         return new Delete($tablename);

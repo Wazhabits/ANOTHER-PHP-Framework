@@ -3,9 +3,16 @@
 
 namespace Core\Database\Connection\Mysql\Type;
 
-
+/**
+ * Class Update
+ * @package Core\Database\Connection\Mysql\Type
+ */
 class Update extends BaseType
 {
+    /**
+     * Update constructor.
+     * @param $tablename
+     */
     public function __construct($tablename)
     {
         parent::$configuration = [];

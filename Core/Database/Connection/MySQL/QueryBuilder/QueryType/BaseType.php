@@ -9,6 +9,9 @@ namespace Core\Database\Connection\Mysql\Type;
  */
 abstract  class BaseType implements Type
 {
+    /**
+     * @var array $configuration
+     */
     protected static $configuration;
 
     /**

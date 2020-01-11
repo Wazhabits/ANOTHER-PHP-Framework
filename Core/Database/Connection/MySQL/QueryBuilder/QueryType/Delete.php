@@ -3,9 +3,16 @@
 
 namespace Core\Database\Connection\Mysql\Type;
 
-
+/**
+ * Class Delete
+ * @package Core\Database\Connection\Mysql\Type
+ */
 class Delete extends BaseType
 {
+    /**
+     * Delete constructor.
+     * @param $tablename
+     */
     public function __construct($tablename)
     {
         parent::$configuration = [];

@@ -94,7 +94,8 @@ class DefaultController extends Controller
             ->values([
                 "id" => "",
                 "name" => "Lapinou",
-                "pseudo" => 'Qui fait "loulou"'
+                "pseudo" => 'Qui fait "loulou"',
+                "pass" => 'Marabouutou@#{""\\',
             ])
             ->getQuery();
         $resultUpdate = Kernel::get("mysql")->getConnection()->exec($updateQuery);

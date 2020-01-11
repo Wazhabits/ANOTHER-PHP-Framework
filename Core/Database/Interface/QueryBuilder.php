@@ -1,19 +1,19 @@
 <?php
 
 
-namespace Core\Database\Connection\MySQL\Type;
+namespace Core\Database;
 
 
 interface QueryBuilder
 {
     /**
      * @param $fields
-     * @return Select
+     * @return mixed
      */
     public function select($fields);
     /**
      * @param $tablename
-     * @return Update
+     * @return mixed
      */
     public function update($tablename);
     /**

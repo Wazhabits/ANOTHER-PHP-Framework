@@ -5,7 +5,7 @@ namespace Core\Connection\Mysql;
 
 use Core\Database\Connection\Mysql\Type\Select;
 use Core\Database\Connection\Mysql\Type\Update;
-use Core\Database\Connection\MySQL\Type\QueryBuilder as Base;
+use Core\Database\QueryBuilder as Base;
 
 class QueryBuilder implements Base
 {

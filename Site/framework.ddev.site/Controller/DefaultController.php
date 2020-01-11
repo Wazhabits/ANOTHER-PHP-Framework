@@ -67,6 +67,7 @@ class DefaultController extends Controller
                 ->where([
                     ["name", "=", "babtou"],
                 ])
+                ->limit(1)
                 ->getQuery(),
             "result" => Kernel::get("mysql")->getConnection()->exec(
                 Kernel::get("mysql")

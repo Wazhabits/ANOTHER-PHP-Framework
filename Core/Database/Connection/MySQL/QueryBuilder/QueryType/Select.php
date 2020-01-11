@@ -17,24 +17,22 @@ namespace Core\Database\Connection\Mysql\Type;
  *      ]
  * ]
  */
-class Select implements Type
+class Select extends DefaultType
 {
-    private $configuration;
-
     /**
      * Select constructor.
      * @param array $fields
      */
     public function __construct($fields) {
         if ($fields !== "*") {
-            $this->configuration["fields"] = $fields;
+            parent::$configuration["fields"] = $fields;
             foreach ($fields as $field) {
-                $this->configuration["fields"][] = "`" . $field . "`";
+                parent::$configuration["fields"][] = "`" . $field . "`";
             }
-            $this->configuration["fields"]["sql"] = "SELECT " . implode(",", $this->configuration["fields"]);
+            parent::$configuration["fields"]["sql"] = "SELECT " . implode(",", parent::$configuration["fields"]);
         } else {
-            $this->configuration["fields"][] = "*";
-            $this->configuration["fields"]["sql"] = "SELECT * ";
+            parent::$configuration["fields"][] = "*";
+            parent::$configuration["fields"]["sql"] = "SELECT * ";
         }
     }
 
@@ -44,59 +42,12 @@ class Select implements Type
      */
     public function from($tablename) {
         if (is_array($tablename)) {
-            $this->configuration["from"] = $tablename;
-            $this->configuration["from"]["sql"] = " FROM " . implode(",", $this->configuration["from"]);
+            parent::$configuration["from"] = $tablename;
+            parent::$configuration["from"]["sql"] = " FROM " . implode(",", parent::$configuration["from"]);
         } else {
-            $this->configuration["from"][] = $tablename;
-            $this->configuration["from"]["sql"] = " FROM " . $tablename;
+            parent::$configuration["from"][] = $tablename;
+            parent::$configuration["from"]["sql"] = " FROM " . $tablename;
         }
-        return $this;
-    }
-
-    public function innerJoin(array $innerJoinConfiguration) {
-        $this->configuration["join"]["inner"] = $innerJoinConfiguration;
-        $this->configuration["join"]["inner"]["sql"] = "";
-        $i = 0;
-        foreach ($innerJoinConfiguration as $join) {
-            /**
-             * "join" => [
-             *      "inner" => [
-             *          [
-             *              ["table1" => "field"],
-             *              ["table2" => "field"],
-             *               "operator" => "="
-             *          ],
-             *       ],
-             * ]
-             */
-            $table1 = array_keys($join[0])[0];
-            $table2 = array_keys($join[1])[0];
-            $this->configuration["join"]["inner"]["sql"] .= " INNER JOIN `" . $table2 . "` ON `" . $table1 . "`.`" . $join[0][$table1] . "` " . $join["operator"] . " `" . $table2 . "`.`" . $join[1][$table2] . "`";
-            $i++;
-        }
-        return $this;
-    }
-
-    /**
-     * @param array $whereConfiguration
-     * @return $this
-     */
-    public function where(array $whereConfiguration) {
-        $i = 0;
-        $this->configuration["where"] = $whereConfiguration;
-        $sql = " WHERE ";
-        foreach ($whereConfiguration as $condition) {
-            if ($i !== 0) {
-                if (isset($condition["concatenator"]))
-                    $sql .= " " . $condition["concatenator"] . " `" . $condition[0] . "` " . $condition[1] . " \"" . $this->quote($condition[2]) . "\"";
-                else
-                    $sql .= " AND `" . $condition[0] . "` " . $condition[1] . " \"" . $this->quote($condition[2]) . "\"";
-            }
-            else
-                $sql .= "`" . $condition[0] . "` " . $condition[1] . " \"" . $this->quote($condition[2]) . "\"";
-            $i++;
-        }
-        $this->configuration["where"]["sql"] = $sql;
         return $this;
     }
 
@@ -105,24 +56,18 @@ class Select implements Type
      */
     public function getQuery() {
         $query = "";
-        if (isset($this->configuration["fields"]["sql"]))
-            $query .= $this->configuration["fields"]["sql"];
-        if (isset($this->configuration["from"]["sql"]))
-            $query .= $this->configuration["from"]["sql"];
-        if (isset($this->configuration["join"]["inner"]["sql"]))
-            $query .= $this->configuration["join"]["inner"]["sql"];
-        if (isset($this->configuration["where"]["sql"]))
-            $query .= $this->configuration["where"]["sql"];
+        if (isset(parent::$configuration["fields"]["sql"]))
+            $query .= parent::$configuration["fields"]["sql"];
+        if (isset(parent::$configuration["from"]["sql"]))
+            $query .= parent::$configuration["from"]["sql"];
+        if (isset(parent::$configuration["join"]["inner"]["sql"]))
+            $query .= parent::$configuration["join"]["inner"]["sql"];
+        if (isset(parent::$configuration["where"]["sql"]))
+            $query .= parent::$configuration["where"]["sql"];
+        if (isset(parent::$configuration["offset"]["sql"]))
+            $query .= parent::$configuration["offset"]["sql"];
+        if (isset(parent::$configuration["limit"]["sql"]))
+            $query .= parent::$configuration["limit"]["sql"];
         return $query;
-    }
-
-    /**
-     * @param $string
-     * @return mixed
-     */
-    private function quote($string) {
-        $string = str_replace('"', '\"', $string);
-        $string = str_replace('\\', '/', $string);
-        return $string;
     }
 }

@@ -112,7 +112,7 @@ Our team is composed by 2 developper : François Gazaube as PHP developper and A
     6 : Event :
          use the "@event Namespace/class.event" flag into your phpdoc static method or the Event::add($eventName, &$args)
 
-# Documentation
+# Manual
 
 
     0 : Kernel -

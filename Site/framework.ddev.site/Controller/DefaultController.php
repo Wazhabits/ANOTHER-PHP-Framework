@@ -3,7 +3,9 @@
 
 namespace Framework\Controller;
 
+use Core\Annotation;
 use Core\Controller;
+use Core\Database\Connection\Mysql\Type\BaseType;
 use Core\Kernel;
 
 class DefaultController extends Controller
@@ -52,6 +54,7 @@ class DefaultController extends Controller
      * @route /connection
      */
     public function connection() {
+        var_dump(Kernel::getAnnotation()->getDocumentation(BaseType::class, "innerJoin")); die;
         $selectQueryAdvanced = Kernel::get("mysql")->getConnection()->getQueryBuilder()->select("*")
             ->from("user")
             ->innerJoin([

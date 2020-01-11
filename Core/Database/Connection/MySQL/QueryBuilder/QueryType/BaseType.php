@@ -4,10 +4,10 @@
 namespace Core\Database\Connection\Mysql\Type;
 
 /**
- * Class DefaultType
+ * Class BaseType
  * @package Core\Database\Connection\Mysql\Type
  */
-class DefaultType
+class BaseType
 {
     protected static $configuration;
 

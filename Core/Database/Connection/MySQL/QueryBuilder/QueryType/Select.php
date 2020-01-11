@@ -17,7 +17,7 @@ namespace Core\Database\Connection\Mysql\Type;
  *      ]
  * ]
  */
-class Select extends DefaultType
+class Select extends BaseType
 {
     /**
      * Select constructor.

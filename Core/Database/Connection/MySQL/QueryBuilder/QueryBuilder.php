@@ -5,8 +5,9 @@ namespace Core\Connection\Mysql;
 
 use Core\Database\Connection\Mysql\Type\Select;
 use Core\Database\Connection\Mysql\Type\Update;
+use Core\Database\Connection\MySQL\Type\QueryBuilder as Base;
 
-class QueryBuilder
+class QueryBuilder implements Base
 {
     /**
      * @param string|array $fields
@@ -22,5 +23,15 @@ class QueryBuilder
      */
     public function update($tablename) {
         return new Update($tablename);
+    }
+
+    public function create($tablename)
+    {
+        // TODO: Implement create() method.
+    }
+
+    public function delete($tablename)
+    {
+        // TODO: Implement delete() method.
     }
 }

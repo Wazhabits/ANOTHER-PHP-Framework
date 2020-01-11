@@ -90,6 +90,13 @@ class DefaultController extends Controller
                 ["name", "=", "babtou"],
             ])
             ->getQuery();
+        $insertQuery = Kernel::get("mysql")->getConnection()->getQueryBuilder()->insert("user")
+            ->values([
+                "id" => "",
+                "name" => "Lapinou",
+                "pseudo" => 'Qui fait "loulou"'
+            ])
+            ->getQuery();
         $resultUpdate = Kernel::get("mysql")->getConnection()->exec($updateQuery);
         $this->render("connection", [
             "connection" => Kernel::get("mysql")->getConnection(),
@@ -97,6 +104,7 @@ class DefaultController extends Controller
             "select" => $selectQueryAdvanced,
             "update" => $updateQuery,
             "delete" => $deleteQuery,
+            "insert" => $insertQuery,
             "resultUpdate" => $resultUpdate,
             "result" => Kernel::get("mysql")->getConnection()->exec($selectQuery)->fetchAll()
         ]);

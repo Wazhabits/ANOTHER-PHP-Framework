@@ -25,5 +25,5 @@ interface QueryBuilder
      * @param $tablename
      * @return mixed
      */
-    public function create($tablename);
+    public function insert($tablename);
 }

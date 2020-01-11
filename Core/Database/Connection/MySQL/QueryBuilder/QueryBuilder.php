@@ -4,6 +4,7 @@
 namespace Core\Connection\Mysql;
 
 use Core\Database\Connection\Mysql\Type\Delete;
+use Core\Database\Connection\Mysql\Type\Insert;
 use Core\Database\Connection\Mysql\Type\Select;
 use Core\Database\Connection\Mysql\Type\Update;
 use Core\Database\QueryBuilder as Base;
@@ -30,9 +31,13 @@ class QueryBuilder implements Base
         return new Update($tablename);
     }
 
-    public function create($tablename)
+    /**
+     * @param $tablename
+     * @return Insert
+     */
+    public function insert($tablename)
     {
-        // TODO: Implement create() method.
+        return new Insert($tablename);
     }
 
     /**

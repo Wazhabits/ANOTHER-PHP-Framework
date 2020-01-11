@@ -44,10 +44,10 @@ class Select extends BaseType
     public function from($tablename) {
         if (is_array($tablename)) {
             parent::$configuration["from"] = $tablename;
-            parent::$configuration["from"]["sql"] = " FROM " . implode(",", parent::$configuration["from"]);
+            parent::$configuration["from"]["sql"] = " FROM " . strtolower(implode(",", parent::$configuration["from"]));
         } else {
             parent::$configuration["from"][] = $tablename;
-            parent::$configuration["from"]["sql"] = " FROM " . $tablename;
+            parent::$configuration["from"]["sql"] = " FROM " . strtolower($tablename);
         }
         return $this;
     }

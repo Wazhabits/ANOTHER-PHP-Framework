@@ -95,7 +95,8 @@ return false;
 }</code></pre>
     <h2>QueryBuilder</h2>
     <p>Generated query by queryBuilder</p>
-    <pre><code>{query}</code></pre>
+    <pre><code>SELECT : {select}
+UPDATE : {update}</code></pre>
     <p>Use :</p>
     <pre><code>Get the query :
 query = Kernel::get("database")->getConnection()->getQueryBuilder()->select("*")
@@ -126,5 +127,6 @@ Get Results
     [foreach:result as row]
         HERE : {row.name}
     [foreach]
+    {debug:__args}
 </body>
 </html>

@@ -55,7 +55,7 @@ class DefaultController extends Controller
         $this->render("connection", [
             "connection" => Kernel::get("mysql")->getConnection(),
             "queryBuilder" => Kernel::get("mysql")->getConnection()->getQueryBuilder(),
-            "query" => Kernel::get("mysql")->getConnection()->getQueryBuilder()->select("*")
+            "select" => Kernel::get("mysql")->getConnection()->getQueryBuilder()->select("*")
                 ->from("user")
                 ->innerJoin([
                     [
@@ -68,6 +68,15 @@ class DefaultController extends Controller
                     ["name", "=", "babtou"],
                 ])
                 ->limit(1)
+                ->getQuery(),
+            "update" => Kernel::get("mysql")->getConnection()->getQueryBuilder()->update("user")
+                ->fields([
+                    "name" => "Lapinou",
+                    "surname" => "Qui fait loulou"
+                ])
+                ->where([
+                    ["name", "=", "babtou"],
+                ])
                 ->getQuery(),
             "result" => Kernel::get("mysql")->getConnection()->exec(
                 Kernel::get("mysql")

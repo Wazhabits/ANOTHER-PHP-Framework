@@ -7,12 +7,12 @@ namespace Core\Database\Connection\Mysql\Type;
  * Class BaseType
  * @package Core\Database\Connection\Mysql\Type
  */
-class BaseType
+abstract  class BaseType implements Type
 {
     protected static $configuration;
 
     /**
-     * @param $nbr
+     * @param integer $nbr
      * @return $this
      */
     public function limit($nbr) {
@@ -22,7 +22,7 @@ class BaseType
     }
 
     /**
-     * @param $nbr
+     * @param integer $nbr
      * @return $this
      */
     public function offset($nbr) {
@@ -51,7 +51,10 @@ class BaseType
         foreach ($innerJoinConfiguration as $join) {
             $table1 = array_keys($join[0])[0];
             $table2 = array_keys($join[1])[0];
-            self::$configuration["join"]["inner"]["sql"] .= " INNER JOIN `" . $table2 . "` ON `" . $table1 . "`.`" . $join[0][$table1] . "` " . $join["operator"] . " `" . $table2 . "`.`" . $join[1][$table2] . "`";
+            self::$configuration["join"]["inner"]["sql"] .= " INNER JOIN `" . strtolower($table2)
+                . "` ON `" . strtolower($table1) . "`.`" . strtolower($join[0][$table1]) . "` "
+                . $join["operator"]
+                . " `" . strtolower($table2) . "`.`" . strtolower($join[1][$table2]) . "`";
             $i++;
         }
         return $this;
@@ -68,12 +71,12 @@ class BaseType
         foreach ($whereConfiguration as $condition) {
             if ($i !== 0) {
                 if (isset($condition["concatenator"]))
-                    $sql .= " " . $condition["concatenator"] . " `" . $condition[0] . "` " . $condition[1] . " \"" . $this->quote($condition[2]) . "\"";
+                    $sql .= " " . $condition["concatenator"] . " `" . strtolower($condition[0]) . "` " . $condition[1] . " \"" . $this->quote($condition[2]) . "\"";
                 else
-                    $sql .= " AND `" . $condition[0] . "` " . $condition[1] . " \"" . $this->quote($condition[2]) . "\"";
+                    $sql .= " AND `" . strtolower($condition[0]) . "` " . $condition[1] . " " . $this->quote($condition[2]);
             }
             else
-                $sql .= "`" . $condition[0] . "` " . $condition[1] . " \"" . $this->quote($condition[2]) . "\"";
+                $sql .= "`" . strtolower($condition[0]) . "` " . $condition[1] . " " . $this->quote($condition[2]);
             $i++;
         }
         self::$configuration["where"]["sql"] = $sql;
@@ -87,6 +90,6 @@ class BaseType
     protected function quote($string) {
         $string = str_replace('"', '\"', $string);
         $string = str_replace('\\', '/', $string);
-        return $string;
+        return '"' . $string . '"';
     }
 }

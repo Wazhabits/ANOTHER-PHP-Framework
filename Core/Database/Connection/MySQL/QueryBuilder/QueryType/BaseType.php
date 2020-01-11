@@ -88,8 +88,6 @@ abstract  class BaseType implements Type
      * @return mixed
      */
     protected function quote($string) {
-        $string = str_replace('"', '\"', $string);
-        $string = str_replace('\\', '/', $string);
-        return '"' . $string . '"';
+        return '"' . str_replace('"', '\"', str_replace('\\', '/', $string)) . '"';
     }
 }

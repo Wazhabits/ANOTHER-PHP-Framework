@@ -52,41 +52,44 @@ class DefaultController extends Controller
      * @route /connection
      */
     public function connection() {
+        $selectQueryAdvanced = Kernel::get("mysql")->getConnection()->getQueryBuilder()->select("*")
+            ->from("user")
+            ->innerJoin([
+                [
+                    ["user" => "groupid"],
+                    ["group" => "id"],
+                    "operator" => "!="
+                ]
+            ])
+            ->where([
+                ["name", "=", "babtou"],
+            ])
+            ->limit(1)
+            ->getQuery();
+        $selectQuery =
+            Kernel::get("mysql")
+                ->getConnection()
+                ->getQueryBuilder()
+                ->select("*")
+                ->from("user")
+                ->getQuery();
+        $updateQuery = Kernel::get("mysql")->getConnection()->getQueryBuilder()->update("user")
+            ->fields([
+                "name" => "Lapinou",
+                "pseudo" => 'Qui fait "loulou"'
+            ])
+            ->where([
+                ["name", "=", "babtou"],
+            ])
+            ->getQuery();
+        $resultUpdate = Kernel::get("mysql")->getConnection()->exec($updateQuery);
         $this->render("connection", [
             "connection" => Kernel::get("mysql")->getConnection(),
             "queryBuilder" => Kernel::get("mysql")->getConnection()->getQueryBuilder(),
-            "select" => Kernel::get("mysql")->getConnection()->getQueryBuilder()->select("*")
-                ->from("user")
-                ->innerJoin([
-                    [
-                        ["user" => "groupid"],
-                        ["group" => "id"],
-                        "operator" => "!="
-                    ]
-                ])
-                ->where([
-                    ["name", "=", "babtou"],
-                ])
-                ->limit(1)
-                ->getQuery(),
-            "update" => Kernel::get("mysql")->getConnection()->getQueryBuilder()->update("user")
-                ->fields([
-                    "name" => "Lapinou",
-                    "surname" => "Qui fait loulou"
-                ])
-                ->where([
-                    ["name", "=", "babtou"],
-                ])
-                ->getQuery(),
-            "result" => Kernel::get("mysql")->getConnection()->exec(
-                Kernel::get("mysql")
-                    ->getConnection()
-                    ->getQueryBuilder()
-                    ->select("*")
-                    ->from("user")
-                    ->getQuery()
-            )
-            ->fetchAll()
+            "select" => $selectQueryAdvanced,
+            "update" => $updateQuery,
+            "resultUpdate" => $resultUpdate,
+            "result" => Kernel::get("mysql")->getConnection()->exec($selectQuery)->fetchAll()
         ]);
     }
 

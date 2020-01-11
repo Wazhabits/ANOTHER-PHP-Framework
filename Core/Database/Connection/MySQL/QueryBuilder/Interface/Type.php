@@ -3,7 +3,10 @@
 
 namespace Core\Database\Connection\MySQL\Type;
 
-
+/**
+ * Interface Type
+ * @package Core\Database\Connection\MySQL\Type
+ */
 interface Type
 {
     /**

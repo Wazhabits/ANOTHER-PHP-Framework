@@ -66,6 +66,14 @@ class DefaultController extends Controller
             ])
             ->limit(1)
             ->getQuery();
+        $deleteQuery = Kernel::get("mysql")
+            ->getConnection()
+            ->getQueryBuilder()
+            ->delete("user")
+            ->where([
+                ["name", "=", "babtou"],
+            ])
+            ->getQuery();
         $selectQuery =
             Kernel::get("mysql")
                 ->getConnection()
@@ -88,6 +96,7 @@ class DefaultController extends Controller
             "queryBuilder" => Kernel::get("mysql")->getConnection()->getQueryBuilder(),
             "select" => $selectQueryAdvanced,
             "update" => $updateQuery,
+            "delete" => $deleteQuery,
             "resultUpdate" => $resultUpdate,
             "result" => Kernel::get("mysql")->getConnection()->exec($selectQuery)->fetchAll()
         ]);

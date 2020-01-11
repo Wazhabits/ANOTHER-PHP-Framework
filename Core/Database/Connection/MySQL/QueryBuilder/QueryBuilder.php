@@ -3,6 +3,7 @@
 
 namespace Core\Connection\Mysql;
 
+use Core\Database\Connection\Mysql\Type\Delete;
 use Core\Database\Connection\Mysql\Type\Select;
 use Core\Database\Connection\Mysql\Type\Update;
 use Core\Database\QueryBuilder as Base;
@@ -32,6 +33,6 @@ class QueryBuilder implements Base
 
     public function delete($tablename)
     {
-        // TODO: Implement delete() method.
+        return new Delete($tablename);
     }
 }

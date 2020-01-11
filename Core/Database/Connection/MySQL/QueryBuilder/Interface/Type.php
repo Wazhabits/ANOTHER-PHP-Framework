@@ -13,4 +13,9 @@ interface Type
      * @return string
      */
     public function getQuery();
+
+    /**
+     * @return array
+     */
+    public function getConfiguration();
 }

@@ -57,10 +57,9 @@ class Select extends BaseType
      */
     public function getQuery() {
         $query = "";
-        if (isset(parent::$configuration["fields"]["sql"]))
-            $query .= parent::$configuration["fields"]["sql"];
-        if (isset(parent::$configuration["from"]["sql"]))
-            $query .= parent::$configuration["from"]["sql"];
+        if (!isset(parent::$configuration["fields"]["sql"]) || !isset(parent::$configuration["from"]["sql"]))
+            return false;
+        $query .= parent::$configuration["fields"]["sql"] . parent::$configuration["from"]["sql"];
         if (isset(parent::$configuration["join"]["inner"]["sql"]))
             $query .= parent::$configuration["join"]["inner"]["sql"];
         if (isset(parent::$configuration["where"]["sql"]))

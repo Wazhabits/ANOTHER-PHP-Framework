@@ -7,8 +7,6 @@ use Core\Files\Files as Base;
 
 class Files implements Base
 {
-    static $ROUTING = [];
-
     /**
      * This function return file contents
      * @param $path

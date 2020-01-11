@@ -12,7 +12,7 @@ class Routing implements Base
     private $status;
 
     public function __construct() {
-        foreach (Files::$ROUTING as $route)
+        foreach (Loader::$ROUTING as $route)
             $this->read($route);
         /**
          * Create routing for controller who had the @ route annotation

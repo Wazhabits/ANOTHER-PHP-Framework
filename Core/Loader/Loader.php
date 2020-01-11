@@ -9,6 +9,7 @@ use \Core\Loader\LoaderBase;
 class Loader implements LoaderBase
 {
     static $CLASSES = [];
+    static $ROUTING = [];
 
     /**
      * This function load classes by path with constraint or needle
@@ -21,7 +22,7 @@ class Loader implements LoaderBase
     static function explore($path, $needle = "", $constraint = "", $depth = 0)
     {
         if (file_exists($path . ".routing")) {
-            Files::$ROUTING[] = $path . ".routing";
+            self::$ROUTING[] = $path . ".routing";
         }
         $scan = glob($path . DIRECTORY_SEPARATOR . "*");
         foreach ($scan as $path) {

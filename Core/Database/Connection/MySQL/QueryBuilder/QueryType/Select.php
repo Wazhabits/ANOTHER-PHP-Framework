@@ -5,17 +5,7 @@ namespace Core\Database\Connection\Mysql\Type;
 
 /**
  * Class Select
- * @package Core\Connection\Mysql
- * Configuration array : [
- *      "fields": [
- *
- *      ],
- *      "where": [
- *          ["fieldname", "operator", "value"],
- *          ["fieldname", "operator", "value", "concatenator": "AND"],
- *          ["fieldname", "operator", "value", "concatenator": "OR"]
- *      ]
- * ]
+ * @package Core\Database\Connection\Mysql\Type
  */
 class Select extends BaseType
 {

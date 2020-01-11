@@ -3,7 +3,10 @@
 
 namespace Core\Database;
 
-
+/**
+ * Interface QueryBuilder
+ * @package Core\Database
+ */
 interface QueryBuilder
 {
     /**

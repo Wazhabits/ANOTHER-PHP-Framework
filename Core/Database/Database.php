@@ -5,6 +5,10 @@ namespace Core;
 
 use Core\Database\Database as base;
 
+/**
+ * Class Database
+ * @package Core
+ */
 class Database implements base
 {
     private $type = "";
@@ -29,7 +33,7 @@ class Database implements base
                         "port" => Kernel::getEnvironment()->getConfiguration("MYSQL_PORT"),
                         "name" => Kernel::getEnvironment()->getConfiguration("MYSQL_NAME"),
                         "user" => Kernel::getEnvironment()->getConfiguration("MYSQL_USER"),
-                        "pass" => Kernel::getEnvironment()->getConfiguration("MYSQL_PASS"),
+                        "pass" => Kernel::getEnvironment()->getConfiguration("MYSQL_PASS")
                     ];
                     break;
                 default:

@@ -7,7 +7,7 @@ namespace Core\Database\Connection\Mysql\Type;
  * Class BaseType
  * @package Core\Database\Connection\Mysql\Type
  */
-abstract  class BaseType implements Type
+abstract class BaseType implements Type
 {
     /**
      * @var array $configuration
@@ -64,6 +64,11 @@ abstract  class BaseType implements Type
     }
 
     /**
+     *      "where": [
+     *          ["fieldname", "operator", "value"],
+     *          ["fieldname", "operator", "value", "concatenator": "AND"],
+     *          ["fieldname", "operator", "value", "concatenator": "OR"]
+     *      ]
      * @param array $whereConfiguration
      * @return $this
      */
@@ -84,6 +89,13 @@ abstract  class BaseType implements Type
         }
         self::$configuration["where"]["sql"] = $sql;
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getConfiguration() {
+        return self::$configuration;
     }
 
     /**

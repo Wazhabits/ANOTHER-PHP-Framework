@@ -3,7 +3,10 @@
 
 namespace Core\Database;
 
-
+/**
+ * Interface Connection
+ * @package Core\Database
+ */
 interface Connection
 {
     public function exec($query);

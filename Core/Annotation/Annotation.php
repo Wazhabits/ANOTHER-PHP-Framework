@@ -145,8 +145,10 @@ class Annotation implements Base
      */
     private function readDocComment($comments, &$classDocumentation)
     {
+        $classDocumentation["description"] = "";
         foreach ($comments as $comment) {
-            if (strpos($comment, "@") !== false) {
+
+            if (strpos($comment, "@") === 0) {
                 $matches = [];
                 /**
                  * Select by key=>value into the doc string
@@ -161,7 +163,7 @@ class Annotation implements Base
                 /**
                  * If there is no marker, it is the description of method
                  */
-                $classDocumentation["description"] = $comment;
+                $classDocumentation["description"] .= $comment;
             }
         }
     }

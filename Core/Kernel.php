@@ -94,7 +94,7 @@ class Kernel
     }
 
     /**
-     * @return Annotation\Annotation $annotation
+     * @return \Core\Annotation\Annotation $annotation
      */
     static function getAnnotation() {
         return self::$annotation;

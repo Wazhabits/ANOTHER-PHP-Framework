@@ -9,6 +9,7 @@ use Core\Database;
 class KernelBootEvent
 {
     /**
+     * @param &array $injection
      * @event core/kernel.boot
      */
     static function connectToDatabase(&$injection)

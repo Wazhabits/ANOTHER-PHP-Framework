@@ -63,6 +63,7 @@ class Database implements base
         } else {
             Logger::log("database", "Try to get connection on non-existing database type '" . ucfirst($this->type) . "'", Logger::$ERROR_LEVEL);
             $this->connection = false;
+            // TODO: Create an exception thrower
         }
     }
 }

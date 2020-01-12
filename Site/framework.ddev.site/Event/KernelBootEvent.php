@@ -15,5 +15,7 @@ class KernelBootEvent
     {
         if (!isset($_GET["excludeDatabase"]))
             $injection["mysql"] = new Database();
+        else
+            $injection["mysql"] = new Database("mongodb", []);
     }
 }

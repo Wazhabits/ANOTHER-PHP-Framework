@@ -56,14 +56,14 @@ class Database implements base
      * This function will make an connection's instance
      */
     private function connectionBuilder() {
-        switch ($this->type) {
-            case "mysql":
-                $connectorName = "Core\\Connection\\" . ucfirst(strtolower($this->type));
-                $this->connection = new $connectorName($this->identity);
-                break;
-            default:
-                break;
+        if (class_exists("Core\\Connection\\" . ucfirst(strtolower($this->type)))) {
+            $connectorName = "Core\\Connection\\" . ucfirst(strtolower($this->type));
+            $this->connection = new $connectorName($this->identity);
+            $this->identity = null;
+        } else {
+            Logger::log("database", "Try to get connection on non-existing database type '" . ucfirst($this->type) . "'", Logger::$ERROR_LEVEL);
+            $this->connection = false;
+            // TODO: Create an exception thrower
         }
-        $this->identity = null;
     }
 }

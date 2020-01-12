@@ -30,6 +30,11 @@ class Kernel
     static $injected = [];
 
     /**
+     * @var string $context
+     */
+    static $context;
+
+    /**
      * This function define environment
      */
     static function boot() {
@@ -40,15 +45,18 @@ class Kernel
         self::$routing = new Routing();
         self::$environment->set("time", "RoutingInit:" . self::$environment->getExecutionTime(). "ms", true);
         Logger::log("general", "KERNEL|Initialize", Logger::$DEFAULT_LEVEL);
+        self::$context = Kernel::getEnvironment()->getConfiguration("APPLICATION_CONTEXT");
         Event::addEventByAnnotation();
         self::$environment->set("time", "EventInit:" . self::$environment->getExecutionTime(). "ms", true);
+        Response::initialize();
         Event::exec("core/kernel.boot", $injection);
         if (is_array($injection))
             self::inject($injection);
         if (self::$routing->getCurrent()["status"] === 200) {
             self::makeControllerCall(self::$routing->getCurrent());
         }
-        http_response_code(self::$routing->getCurrent()["status"]);
+        Response::setHeader(["babti" => "babtibou"]);
+        Response::send();
     }
 
     /**

@@ -20,22 +20,61 @@ class Template implements Base
 
     /**
      * This function build a template
+     * Cache include static format of a template so it don't include Loop / Condition / Vars
      * @param $buffer
      * @param $args
      */
     static function build(&$buffer, &$args) {
-        self::sectionalize($buffer);
-        $buffer = str_replace("\n", "", $buffer);
+        /**
+         * If we don't get cache or we are in Develop context
+         */
+        if (!self::getCache($buffer) || Kernel::$context === "Develop") {
+            self::sectionalize($buffer);
+            $buffer = str_replace("\n", "", $buffer);
+            if (Kernel::$context === "Production") {
+                self::putCache($buffer);
+            }
+        }
         self::$loopBuilder = new Loop($buffer, $args);
         self::$conditionBuilder = new Conditions($buffer, $args);
-        self::$varsBuilder = new Vars($buffer, $args);
         /**
          * Show fully a var, only available in develop context
          */
-        if (Kernel::getEnvironment()->getConfiguration("APPLICATION_CONTEXT") === "Develop")
+        if (Kernel::$context === "Develop") {
             self::debug($buffer);
+        }
+        self::$varsBuilder = new Vars($buffer, $args);
         Response::send();
         Kernel::$environment->set("time", "ControllerCall:" . Kernel::getEnvironment()->getExecutionTime(). "ms", true);
+    }
+
+    /**
+     * @param $buffer
+     * @return bool
+     */
+    private static function getCache(&$buffer) {
+        if (file_exists(self::calcTemplatePath())) {
+            $buffer = file_get_contents(self::calcTemplatePath());
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param $buffer
+     */
+    private static function putCache(&$buffer) {
+        if (file_exists(self::calcTemplatePath())) {
+            unlink(self::calcTemplatePath());
+        }
+        file_put_contents(self::calcTemplatePath(), $buffer);
+    }
+
+    /**
+     * @return string
+     */
+    private static function calcTemplatePath() {
+        return "Cache" . DIRECTORY_SEPARATOR . str_replace(DIRECTORY_SEPARATOR, "", strtoupper(md5(str_replace(self::$baseTemplatePath, "", self::$templatePath)))) . ".cache";
     }
 
     /**
@@ -89,7 +128,6 @@ class Template implements Base
          * Exec event preRender
          */
         Event::exec("core/template.preBuild", $buffer);
-        Response::init();
         /**
          *
          */

@@ -36,12 +36,12 @@ class Kernel
         self::$environment = new Env(PATH_ROOT . ".env");
         self::$environment->set("time", "Load of class & Define env:" .($classTime = self::$environment->getExecutionTime()). "ms", true);
         self::$annotation = new Annotation();
-        self::$environment->set("time", "AnnotationInit:" .($annoTime = self::$environment->getExecutionTime() - $classTime). "ms", true);
+        self::$environment->set("time", "AnnotationInit:" . self::$environment->getExecutionTime(). "ms", true);
         self::$routing = new Routing();
-        self::$environment->set("time", "RoutingInit:" .($routingTime = self::$environment->getExecutionTime() - $annoTime). "ms", true);
+        self::$environment->set("time", "RoutingInit:" . self::$environment->getExecutionTime(). "ms", true);
         Logger::log("general", "KERNEL|Initialize", Logger::$DEFAULT_LEVEL);
         Event::addEventByAnnotation();
-        self::$environment->set("time", "EventInit:" .($eventTime = self::$environment->getExecutionTime() - $routingTime). "ms", true);
+        self::$environment->set("time", "EventInit:" . self::$environment->getExecutionTime(). "ms", true);
         Event::exec("core/kernel.boot", $injection);
         if (is_array($injection))
             self::inject($injection);
@@ -49,7 +49,6 @@ class Kernel
             self::makeControllerCall(self::$routing->getCurrent());
         }
         http_response_code(self::$routing->getCurrent()["status"]);
-        self::$environment->set("time", "ControllerCall:" .($controllerTime = self::$environment->getExecutionTime() - $routingTime). "ms", true);
     }
 
     /**
@@ -95,7 +94,7 @@ class Kernel
     }
 
     /**
-     * @return Annotation\Annotation $annotation
+     * @return \Core\Annotation\Annotation $annotation
      */
     static function getAnnotation() {
         return self::$annotation;

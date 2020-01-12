@@ -44,7 +44,6 @@ class Kernel
         self::$environment->set("time", "AnnotationInit:" . self::$environment->getExecutionTime(). "ms", true);
         self::$routing = new Routing();
         self::$environment->set("time", "RoutingInit:" . self::$environment->getExecutionTime(). "ms", true);
-        Logger::log("general", "KERNEL|Initialize", Logger::$DEFAULT_LEVEL);
         self::$context = Kernel::getEnvironment()->getConfiguration("APPLICATION_CONTEXT");
         Event::addEventByAnnotation();
         self::$environment->set("time", "EventInit:" . self::$environment->getExecutionTime(). "ms", true);

@@ -160,6 +160,9 @@ Our team is composed by 2 developper : François Gazaube as PHP developper and A
         static function debug(&$buffer) | This function add the marker {debug:varname} to frontend
         static function object_to_array($obj) | This function convert an object to an array recursively
         
+    8 : Response
+        static function setHeader(string|array) | Set one or many header, value can be  a header string or a property => value array
+        static function setStatus(int $code) | Set http response status code
         
 # Template :
 

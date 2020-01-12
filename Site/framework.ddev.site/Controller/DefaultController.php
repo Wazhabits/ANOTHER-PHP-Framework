@@ -7,6 +7,7 @@ use Core\Annotation;
 use Core\Controller;
 use Core\Database\Connection\Mysql\Type\BaseType;
 use Core\Kernel;
+use Core\Response;
 
 class DefaultController extends Controller
 {
@@ -47,6 +48,15 @@ class DefaultController extends Controller
      */
     public function condition() {
         $this->render("condition", ["coucou" => "Bonjour"]);
+    }
+
+    /**
+     * @site framework.ddev.site
+     * @route /api
+     */
+    public function testResponseWithoutTemplate() {
+        Response::setHeader("Content-Type: application/json");
+        var_dump(json_encode(["babtou" => ["batbi" => "bou"]]));
     }
 
     /**

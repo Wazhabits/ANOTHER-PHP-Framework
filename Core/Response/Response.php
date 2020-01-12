@@ -8,7 +8,7 @@ class Response
 {
     static $response = [];
 
-    static function init() {
+    static function initialize() {
         self::$response = [
             "code" => 200,
             "header" => [
@@ -31,6 +31,8 @@ class Response
     }
 
     static function send() {
+        if (Kernel::getEnvironment()->getConfiguration("SHOW_EXECUTION_TIME") === "true")
+            self::$response["header"]["fw-exec-time"] = Kernel::getEnvironment()->getExecutionTime() . "ms";
         foreach (self::$response["header"] as $property => $value) {
             header($property . ": " . $value);
         }

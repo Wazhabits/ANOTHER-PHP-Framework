@@ -89,7 +89,6 @@ class Template implements Base
          * Exec event preRender
          */
         Event::exec("core/template.preBuild", $buffer);
-        Response::init();
         /**
          *
          */

@@ -16,8 +16,8 @@ class Update extends BaseType
     public function __construct($tablename)
     {
         parent::$configuration = [];
-        parent::$configuration["table"]["name"] = $tablename;
-        parent::$configuration["table"]["sql"] = "UPDATE " . strtolower($tablename) . " SET ";
+        parent::__construct($tablename);
+        parent::$configuration["table"]["sql"] = "UPDATE " . self::$configuration["table"]["name"] . " SET ";
     }
 
     /**

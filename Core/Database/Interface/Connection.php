@@ -9,7 +9,15 @@ namespace Core\Database;
  */
 interface Connection
 {
-    public function exec($query);
-    public function fetchAll();
-    public function getQueryBuilder();
+    /**
+     * @param string $query
+     * @return mixed
+     */
+    static function exec($query = "");
+
+    /**
+     * @param string $table
+     * @return mixed
+     */
+    static function getQueryBuilder($table = "");
 }

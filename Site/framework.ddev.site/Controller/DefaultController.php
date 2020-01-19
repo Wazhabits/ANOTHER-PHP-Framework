@@ -4,10 +4,12 @@
 namespace Framework\Controller;
 
 use Core\Annotation;
+use Core\Connection\Mysql;
 use Core\Controller;
 use Core\Database\Connection\Mysql\Type\BaseType;
 use Core\Kernel;
 use Core\Response;
+use Framework\Model\User;
 
 class DefaultController extends Controller
 {
@@ -64,11 +66,11 @@ class DefaultController extends Controller
      * @route /connection
      */
     public function connection() {
-        $selectQueryAdvanced = Kernel::get("mysql")->getConnection()->getQueryBuilder()->select("*")
-            ->from("user")
+        $selectQueryAdvanced = Mysql::getQueryBuilder(User::class)->select("*")
+            ->from(User::class)
             ->innerJoin([
                 [
-                    ["user" => "groupid"],
+                    [User::class => "groupid"],
                     ["group" => "id"],
                     "operator" => "!="
                 ]
@@ -78,22 +80,17 @@ class DefaultController extends Controller
             ])
             ->limit(1)
             ->getQuery();
-        $deleteQuery = Kernel::get("mysql")
-            ->getConnection()
-            ->getQueryBuilder()
-            ->delete("user")
+        $deleteQuery = Mysql::getQueryBuilder(User::class)
+            ->delete(User::class)
             ->where([
                 ["name", "=", "babtou"],
             ])
             ->getQuery();
-        $selectQuery =
-            Kernel::get("mysql")
-                ->getConnection()
-                ->getQueryBuilder()
+        $selectQuery = Mysql::getQueryBuilder(User::class)
                 ->select("*")
-                ->from("user")
+                ->from(User::class)
                 ->getQuery();
-        $updateQuery = Kernel::get("mysql")->getConnection()->getQueryBuilder()->update("user")
+        $updateQuery = Mysql::getQueryBuilder(User::class)->update(User::class)
             ->fields([
                 "name" => "Lapinou",
                 "pseudo" => 'Qui fait "loulou"'
@@ -102,7 +99,7 @@ class DefaultController extends Controller
                 ["name", "=", "babtou"],
             ])
             ->getQuery();
-        $insertQuery = Kernel::get("mysql")->getConnection()->getQueryBuilder()->insert("user")
+        $insertQuery = Mysql::getQueryBuilder(User::class)->insert(User::class)
             ->values([
                 "id" => "",
                 "name" => "Lapinou",
@@ -110,16 +107,26 @@ class DefaultController extends Controller
                 "pass" => 'Marab--ouutou@#{""\\',
             ])
             ->getQuery();
-        $resultUpdate = Kernel::get("mysql")->getConnection()->exec($updateQuery);
+        $resultUpdate = Mysql::getQueryBuilder(User::class)->update(User::class)
+            ->fields([
+                "name" => "Lapinou",
+                "pseudo" => 'Qui fait "loulou"'
+            ])
+            ->where([
+                ["name", "=", "babtou"],
+            ]);
+        $result = Mysql::getQueryBuilder(User::class)
+            ->select("*")
+            ->from(User::class)
+            ->execute();
         $this->render("connection", [
-            "connection" => Kernel::get("mysql")->getConnection(),
-            "queryBuilder" => Kernel::get("mysql")->getConnection()->getQueryBuilder(),
+            "queryBuilder" => Mysql::getQueryBuilder(User::class),
             "select" => $selectQueryAdvanced,
             "update" => $updateQuery,
             "delete" => $deleteQuery,
             "insert" => $insertQuery,
             "resultUpdate" => $resultUpdate,
-            "result" => Kernel::get("mysql")->getConnection()->exec($selectQuery)->fetchAll()
+            "result" => $result
         ]);
     }
 

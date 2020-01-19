@@ -106,11 +106,7 @@ class Template implements Base
          * Exec event preProcess
          */
         Event::exec("core/template.preProcess", $argumentForEvent);
-        self::$args = $args;
-        foreach ($args as $name => $arg) {
-            if (is_object($arg))
-                $args[$name] = self::object_to_array($arg);
-        }
+        self::$args = self::object_to_array($args);
         self::$baseTemplatePath = PATH_SITE . DIRECTORY_SEPARATOR
             . $_SERVER["HTTP_HOST"] . DIRECTORY_SEPARATOR . "Resource" . DIRECTORY_SEPARATOR;
         self::$templatePath = self::$baseTemplatePath

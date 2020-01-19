@@ -2,6 +2,8 @@
 
 namespace Core\Template\Parts;
 
+use Core\Template;
+
 class Vars
 {
     /**
@@ -32,6 +34,8 @@ class Vars
      */
     private function getVarsValue($args, $path, $index = 0, $quote = "")
     {
+        if (is_object($args[$path[$index]]))
+            $args[$path[$index]] = Template::object_to_array($args[$path[$index]]);
         if (count($path) - 1 > $index) {
             return (isset($args[$path[$index]])) ?
                 $this->getVarsValue($args[$path[$index]], $path, $index + 1, $quote)

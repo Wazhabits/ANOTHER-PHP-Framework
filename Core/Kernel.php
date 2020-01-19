@@ -54,7 +54,6 @@ class Kernel
         if (self::$routing->getCurrent()["status"] === 200) {
             self::makeControllerCall(self::$routing->getCurrent());
         }
-        Response::setHeader(["babti" => "babtibou"]);
         Response::send();
     }
 

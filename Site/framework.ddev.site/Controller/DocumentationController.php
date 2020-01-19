@@ -4,8 +4,9 @@
 namespace Framework\Controller;
 
 
+use Core\Connection\Mysql;
 use Core\Controller;
-use Core\Kernel;
+use Framework\Model\Classes;
 
 class DocumentationController extends Controller
 {
@@ -14,6 +15,11 @@ class DocumentationController extends Controller
      * @route /documentation
      */
     public function documentation() {
-        $this->render("documentation", ["annotation" => Kernel::getAnnotation()->getDocumentation()]);
+
+        $result = Mysql::getQueryBuilder(Classes::class)
+            ->select("*")
+            ->from(Classes::class)
+            ->execute();
+        $this->render("documentation", ["result" => $result]);
     }
 }

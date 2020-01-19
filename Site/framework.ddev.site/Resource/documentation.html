@@ -6,7 +6,9 @@
 </head>
 <body>
 [foreach:result as row]
-HERE : {key:row} : {row.name}
+<h1>{row.classname}</h1>
+<h2><span class="last-update">{row.updatedat}</span><span class="creation">{row.createdat}</span></h2>
+<span class="json">{row.json}</span>
 [foreach]
 </body>
 </html>

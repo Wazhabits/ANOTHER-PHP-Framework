@@ -68,14 +68,10 @@ class Model implements Base
         $this->updatedat = time();
         if ($this->id === null) {
             unset($this->id);
-            echo "<pre><code>", var_dump(
-            Mysql::getQueryBuilder(get_class($this))->insert(get_class($this))->values($this->get())->getConfiguration()), "</code></pre>";
             Mysql::getQueryBuilder(get_class($this))->insert(get_class($this))->values($this->get())->execute();
         } else {
             $id = $this->id;
             unset($this->createdat, $this->id);
-            echo "<pre><code>", var_dump(
-            Mysql::getQueryBuilder(get_class($this))->update(get_class($this))->fields($this->get())->where([["id", "=", $id]])->getQuery()), "</code></pre>";
             Mysql::getQueryBuilder(get_class($this))->update(get_class($this))->fields($this->get())->where([["id", "=", $id]])->execute();
         }
         return $this;

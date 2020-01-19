@@ -151,12 +151,7 @@ class Template implements Base
     }
 
     /**
-     * This function add the {debug:Vars} to frontend, this flag show a vars in html (each kind of var)
-     * use :
-     *  - {debug:varname}
-     * special :
-     *  - {debug:__args} this marker show all vars accessible in template
-     * @param $buffer
+     * This function add the debug to frontend, this flag show a vars in html (each kind of var)
      */
     static function debug(&$buffer) {
         $matches = [];

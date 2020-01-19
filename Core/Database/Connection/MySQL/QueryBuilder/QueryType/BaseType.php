@@ -87,12 +87,12 @@ abstract class BaseType implements Type
         foreach ($whereConfiguration as $condition) {
             if ($i !== 0) {
                 if (isset($condition["concatenator"]))
-                    $sql .= " " . $condition["concatenator"] . " `" . Manager::getTableName($condition[0]) . "` " . $condition[1] . " \"" . $this->quote($condition[2]) . "\"";
+                    $sql .= " " . $condition["concatenator"] . " `" . $condition[0] . "` " . $condition[1] . " \"" . $this->quote($condition[2]) . "\"";
                 else
-                    $sql .= " AND `" . Manager::getTableName($condition[0]) . "` " . $condition[1] . " " . $this->quote($condition[2]);
+                    $sql .= " AND `" . $condition[0] . "` " . $condition[1] . " " . $this->quote($condition[2]);
             }
             else
-                $sql .= "`" . Manager::getTableName($condition[0]) . "` " . $condition[1] . " " . $this->quote($condition[2]);
+                $sql .= "`" . $condition[0] . "` " . $condition[1] . " " . $this->quote($condition[2]);
             $i++;
         }
         self::$configuration["where"]["sql"] = $sql;

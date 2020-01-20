@@ -50,8 +50,8 @@ class Model
      */
     private function cache() {
         foreach ($this->schema["json"] as $filename => $content) {
-            $filepathSchema = "Cache/Database/Schema/" . date(Kernel::getEnvironment()->getConfiguration("LOG_FORMAT")) . "." . $filename . ".json";
-            $filepathSql = "Cache/Database/Sql/" . date(Kernel::getEnvironment()->getConfiguration("LOG_FORMAT")) . "." . $filename . ".sql";
+            $filepathSchema = "Cache/database/schema/" . date(Kernel::getEnvironment()->getConfiguration("LOG_FORMAT")) . "." . $filename . ".json";
+            $filepathSql = "Cache/database/sql/" . date(Kernel::getEnvironment()->getConfiguration("LOG_FORMAT")) . "." . $filename . ".sql";
             if (!file_exists($filepathSchema) || filesize($filepathSchema) !== strlen($content))
                 Files::put($filepathSchema, $content, true);
             if (!file_exists($filepathSql) || filesize($filepathSql) !== strlen($this->schema["sql"][$filename]))

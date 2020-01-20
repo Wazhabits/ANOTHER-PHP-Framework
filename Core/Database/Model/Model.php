@@ -55,24 +55,17 @@ class Model implements Base
     }
 
     /**
-     * @return array
-     */
-    public function get() {
-        return get_object_vars($this);
-    }
-
-    /**
      * @return $this
      */
     public function save() {
         $this->updatedat = time();
         if ($this->id === null) {
             unset($this->id);
-            Mysql::getQueryBuilder(get_class($this))->insert(get_class($this))->values($this->get())->execute();
+            Mysql::getQueryBuilder(get_class($this))->insert(get_class($this))->values(get_object_vars($this))->execute();
         } else {
             $id = $this->id;
             unset($this->createdat, $this->id);
-            Mysql::getQueryBuilder(get_class($this))->update(get_class($this))->fields($this->get())->where([["id", "=", $id]])->execute();
+            Mysql::getQueryBuilder(get_class($this))->update(get_class($this))->fields(get_object_vars($this))->where([["id", "=", $id]])->execute();
         }
         return $this;
     }

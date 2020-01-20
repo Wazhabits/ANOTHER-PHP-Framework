@@ -31,7 +31,7 @@ class QueryBuilder implements Base
     }
 
     /**
-     * @param array $tablename
+     * @param string $tablename
      * @return Update
      */
     public function update($tablename) {

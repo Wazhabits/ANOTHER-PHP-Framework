@@ -10,24 +10,39 @@ class Model implements Base
 {
     /**
      * @var int $id
+     * @type integer
+     * @primary true
+     * @ai true
      */
     public $id = null;
 
     /**
      * Sorting
      * @var int $sorting
+     * @type integer
+     * @size 11
+     * @default 0
+     * @nullable false
      */
     public $sorting;
 
     /**
      * Date of creation
      * @var int $createdate
+     * @type integer
+     * @size 11
+     * @default {time.current}
+     * @nullable false
      */
     public $createdat;
 
     /**
      * Time of update
      * @var $updatedade
+     * @type integer
+     * @size 11
+     * @default {time.current}
+     * @nullable false
      */
     public $updatedat;
 
@@ -36,7 +51,7 @@ class Model implements Base
      * @param $element
      * @param $sorting
      */
-    public function __construct($element, $sorting)
+    public function __construct($element = [], $sorting = 0)
     {
         $this->createdat = time();
         $this->sorting = &$sorting;

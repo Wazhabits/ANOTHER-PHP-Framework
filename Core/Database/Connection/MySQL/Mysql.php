@@ -16,24 +16,23 @@ class Mysql implements Connection
     /**
      * @var \PDO|null
      */
-    private $pdo = null;
+    private static $pdo = null;
     /**
      * @var \PDOStatement
      */
-    private $queryResult;
+    private static $queryResult;
 
     /**
      * @var QueryBuilder
      */
-    private $queryBuilder;
+    private static $queryBuilder;
 
     /**
-     * Mysql constructor.
      * @param $identity
      */
-    public function __construct($identity) {
+    static function define($identity) {
         try {
-            $this->pdo = new \PDO(
+            self::$pdo = new \PDO(
                 'mysql:host=' . $identity["host"] . ':' . $identity["port"] .  ';dbname=' . $identity["name"],
                 $identity["user"],
                 $identity["pass"],
@@ -41,34 +40,25 @@ class Mysql implements Connection
                     \PDO::ATTR_PERSISTENT => true
                 ]
             );
-            $this->queryBuilder = new QueryBuilder();
         } catch (\PDOException $exception) {
             Logger::log("database", "Connection error: " . $exception->getMessage(), Logger::$ERROR_LEVEL);
             //TODO: Create an exception thrower
-            return null;
         }
     }
+
     /**
      * @param string $query
-     * @return $this
+     * @return false|mixed|\PDOStatement
      */
-    public function exec($query) {
-        $this->queryResult =  $this->pdo->query($query);
-        return $this;
+    static function exec($query = "") {
+        return self::$pdo->query($query);
     }
+
     /**
-     * @return array|bool
+     * @param string $tablename
+     * @return QueryBuilder|mixed
      */
-    public function fetchAll() {
-        if ($this->queryResult)
-            return $this->queryResult->fetchAll();
-        else
-            return false;
-    }
-    /**
-     * @return QueryBuilder
-     */
-    public function getQueryBuilder() {
-        return $this->queryBuilder;
+    static function getQueryBuilder($tablename = "") {
+        return new QueryBuilder($tablename);
     }
 }

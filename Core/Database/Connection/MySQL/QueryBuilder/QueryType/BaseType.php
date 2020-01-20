@@ -3,6 +3,9 @@
 
 namespace Core\Database\Connection\Mysql\Type;
 
+use Core\Connection\Mysql;
+use Core\Database\Manager;
+
 /**
  * Class BaseType
  * @package Core\Database\Connection\Mysql\Type
@@ -13,6 +16,11 @@ abstract class BaseType implements Type
      * @var array $configuration
      */
     protected static $configuration;
+
+    public function __construct($tablename = "")
+    {
+        self::$configuration["table"]["name"] = Manager::getTableName($tablename);
+    }
 
     /**
      * @param integer $nbr
@@ -55,9 +63,9 @@ abstract class BaseType implements Type
             $table1 = array_keys($join[0])[0];
             $table2 = array_keys($join[1])[0];
             self::$configuration["join"]["inner"]["sql"] .= " INNER JOIN `" . strtolower($table2)
-                . "` ON `" . strtolower($table1) . "`.`" . strtolower($join[0][$table1]) . "` "
+                . "` ON `" . Manager::getTableName($table1) . "`.`" . strtolower($join[0][$table1]) . "` "
                 . $join["operator"]
-                . " `" . strtolower($table2) . "`.`" . strtolower($join[1][$table2]) . "`";
+                . " `" . Manager::getTableName($table2) . "`.`" . strtolower($join[1][$table2]) . "`";
             $i++;
         }
         return $this;
@@ -79,16 +87,25 @@ abstract class BaseType implements Type
         foreach ($whereConfiguration as $condition) {
             if ($i !== 0) {
                 if (isset($condition["concatenator"]))
-                    $sql .= " " . $condition["concatenator"] . " `" . strtolower($condition[0]) . "` " . $condition[1] . " \"" . $this->quote($condition[2]) . "\"";
+                    $sql .= " " . $condition["concatenator"] . " `" . $condition[0] . "` " . $condition[1] . " \"" . $this->quote($condition[2]) . "\"";
                 else
-                    $sql .= " AND `" . strtolower($condition[0]) . "` " . $condition[1] . " " . $this->quote($condition[2]);
+                    $sql .= " AND `" . $condition[0] . "` " . $condition[1] . " " . $this->quote($condition[2]);
             }
             else
-                $sql .= "`" . strtolower($condition[0]) . "` " . $condition[1] . " " . $this->quote($condition[2]);
+                $sql .= "`" . $condition[0] . "` " . $condition[1] . " " . $this->quote($condition[2]);
             $i++;
         }
         self::$configuration["where"]["sql"] = $sql;
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function execute() {
+        $tablename = Manager::getTableName(self::$configuration["table"]["name"]);
+        $result[$tablename] = Mysql::exec($this->getQuery());
+        return  $result;
     }
 
     /**

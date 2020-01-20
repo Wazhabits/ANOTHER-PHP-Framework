@@ -16,8 +16,8 @@ class Delete extends BaseType
     public function __construct($tablename)
     {
         parent::$configuration = [];
-        parent::$configuration["table"]["name"] = $tablename;
-        parent::$configuration["table"]["sql"] = "DELETE FROM " . strtolower($tablename);
+        parent::__construct($tablename);
+        parent::$configuration["table"]["sql"] = "DELETE FROM " . self::$configuration["table"]["name"];
     }
 
     /**

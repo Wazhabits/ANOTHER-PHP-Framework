@@ -4,6 +4,8 @@
 namespace Core\Template\Parts;
 
 
+use Core\Template;
+
 class Loop
 {
     public function __construct(&$buffer, &$args)
@@ -35,6 +37,8 @@ class Loop
             foreach ($args[$var] as $key => $value) {
                 $tempContent = $content;
                 $this->putKey($tempContent, "{key:" . $matches[2][$index] . "}", $key);
+                if (is_object($value))
+                    $value = Template::object_to_array($value);
                 if (is_array($value)) {
                     foreach ($value as $subkey => $subvalue) {
                         $this->putKey($tempContent, "{key:" . $matches[2][$index] . "." . $subkey . "}", $subkey);

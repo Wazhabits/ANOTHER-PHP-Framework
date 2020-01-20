@@ -127,7 +127,7 @@ Get Results
 ->fetchAll()</code></pre>
     {debug:result}
     [foreach:result as row]
-        HERE : {row.name}
+        HERE : {key:row} : {row.name}
     [foreach]
     {debug:__args}
 </body>

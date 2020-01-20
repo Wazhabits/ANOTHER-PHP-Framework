@@ -16,8 +16,8 @@ class Insert extends BaseType
     public function __construct($tablename)
     {
         parent::$configuration = [];
-        parent::$configuration["table"]["name"] = $tablename;
-        parent::$configuration["table"]["sql"] = "INSERT INTO " . strtolower($tablename);
+        parent::__construct($tablename);
+        parent::$configuration["table"]["sql"] = "INSERT INTO " . self::$configuration["table"]["name"];
     }
 
     /**

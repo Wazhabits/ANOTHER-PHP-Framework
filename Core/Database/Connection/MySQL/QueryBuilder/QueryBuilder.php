@@ -15,16 +15,23 @@ use Core\Database\QueryBuilder as Base;
  */
 class QueryBuilder implements Base
 {
+    private $tablename = "";
+
+    public function __construct($tablename)
+    {
+        $this->tablename = $tablename;
+    }
+
     /**
      * @param string|array $fields
      * @return Select
      */
     public function select($fields) {
-        return new Select($fields);
+        return new Select($fields, $this->tablename);
     }
 
     /**
-     * @param array $tablename
+     * @param string $tablename
      * @return Update
      */
     public function update($tablename) {

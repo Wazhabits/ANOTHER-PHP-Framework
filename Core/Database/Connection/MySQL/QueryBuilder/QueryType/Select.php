@@ -3,6 +3,9 @@
 
 namespace Core\Database\Connection\Mysql\Type;
 
+use Core\Connection\Mysql;
+use Core\Database\Manager;
+
 /**
  * Class Select
  * @package Core\Database\Connection\Mysql\Type
@@ -13,7 +16,7 @@ class Select extends BaseType
      * Select constructor.
      * @param array $fields
      */
-    public function __construct($fields) {
+    public function __construct($fields, $tablename) {
         parent::$configuration = [];
         if ($fields !== "*") {
             parent::$configuration["fields"] = $fields;
@@ -25,21 +28,33 @@ class Select extends BaseType
             parent::$configuration["fields"][] = "*";
             parent::$configuration["fields"]["sql"] = "SELECT * ";
         }
+        parent::__construct($tablename);
     }
 
     /**
      * @param string|array $tablename
      * @return $this
      */
-    public function from($tablename) {
+    public function from($tablename)
+    {
         if (is_array($tablename)) {
             parent::$configuration["from"] = $tablename;
-            parent::$configuration["from"]["sql"] = " FROM " . strtolower(implode(",", parent::$configuration["from"]));
+            parent::$configuration["from"]["sql"] = " FROM " . Manager::getTableName(parent::$configuration["from"]);
         } else {
             parent::$configuration["from"][] = $tablename;
-            parent::$configuration["from"]["sql"] = " FROM " . strtolower($tablename);
+            parent::$configuration["from"]["sql"] = " FROM " . Manager::getTableName($tablename);
         }
         return $this;
+    }
+
+    public function execute()
+    {
+        $tablename = self::$configuration["table"]["name"];
+        $pdoResult = Mysql::exec($this->getQuery());
+        if ($pdoResult !== false)
+            $models[$tablename] = $pdoResult->fetchAll();
+            $models = Manager::convert($models);
+        return $models;
     }
 
     /**

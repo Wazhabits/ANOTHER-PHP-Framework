@@ -7,6 +7,7 @@ namespace Core;
 class Response
 {
     static $response = [];
+    static $SENT = false;
 
     static function initialize() {
         self::$response = [
@@ -17,10 +18,16 @@ class Response
         ];
     }
 
+    /**
+     * @param $code
+     */
     static function setStatus($code) {
         self::$response["code"] = $code;
     }
 
+    /**
+     * @param $header
+     */
     static function setHeader($header) {
         if (is_array($header)) {
             foreach ($header as $element => $value)
@@ -31,6 +38,9 @@ class Response
     }
 
     static function send() {
+        if (self::$SENT)
+            return;
+        self::$SENT = true;
         if (Kernel::getEnvironment()->getConfiguration("SHOW_EXECUTION_TIME") === "true")
             self::$response["header"]["fw-exec-time"] = Kernel::getEnvironment()->getExecutionTime() . "ms";
         foreach (self::$response["header"] as $property => $value) {

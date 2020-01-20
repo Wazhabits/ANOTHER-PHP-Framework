@@ -6,6 +6,7 @@ namespace Framework\Event;
 use Core\Connection\Mysql;
 use Core\Database;
 use Core\Kernel;
+use Core\Loader;
 use Core\Logger;
 use Framework\Model\Classes;
 
@@ -19,7 +20,6 @@ class KernelBootEvent
     {
         if (!isset($_GET["excludeDatabase"]))
             $injection["mysql"] = new Database();
-
     }
 
     /**

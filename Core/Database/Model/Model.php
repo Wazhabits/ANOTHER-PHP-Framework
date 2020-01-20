@@ -12,7 +12,6 @@ class Model implements Base
      * @var int $id
      * @type integer
      * @primary true
-     * @unique true
      * @ai true
      */
     public $id = null;

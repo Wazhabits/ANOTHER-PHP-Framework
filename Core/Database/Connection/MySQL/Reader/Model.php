@@ -98,10 +98,9 @@ class Model
             $sql .= "(" . $configuration["size"] . ")";
         if (isset($configuration["primary"]) && $configuration["primary"] === "true") {
             $sql .= " PRIMARY KEY";
-            unset($configuration["unique"]);
         }
         if (isset($configuration["default"]))
-            $sql .= " DEFAULT " . $configuration["default"];
+            $sql .= " DEFAULT " . $this->format($configuration["default"]);
         if (isset($configuration["nullable"]))
             $sql .= ($configuration["nullable"] === "true") ? " NULL" : " NOT NULL";
         if (isset($configuration["unique"]) && $configuration["unique"] === "true")
@@ -111,5 +110,9 @@ class Model
         if (!$isLast)
             $sql .= ",";
         return $sql . "\n";
+    }
+
+    private function format($value) {
+        return str_replace("{time.current}", time(), $value);
     }
 }

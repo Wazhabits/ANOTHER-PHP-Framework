@@ -115,8 +115,12 @@ class Annotation implements Base
     private function document($classname, \ReflectionClass $reflectedClass)
     {
         $methods = $reflectedClass->getMethods();
+        $properties = $reflectedClass->getProperties();
         foreach ($methods as $method) {
             $this->readDocComment($this->clearComment($method->getDocComment()), $this->documentation[$classname][$method->name]);
+        }
+        foreach ($properties as $property) {
+            $this->readDocComment($this->clearComment($property->getDocComment()), $this->documentation[$classname]["properties"][$property->name]);
         }
     }
 

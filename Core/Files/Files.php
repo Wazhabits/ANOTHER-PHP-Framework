@@ -23,11 +23,14 @@ class Files implements Base
      * This function put content into $path given
      * @param $path
      * @param $content
+     * @param $deleteIfExist = false
      * @return bool|int|mixed
      */
-    static function put($path, $content) {
+    static function put($path, $content, $deleteIfExist = false) {
         if (!file_exists($path))
             self::test($path);
+        elseif ($deleteIfExist)
+            unlink($path);
         return file_put_contents($path, $content . PHP_EOL, FILE_APPEND | LOCK_EX);
     }
 

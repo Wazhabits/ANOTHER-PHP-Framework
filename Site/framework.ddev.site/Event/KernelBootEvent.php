@@ -18,7 +18,7 @@ class KernelBootEvent
         $classes = Kernel::getAnnotation()->getDocumentation();
         Logger::log("general", "Loaded classes : " . count($classes));
         foreach ($classes as $class => $property) {
-            $exist = Mysql::getQueryBuilder(Classes::class)->select("*")->from(Classes::class)->where([["classname", "=", $class]])->limit(1)->execute();
+            $exist = Database\Manager::getConnection("mysql")->getQueryBuilder(Classes::class)->select("*")->from(Classes::class)->where([["classname", "=", $class]])->limit(1)->execute();
             if (isset($exist[0])) {
                 $model = $exist[0];
             } else {

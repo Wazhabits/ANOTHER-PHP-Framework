@@ -104,7 +104,7 @@ abstract class BaseType implements Type
      */
     public function execute() {
         $tablename = Manager::getTableName(self::$configuration["table"]["name"]);
-        $result[$tablename] = Mysql::exec($this->getQuery());
+        $result[$tablename] = Manager::getConnection("mysql")->exec($this->getQuery());
         return  $result;
     }
 

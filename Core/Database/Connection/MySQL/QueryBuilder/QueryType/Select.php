@@ -50,7 +50,7 @@ class Select extends BaseType
     public function execute()
     {
         $tablename = self::$configuration["table"]["name"];
-        $pdoResult = Mysql::exec($this->getQuery());
+        $pdoResult = Manager::getConnection("mysql")->exec($this->getQuery());
         if ($pdoResult !== false)
             $models[$tablename] = $pdoResult->fetchAll();
             $models = Manager::convert($models);

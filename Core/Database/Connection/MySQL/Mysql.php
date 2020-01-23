@@ -14,25 +14,23 @@ use Core\Logger;
 class Mysql implements Connection
 {
     /**
+     * @var string
+     */
+    private $name = "mysql";
+    /**
+     * @var null|mixed
+     */
+    private $modelReader = null;
+    /**
      * @var \PDO|null
      */
-    private static $pdo = null;
-    /**
-     * @var \PDOStatement
-     */
-    private static $queryResult;
-
-    /**
-     * @var QueryBuilder
-     */
-    private static $queryBuilder;
-
+    private $pdo = null;
     /**
      * @param $identity
      */
-    static function define($identity) {
+    public function __construct($identity) {
         try {
-            self::$pdo = new \PDO(
+            $this->pdo = new \PDO(
                 'mysql:host=' . $identity["host"] . ':' . $identity["port"] .  ';dbname=' . $identity["name"],
                 $identity["user"],
                 $identity["pass"],
@@ -45,20 +43,33 @@ class Mysql implements Connection
             //TODO: Create an exception thrower
         }
     }
-
     /**
      * @param string $query
      * @return false|mixed|\PDOStatement
      */
-    static function exec($query = "") {
-        return self::$pdo->query($query);
+    public function exec($query = "") {
+        return $this->pdo->query($query);
     }
-
     /**
      * @param string $tablename
      * @return QueryBuilder|mixed
      */
-    static function getQueryBuilder($tablename = "") {
+    public function getQueryBuilder($tablename = "") {
         return new QueryBuilder($tablename);
+    }
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+    /**
+     * @param $reader
+     * @return mixed|void
+     */
+    public function setModelReader(&$reader)
+    {
+        $this->modelReader = $reader;
     }
 }

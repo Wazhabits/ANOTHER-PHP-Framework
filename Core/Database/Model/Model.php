@@ -76,11 +76,11 @@ class Model implements Base
         $this->updatedat = time();
         if ($this->id === null) {
             unset($this->id);
-            Mysql::getQueryBuilder(get_class($this))->insert(get_class($this))->values(get_object_vars($this))->execute();
+            Manager::getConnection("mysql")->getQueryBuilder(get_class($this))->insert(get_class($this))->values(get_object_vars($this))->execute();
         } else {
             $id = $this->id;
             unset($this->createdat, $this->id);
-            Mysql::getQueryBuilder(get_class($this))->update(get_class($this))->fields(get_object_vars($this))->where([["id", "=", $id]])->execute();
+            Manager::getConnection("mysql")->getQueryBuilder(get_class($this))->update(get_class($this))->fields(get_object_vars($this))->where([["id", "=", $id]])->execute();
         }
         return $this;
     }

@@ -6,6 +6,7 @@ namespace Framework\Controller;
 
 use Core\Connection\Mysql;
 use Core\Controller;
+use Core\Database\Manager;
 use Framework\Model\Classes;
 
 class DocumentationController extends Controller
@@ -16,7 +17,7 @@ class DocumentationController extends Controller
      */
     public function documentation() {
 
-        $result = Mysql::getQueryBuilder(Classes::class)
+        $result = Manager::getConnection("mysql")->getQueryBuilder(Classes::class)
             ->select("*")
             ->from(Classes::class)
             ->execute();

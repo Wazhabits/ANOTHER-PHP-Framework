@@ -7,6 +7,7 @@ use Core\Annotation;
 use Core\Connection\Mysql;
 use Core\Controller;
 use Core\Database\Connection\Mysql\Type\BaseType;
+use Core\Database\Manager;
 use Core\Kernel;
 use Core\Response;
 use Framework\Model\User;
@@ -66,7 +67,7 @@ class DefaultController extends Controller
      * @route /connection
      */
     public function connection() {
-        $selectQueryAdvanced = Mysql::getQueryBuilder(User::class)->select("*")
+        $selectQueryAdvanced = Manager::getConnection("mysql")->getQueryBuilder(User::class)->select("*")
             ->from(User::class)
             ->innerJoin([
                 [
@@ -80,17 +81,17 @@ class DefaultController extends Controller
             ])
             ->limit(1)
             ->getQuery();
-        $deleteQuery = Mysql::getQueryBuilder(User::class)
+        $deleteQuery = Manager::getConnection("mysql")->getQueryBuilder(User::class)
             ->delete(User::class)
             ->where([
                 ["name", "=", "babtou"],
             ])
             ->getQuery();
-        $selectQuery = Mysql::getQueryBuilder(User::class)
+        $selectQuery = Manager::getConnection("mysql")->getQueryBuilder(User::class)
                 ->select("*")
                 ->from(User::class)
                 ->getQuery();
-        $updateQuery = Mysql::getQueryBuilder(User::class)->update(User::class)
+        $updateQuery = Manager::getConnection("mysql")->getQueryBuilder(User::class)->update(User::class)
             ->fields([
                 "name" => "Lapinou",
                 "pseudo" => 'Qui fait "loulou"'
@@ -99,7 +100,7 @@ class DefaultController extends Controller
                 ["name", "=", "babtou"],
             ])
             ->getQuery();
-        $insertQuery = Mysql::getQueryBuilder(User::class)->insert(User::class)
+        $insertQuery = Manager::getConnection("mysql")->getQueryBuilder(User::class)->insert(User::class)
             ->values([
                 "id" => "",
                 "name" => "Lapinou",
@@ -107,7 +108,7 @@ class DefaultController extends Controller
                 "pass" => 'Marab--ouutou@#{""\\',
             ])
             ->getQuery();
-        $resultUpdate = Mysql::getQueryBuilder(User::class)->update(User::class)
+        $resultUpdate = Manager::getConnection("mysql")->getQueryBuilder(User::class)->update(User::class)
             ->fields([
                 "name" => "Lapinou",
                 "pseudo" => 'Qui fait "loulou"'
@@ -115,12 +116,12 @@ class DefaultController extends Controller
             ->where([
                 ["name", "=", "babtou"],
             ]);
-        $result = Mysql::getQueryBuilder(User::class)
+        $result = Manager::getConnection("mysql")->getQueryBuilder(User::class)
             ->select("*")
             ->from(User::class)
             ->execute();
         $this->render("connection", [
-            "queryBuilder" => Mysql::getQueryBuilder(User::class),
+            "queryBuilder" => Manager::getConnection("mysql")->getQueryBuilder(User::class),
             "select" => $selectQueryAdvanced,
             "update" => $updateQuery,
             "delete" => $deleteQuery,

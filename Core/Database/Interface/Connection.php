@@ -10,20 +10,6 @@ namespace Core\Database;
 interface Connection
 {
     /**
-     * Execute a query generate by QueryBuilder
-     * @param string $query
-     * @return mixed
-     */
-    public function exec($query = "");
-
-    /**
-     * Return a QueryBuilder instance
-     * @param string $table
-     * @return mixed
-     */
-    public function getQueryBuilder($table = "");
-
-    /**
      * Return driver name
      * @return string
      */
@@ -34,4 +20,25 @@ interface Connection
      * @return mixed
      */
     public function setModelReader(&$reader);
+
+    /**
+     * Return a QueryBuilder instance
+     * @param string $table
+     * @return mixed
+     */
+    public function getQueryBuilder($table = "");
+
+    /**
+     * Execute a query generate by QueryBuilder
+     * @param string $query
+     * @return mixed
+     */
+    public function exec($query = "");
+
+    /**
+     * @param $elements
+     * @param array $result
+     * @return array<\Core\Database\Model\Model>
+     */
+    public function convert(&$elements, $result = []);
 }

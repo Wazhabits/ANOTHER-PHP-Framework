@@ -5,6 +5,7 @@ namespace Core\Connection;
 
 use Core\Connection\Mysql\QueryBuilder;
 use Core\Database\Connection;
+use Core\Database\Model\Model;
 use Core\Logger;
 
 /**
@@ -97,7 +98,7 @@ class Mysql implements Connection
     /**
      * @param $elements
      * @param array $result
-     * @return array<\Core\Database\Model\Model>
+     * @return array<Model>
      */
     public function convert(&$elements, $result = []) {
         if ($elements === false)

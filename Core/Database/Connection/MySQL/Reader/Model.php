@@ -11,6 +11,9 @@ class Model
     private $modelsDocumentation;
     private $schema = [];
 
+    /**
+     * Model constructor.
+     */
     public function __construct() {
         $this->parseClasses();
         $this->buildSchemaConfiguration();

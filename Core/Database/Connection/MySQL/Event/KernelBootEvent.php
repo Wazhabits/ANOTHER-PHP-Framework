@@ -21,9 +21,16 @@ class KernelBootEvent
                 "user" => Kernel::getEnvironment()->getConfiguration("MYSQL_USER"),
                 "pass" => Kernel::getEnvironment()->getConfiguration("MYSQL_PASS")
             ]);
-            $modelReader = new Model();
-            $connection->setModelReader($modelReader);
             Database\Manager::setConnection($connection);
         }
+    }
+
+    /**
+     * @param Database\Connection $connection
+     * @event core/connection.set
+     */
+    static function listenConnectionSet(&$connection) {
+        $modelReader = new Model();
+        $connection->setModelReader($modelReader);
     }
 }

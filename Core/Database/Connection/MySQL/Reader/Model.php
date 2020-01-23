@@ -80,7 +80,7 @@ class Model
      */
     private function buildSchemaConfiguration() {
         foreach ($this->modelsDocumentation as $classname => $documentation) {
-            $table = Manager::getTableName($classname);
+            $table = Manager::getConnection("mysql")->getTableName($classname);
             $properties = $documentation["properties"];
             foreach ($properties as $index => $configuration) {
                 $column = strtolower($index);

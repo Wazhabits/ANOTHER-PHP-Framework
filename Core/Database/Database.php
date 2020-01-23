@@ -22,7 +22,7 @@ class Database implements base
      */
     public function __construct($type = "", $identity = []) {
         if ($type === "")
-            $this->type = Kernel::getEnvironment()->getConfiguration("DATABASE_TYPE");
+            $this->type = Kernel::getEnvironment()->getConfiguration("DATABASE_DRIVER");
         else
             $this->type = $type;
         if (empty($identity)) {

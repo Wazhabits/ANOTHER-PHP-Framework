@@ -2,7 +2,6 @@
 
 namespace Core\Database\Connection\MySQL\Reader;
 
-use Core\Database\Connection\Mysql\Type\BaseType;
 use Core\Database\Manager;
 use Core\Files;
 use Core\Kernel;
@@ -29,6 +28,9 @@ class Model
         }
     }
 
+    /**
+     * This function will make all sql file for table
+     */
     private function buildSql() {
         foreach ($this->schema["local"] as $table => $schemaConfiguration) {
             $this->schema["sql"][$table] = "CREATE TABLE `" . $table . "` (\n";

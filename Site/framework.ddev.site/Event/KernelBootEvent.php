@@ -6,22 +6,11 @@ namespace Framework\Event;
 use Core\Connection\Mysql;
 use Core\Database;
 use Core\Kernel;
-use Core\Loader;
 use Core\Logger;
 use Framework\Model\Classes;
 
 class KernelBootEvent
 {
-    /**
-     * @param &array $injection
-     * @event core/kernel.boot
-     */
-    static function connectToDatabase(&$injection)
-    {
-        if (!isset($_GET["excludeDatabase"]))
-            $injection["mysql"] = new Database();
-    }
-
     /**
      * @event core/template.postProcess
      */

@@ -1,11 +1,8 @@
 <?php
 
-
 namespace Core\Database;
 
-
 use Core\Event;
-use Core\Kernel;
 
 class Manager
 {

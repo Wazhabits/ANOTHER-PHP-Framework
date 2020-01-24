@@ -41,4 +41,10 @@ interface Connection
      * @return array<\Core\Database\Model\Model>
      */
     public function convert(&$elements, $result = []);
+
+    /**
+     * @param string $classname
+     * @return string $tablename
+     */
+    public function getTableName($classname);
 }

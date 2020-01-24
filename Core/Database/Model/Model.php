@@ -5,10 +5,14 @@ namespace Core\Database;
 
 use Core\Connection\Mysql;
 use Core\Database\Model\Model as Base;
+use Core\Event;
 
 class Model implements Base
 {
     /**
+     * ID of the row in database
+     * Primary key of table
+     * basic configuration
      * @var int $id
      * @type integer
      * @primary true
@@ -73,6 +77,7 @@ class Model implements Base
      * @return $this
      */
     public function save() {
+        Event::exec("core/connection.modelSave", $this);
         $this->updatedat = time();
         if ($this->id === null) {
             unset($this->id);

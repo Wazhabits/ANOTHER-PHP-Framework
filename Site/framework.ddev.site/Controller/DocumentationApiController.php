@@ -7,20 +7,21 @@ namespace Framework\Controller;
 use Core\Connection\Mysql;
 use Core\Controller;
 use Core\Database\Manager;
+use Core\Response;
 use Framework\Model\Classes;
 
-class DocumentationController extends Controller
+class DocumentationApiController extends Controller
 {
     /**
      * @site framework.ddev.site
-     * @route /documentation
+     * @route /api/documentation
      */
     public function documentation() {
-
         $result = Manager::getConnection("mysql")->getQueryBuilder(Classes::class)
             ->select("*")
             ->from(Classes::class)
             ->execute();
-        $this->render("documentation", ["result" => $result]);
+        Response::setHeader("Content-Type: application/json");
+        echo json_encode($result);
     }
 }

@@ -39,11 +39,33 @@ class Model
             $this->schema["sql"][$table] = "CREATE TABLE `" . $table . "` (\n";
             $index = 0;
             $lines = "";
+            $isLast = false;
+            $foreign = [];
             foreach ($schemaConfiguration as $column => $configuration) {
-                if ($index < count($schemaConfiguration) - 1)
-                    $lines .= $this->buildLine($column, $configuration);
-                else
-                    $lines .= $this->buildLine($column, $configuration, true);
+                if ($index === count($schemaConfiguration) - 1)
+                    $isLast = true;
+                if (isset($configuration["foreign"]))
+                    $foreign[$column] = $configuration["foreign"];
+                $lines .= $this->buildLine($column, $configuration, $isLast);
+                $index++;
+            }
+            if (count($foreign) > 0)
+                $lines .= ",";
+            $index = 0;
+            foreach ($foreign as $column => $configuration) {
+                switch ($configuration["type"]) {
+                    case "1":
+                        $lines .= "FOREIGN KEY (" . $column . ") REFERENCES " . Manager::getConnection("mysql")->getTableName($configuration["class"]) . "(id)";
+                        break;
+                    case "n":
+                        $lines .= "FOREIGN KEY (" . $column . ") REFERENCES " . Manager::getConnection("mysql")->getTableName($configuration["class"]) . "(id)";
+                        break;
+                    default:
+                        break;
+                }
+                if ($index < count($foreign) - 1)
+                    $lines .= ",";
+                $lines .= "\n";
                 $index++;
             }
             $this->schema["sql"][$table] .= $lines . ");";
@@ -88,11 +110,34 @@ class Model
             foreach ($properties as $index => $configuration) {
                 $column = strtolower($index);
                 foreach ($configuration as $config => $value) {
-                    if (in_array($config, ["type", "size", "default", "nullable", "primary", "ai", "unique", "foreign"]))
+                    if (in_array($config, ["type", "size", "default", "nullable", "primary", "ai", "unique"]))
                         $this->schema["local"][$table][$column][$config] = trim($value[0]);
+                    if (in_array($config, ["foreign"])) {
+                        $this->schema["local"][$table][$column][$config] = $this->buildForeignConfiguration(trim($value[0]));
+                    }
                 }
             }
         }
+    }
+
+    /**
+     * This function return the foreign configuration array
+     * @param $configurationString
+     * @return array
+     */
+    private function buildForeignConfiguration($configurationString) {
+        $returnable = [];
+        $values = explode(" ", $configurationString);
+        foreach ($values as $value) {
+            $association = explode(":", $value);
+            if (count($association) === 2)
+                $returnable[$association[0]] = $association[1];
+            else if (count($association) === 1)
+                $returnable["class"] = $association[0];
+        }
+        if (!isset($returnable["type"]))
+            $returnable["type"] = "1-1";
+        return $returnable;
     }
 
     private function buildLine($column, $configuration, $isLast = false) {
@@ -114,7 +159,7 @@ class Model
             $sql .= " AUTO_INCREMENT";
         if (!$isLast)
             $sql .= ",";
-        return $sql . "\n";
+        return $sql;
     }
 
     private function format($value) {

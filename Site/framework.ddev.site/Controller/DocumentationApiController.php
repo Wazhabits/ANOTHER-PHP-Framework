@@ -1,10 +1,7 @@
 <?php
 
-
 namespace Framework\Controller;
 
-
-use Core\Connection\Mysql;
 use Core\Controller;
 use Core\Database\Manager;
 use Core\Response;
@@ -16,7 +13,7 @@ class DocumentationApiController extends Controller
      * @site framework.ddev.site
      * @route /api/documentation
      */
-    public function documentation() {
+    public function documentationApi() {
         $result = Manager::getConnection("mysql")->getQueryBuilder(Classes::class)
             ->select("*")
             ->from(Classes::class)

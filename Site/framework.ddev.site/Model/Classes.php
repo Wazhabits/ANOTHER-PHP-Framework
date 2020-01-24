@@ -23,4 +23,13 @@ class Classes extends Model
      * @nullable false
      */
     public $class = "";
+
+    /**
+     * @var array $properties<Property>
+     * @foreign Framework\Model\Property type:1
+     * @type int
+     * @size 11
+     * @nullable false
+     */
+    public $properties;
 }

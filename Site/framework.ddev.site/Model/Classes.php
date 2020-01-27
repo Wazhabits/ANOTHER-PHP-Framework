@@ -23,4 +23,10 @@ class Classes extends Model
      * @nullable false
      */
     public $class = "";
+
+    /**
+     * @var array $properties<Property>
+     * @foreign from:Framework\Model\Property refer:class
+     */
+    public $properties;
 }

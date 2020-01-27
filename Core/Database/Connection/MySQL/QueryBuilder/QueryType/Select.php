@@ -39,10 +39,10 @@ class Select extends BaseType
     {
         if (is_array($tablename)) {
             parent::$configuration["from"] = $tablename;
-            parent::$configuration["from"]["sql"] = " FROM " . Manager::getTableName(parent::$configuration["from"]);
+            parent::$configuration["from"]["sql"] = " FROM " . Manager::getConnection("mysql")->getTableName(parent::$configuration["from"]);
         } else {
             parent::$configuration["from"][] = $tablename;
-            parent::$configuration["from"]["sql"] = " FROM " . Manager::getTableName($tablename);
+            parent::$configuration["from"]["sql"] = " FROM " . Manager::getConnection("mysql")->getTableName($tablename);
         }
         return $this;
     }
@@ -50,10 +50,10 @@ class Select extends BaseType
     public function execute()
     {
         $tablename = self::$configuration["table"]["name"];
-        $pdoResult = Mysql::exec($this->getQuery());
+        $pdoResult = Manager::getConnection("mysql")->exec($this->getQuery());
         if ($pdoResult !== false)
             $models[$tablename] = $pdoResult->fetchAll();
-            $models = Manager::convert($models);
+            $models = Manager::getConnection("mysql")->convert($models);
         return $models;
     }
 

@@ -19,7 +19,7 @@ abstract class BaseType implements Type
 
     public function __construct($tablename = "")
     {
-        self::$configuration["table"]["name"] = Manager::getTableName($tablename);
+        self::$configuration["table"]["name"] = Manager::getConnection("mysql")->getTableName($tablename);
     }
 
     /**
@@ -63,9 +63,9 @@ abstract class BaseType implements Type
             $table1 = array_keys($join[0])[0];
             $table2 = array_keys($join[1])[0];
             self::$configuration["join"]["inner"]["sql"] .= " INNER JOIN `" . strtolower($table2)
-                . "` ON `" . Manager::getTableName($table1) . "`.`" . strtolower($join[0][$table1]) . "` "
+                . "` ON `" . Manager::getConnection("mysql")->getTableName($table1) . "`.`" . strtolower($join[0][$table1]) . "` "
                 . $join["operator"]
-                . " `" . Manager::getTableName($table2) . "`.`" . strtolower($join[1][$table2]) . "`";
+                . " `" . Manager::getConnection("mysql")->getTableName($table2) . "`.`" . strtolower($join[1][$table2]) . "`";
             $i++;
         }
         return $this;
@@ -103,8 +103,8 @@ abstract class BaseType implements Type
      * @return array
      */
     public function execute() {
-        $tablename = Manager::getTableName(self::$configuration["table"]["name"]);
-        $result[$tablename] = Mysql::exec($this->getQuery());
+        $tablename = Manager::getConnection("mysql")->getTableName(self::$configuration["table"]["name"]);
+        $result[$tablename] = Manager::getConnection("mysql")->exec($this->getQuery());
         return  $result;
     }
 

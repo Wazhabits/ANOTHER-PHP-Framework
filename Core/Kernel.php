@@ -48,12 +48,11 @@ class Kernel
         Event::addEventByAnnotation();
         self::$environment->set("time", "EventInit:" . self::$environment->getExecutionTime(). "ms", true);
         Response::initialize();
+        $injection = [];
         Event::exec("core/kernel.boot", $injection);
-        if (is_array($injection))
-            self::inject($injection);
-        if (self::$routing->getCurrent()["status"] === 200) {
+        self::inject($injection);
+        if (self::$routing->getCurrent()["status"] === 200)
             self::makeControllerCall(self::$routing->getCurrent());
-        }
         Response::send();
     }
 
@@ -89,6 +88,7 @@ class Kernel
     static function makeControllerCall($current) {
         $controller = explode("->", $current["route"]["controller"]);
         self::$controller = new $controller[0]();
+        Event::exec("core/controller.call", self::$controller);
         return self::$controller->{$controller[1]}();
     }
 

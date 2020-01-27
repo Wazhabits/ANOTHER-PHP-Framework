@@ -31,7 +31,7 @@ class Env implements Base
          * Array : [Key, Value]
          */
         foreach ($vars as $var) {
-            if (substr($var, 0, 1) !== "#" && trim($var) !== "") {
+            if (substr($var, 0, 1) !== "#") {
                 $configuration = explode("=", $var);
                 $this->set($configuration[0], $configuration[1]);
             }

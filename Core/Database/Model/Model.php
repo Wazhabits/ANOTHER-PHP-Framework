@@ -5,10 +5,14 @@ namespace Core\Database;
 
 use Core\Connection\Mysql;
 use Core\Database\Model\Model as Base;
+use Core\Event;
 
 class Model implements Base
 {
     /**
+     * ID of the row in database
+     * Primary key of table
+     * basic configuration
      * @var int $id
      * @type integer
      * @primary true
@@ -73,14 +77,15 @@ class Model implements Base
      * @return $this
      */
     public function save() {
+        Event::exec("core/connection.modelSave", $this);
         $this->updatedat = time();
         if ($this->id === null) {
             unset($this->id);
-            Mysql::getQueryBuilder(get_class($this))->insert(get_class($this))->values(get_object_vars($this))->execute();
+            Manager::getConnection("mysql")->getQueryBuilder(get_class($this))->insert(get_class($this))->values(get_object_vars($this))->execute();
         } else {
             $id = $this->id;
             unset($this->createdat, $this->id);
-            Mysql::getQueryBuilder(get_class($this))->update(get_class($this))->fields(get_object_vars($this))->where([["id", "=", $id]])->execute();
+            Manager::getConnection("mysql")->getQueryBuilder(get_class($this))->update(get_class($this))->fields(get_object_vars($this))->where([["id", "=", $id]])->execute();
         }
         return $this;
     }

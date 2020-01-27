@@ -5,6 +5,7 @@ namespace Core\Connection;
 
 use Core\Connection\Mysql\QueryBuilder;
 use Core\Database\Connection;
+use Core\Database\Model\Model;
 use Core\Logger;
 
 /**
@@ -14,25 +15,23 @@ use Core\Logger;
 class Mysql implements Connection
 {
     /**
+     * @var string
+     */
+    private $name = "mysql";
+    /**
+     * @var null|mixed
+     */
+    private $modelReader = null;
+    /**
      * @var \PDO|null
      */
-    private static $pdo = null;
-    /**
-     * @var \PDOStatement
-     */
-    private static $queryResult;
-
-    /**
-     * @var QueryBuilder
-     */
-    private static $queryBuilder;
-
+    private $pdo = null;
     /**
      * @param $identity
      */
-    static function define($identity) {
+    public function __construct($identity) {
         try {
-            self::$pdo = new \PDO(
+            $this->pdo = new \PDO(
                 'mysql:host=' . $identity["host"] . ':' . $identity["port"] .  ';dbname=' . $identity["name"],
                 $identity["user"],
                 $identity["pass"],
@@ -45,20 +44,70 @@ class Mysql implements Connection
             //TODO: Create an exception thrower
         }
     }
-
     /**
      * @param string $query
      * @return false|mixed|\PDOStatement
      */
-    static function exec($query = "") {
-        return self::$pdo->query($query);
+    public function exec($query = "") {
+        return $this->pdo->query($query);
     }
-
     /**
      * @param string $tablename
      * @return QueryBuilder|mixed
      */
-    static function getQueryBuilder($tablename = "") {
+    public function getQueryBuilder($tablename = "") {
         return new QueryBuilder($tablename);
+    }
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+    /**
+     * @param $reader
+     * @return mixed|void
+     */
+    public function setModelReader(&$reader)
+    {
+        $this->modelReader = $reader;
+    }
+    /**
+     * @param $string
+     * @return string
+     */
+    public function getTableName($string) {
+        if (strpos($string, "\\") !== false) {
+            $value = strtolower(str_replace("\\", "_", $string));
+        } else {
+            $index = 0;
+            $string = explode("_", $string);
+            $classname = "";
+            while ($index < count($string)) {
+                $classname .= ucfirst($string[$index]);
+                if ($index !== count($string) - 1)
+                    $classname .= "\\";
+                $index++;
+            }
+            $value = $classname;
+        }
+        return $value;
+    }
+
+    /**
+     * @param $elements
+     * @param array $result
+     * @return array<Model>
+     */
+    public function convert(&$elements, $result = []) {
+        if ($elements === false)
+            return [];
+        $table = $this->getTableName(array_keys($elements)[0]);
+        $elements = $elements[array_keys($elements)[0]];
+        foreach ($elements as $sorting => $element) {
+            $result[] = new $table($element, $sorting);
+        }
+        return $result;
     }
 }

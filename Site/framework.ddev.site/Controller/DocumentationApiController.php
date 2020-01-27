@@ -18,7 +18,7 @@ class DocumentationApiController extends Controller
             ->select("*")
             ->from(Classes::class)
             ->execute();
-        Response::setHeader("Content-Type: application/json");
+        Response::setHeader(["Content-Type", "application/json"]);
         echo json_encode($result);
     }
 }

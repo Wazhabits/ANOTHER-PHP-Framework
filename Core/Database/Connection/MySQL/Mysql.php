@@ -101,7 +101,7 @@ class Mysql implements Connection
      * @return array<Model>
      */
     public function convert(&$elements, $result = []) {
-        if ($elements === false)
+        if ($elements === false || !is_array($elements))
             return [];
         $table = $this->getTableName(array_keys($elements)[0]);
         $elements = $elements[array_keys($elements)[0]];

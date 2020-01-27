@@ -22,11 +22,5 @@ class Classes extends Model
      * @size 255
      * @nullable false
      */
-    public $class = "";
-
-    /**
-     * @var array $properties<Property>
-     * @foreign from:Framework\Model\Property refer:class
-     */
-    public $properties;
+    public $classname = "";
 }

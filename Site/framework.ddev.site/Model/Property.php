@@ -22,4 +22,10 @@ class Property extends Model
      * @size 1024
      */
     public $configuration;
+
+    /**
+     * @var
+     * @foreign Framework\Model\Classes
+     */
+    public $class;
 }

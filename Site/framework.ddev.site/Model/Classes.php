@@ -26,10 +26,7 @@ class Classes extends Model
 
     /**
      * @var array $properties<Property>
-     * @foreign Framework\Model\Property type:1
-     * @type int
-     * @size 11
-     * @nullable false
+     * @foreign from:Framework\Model\Property refer:class
      */
     public $properties;
 }

@@ -32,5 +32,9 @@ class KernelBootEvent
     static function listenConnectionSet(&$connection) {
         $modelReader = new Model();
         $connection->setModelReader($modelReader);
+        foreach (Database\Manager::getScheme() as $tablename => $schemes) {
+            if (isset($schemes["sql"]))
+                Database\Manager::getConnection("mysql")->exec($schemes["sql"]);
+        }
     }
 }

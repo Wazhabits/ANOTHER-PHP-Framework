@@ -25,6 +25,8 @@ class Property extends Model
 
     /**
      * @var
+     * @type int
+     * @size 11
      * @foreign Framework\Model\Classes
      */
     public $class;

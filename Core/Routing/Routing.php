@@ -7,8 +7,20 @@ use Core\Routing\Routing as Base;
 
 class Routing implements Base
 {
+    /**
+     * Containing the current existing route information
+     * @var array $current
+     */
     private $current = [];
+    /**
+     * Containing all route as interpretable array
+     * @var array $routes
+     */
     private $routes = [];
+    /**
+     * Status code of return
+     * @var int $status
+     */
     private $status;
 
     public function __construct() {

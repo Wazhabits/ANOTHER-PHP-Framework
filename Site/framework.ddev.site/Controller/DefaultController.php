@@ -3,20 +3,15 @@
 
 namespace Framework\Controller;
 
-use Core\Annotation;
-use Core\Connection\Mysql;
 use Core\Controller;
-use Core\Database\Connection\Mysql\Type\BaseType;
 use Core\Database\Manager;
-use Core\Kernel;
 use Core\Response;
 use Framework\Model\User;
 
 class DefaultController extends Controller
 {
     /**
-     * @site framework.ddev.site
-     * @route /
+     * Routing define by .routing file at the root of web server (next to index.php)
      */
     public function index()
     {

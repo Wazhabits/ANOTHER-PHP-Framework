@@ -3,10 +3,8 @@
 namespace Modules\Documentation\Controller;
 
 use Core\Controller;
-use Core\Database\Manager;
 use Core\Logger;
 use Core\Response;
-use Framework\Model\Classes;
 use Framework\Repository\ClassesRepository;
 use Modules\Documentation\Maker;
 

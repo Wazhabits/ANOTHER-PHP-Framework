@@ -17,9 +17,37 @@ class Annotation implements Base
      */
     public $documentation = [];
 
+    /**
+     * This function parse all loaded classes and read these documentation
+     */
     public function __construct()
     {
-        $this->getClasses();
+        /**
+         * Get all namespace loaded
+         */
+        $loadedClasses = get_declared_classes();
+        foreach ($loadedClasses as $class) {
+            /**
+             * If it is a class of framework (multi part namespace)
+             */
+            if (strpos($class, "\\") !== false) {
+                try {
+                    try {
+                        /**
+                         * Reflect this class to extract documentation
+                         */
+                        $reflectedClass = new \ReflectionClass($class);
+                        $namespace = explode("\\", $class)[0];
+                        $this->document($class, $reflectedClass);
+                        $this->documentation["classes"][$namespace][] = str_replace($namespace . "\\", "", $class);
+                    } catch (\Exception $exception) {
+                        var_dump($exception);
+                    }
+                } catch (\Exception $exception) {
+                    var_dump($exception);
+                }
+            }
+        }
     }
 
     /**
@@ -72,39 +100,6 @@ class Annotation implements Base
             }
         }
         return $result;
-    }
-
-    /**
-     * This function parse all loaded classes and read these documentation
-     */
-    private function getClasses()
-    {
-        /**
-         * Get all namespace loaded
-         */
-        $loadedClasses = get_declared_classes();
-        foreach ($loadedClasses as $class) {
-            /**
-             * If it is a class of framework (multi part namespace)
-             */
-            if (strpos($class, "\\") !== false) {
-                try {
-                    try {
-                        /**
-                         * Reflect this class to extract documentation
-                         */
-                        $reflectedClass = new \ReflectionClass($class);
-                        $namespace = explode("\\", $class)[0];
-                        $this->document($class, $reflectedClass);
-                        $this->documentation["classes"][$namespace][] = str_replace($namespace . "\\", "", $class);
-                    } catch (\Exception $exception) {
-                        var_dump($exception);
-                    }
-                } catch (\Exception $exception) {
-                    var_dump($exception);
-                }
-            }
-        }
     }
 
     /**

@@ -21,9 +21,10 @@ class Loader implements LoaderBase
      */
     static function explore($path, $needle = "", $constraint = "", $depth = 0)
     {
-        if (file_exists($path . ".routing")) {
+        if (file_exists($path . ".routing"))
             self::$ROUTING[] = $path . ".routing";
-        }
+        if (file_exists($path . DIRECTORY_SEPARATOR . ".routing"))
+            self::$ROUTING[] = $path . DIRECTORY_SEPARATOR . ".routing";
         $scan = glob($path . DIRECTORY_SEPARATOR . "*");
         foreach ($scan as $path) {
             if (is_dir($path)) {

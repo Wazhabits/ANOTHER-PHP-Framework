@@ -8,13 +8,11 @@ use Core\Response;
 use Framework\Model\Classes;
 use Framework\Repository\ClassesRepository;
 
-class DocumentationApiController extends Controller
+class DefaultController extends Controller
 {
     /**
-     * @route /api/documentation
-     * @route /api/documentation/{test}
      */
-    public function documentationApi() {
+    public function index() {
         $repository = new ClassesRepository();
         $result = $repository->findAll();
         Response::setHeader(["Content-Type" => "application/json"]);

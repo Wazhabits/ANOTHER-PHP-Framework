@@ -12,7 +12,7 @@ class KernelBootEvent
     /**
      * @event core/kernel.boot
      */
-    static function listenKernelBoot(&$injection) {
+    static function listenKernelBoot() {
         if (Kernel::getEnvironment()->getConfiguration("DATABASE_ENABLE") === "true" && Kernel::getEnvironment()->getConfiguration("DATABASE_DRIVER") === "mysql") {
             $connection = new Mysql([
                 "host" => Kernel::getEnvironment()->getConfiguration("MYSQL_HOST"),

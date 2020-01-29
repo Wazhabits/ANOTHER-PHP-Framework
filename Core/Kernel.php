@@ -89,7 +89,7 @@ class Kernel
         $controller = explode("->", $current["route"]["controller"]);
         self::$controller = new $controller[0]();
         Event::exec("core/controller.call", self::$controller);
-        return self::$controller->{$controller[1]}();
+        return self::$controller->{$controller[1]}($current);
     }
 
     /**

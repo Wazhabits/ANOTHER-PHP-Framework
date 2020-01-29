@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Controller;
+namespace Modules\Documentation\Controller;
 
 use Core\Controller;
 use Core\Database\Manager;
@@ -11,8 +11,8 @@ use Framework\Repository\ClassesRepository;
 class DocumentationApiController extends Controller
 {
     /**
-     * @site framework.ddev.site
      * @route /api/documentation
+     * @route /api/documentation/{test}
      */
     public function documentationApi() {
         $repository = new ClassesRepository();

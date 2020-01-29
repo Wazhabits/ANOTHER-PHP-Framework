@@ -1,5 +1,6 @@
 {
     "static": {
-        "/api/documentation": "Modules\\Documentation\\Controller\\DefaultController->index"
+        "/api/documentation": "Modules\\Documentation\\Controller\\DefaultController->index",
+        "/api/documentation/make": "Modules\\Documentation\\Controller\\DefaultController->make"
     }
 }

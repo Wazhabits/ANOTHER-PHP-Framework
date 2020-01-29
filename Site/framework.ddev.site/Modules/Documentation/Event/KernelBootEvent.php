@@ -1,14 +1,14 @@
 <?php
 
 
-namespace Framework\Event;
+namespace Modules\Documentation\Event;
 
 use Core\Database;
 use Core\Kernel;
 use Core\Logger;
-use Framework\Model\Classes;
-use Framework\Model\Method;
-use Framework\Model\Property;
+use Modules\Documentation\Model\Classes;
+use Modules\Documentation\Model\Method;
+use Modules\Documentation\Model\Property;
 
 class KernelBootEvent
 {

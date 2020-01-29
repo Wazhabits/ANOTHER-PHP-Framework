@@ -27,6 +27,11 @@ class Routing implements Base
                             $route = trim($route);
                             $this->routes[$site][$route] = $classname . "->" . $method;
                         }
+                    } else {
+                        foreach ($configuration["route"] as $route) {
+                            $route = trim($route);
+                            $this->routes["static"][$route] = $classname . "->" . $method;
+                        }
                     }
                 }
             }
@@ -72,8 +77,12 @@ class Routing implements Base
                 $this->current["route"] = $uri;
                 $this->current["controller"] = $this->routes[$site][$uri];
                 $this->current["site"] = $site;
+            } elseif (isset($this->routes["static"][$uri])) {
+                $this->current["route"] = $uri;
+                $this->current["controller"] = $this->routes["static"][$uri];
+                $this->current["site"] = $site;
             } else {
-                if (!$this->checkRouteParams($site, $uri)) {
+                if (!$this->checkRouteParams($site, $uri) && !$this->checkRouteParams("static", $uri)) {
                     Event::exec("core/routing.404", $this->routes);
                     return 404;
                 }
@@ -103,14 +112,18 @@ class Routing implements Base
             $existingRouteArray = array_values(array_filter(explode("/", $route)));
             $testingRouteArray = array_values(array_filter(explode("/", $uri)));
             $index = 0;
+            $tempParameter = [];
             if (count($testingRouteArray) === count($existingRouteArray)) {
                 while ($index < count($testingRouteArray)) {
                     if (($testingRouteArray[$index] === $existingRouteArray[$index]) || ($testingRouteArray[$index] !== $existingRouteArray[$index] && $this->isURIParameter($existingRouteArray[$index]))) {
+                        if ($this->isURIParameter($existingRouteArray[$index]))
+                            $tempParameter[substr($existingRouteArray[$index], 1, strlen($existingRouteArray[$index]) - 2)] = $testingRouteArray[$index];
                         $index++;
                         if ($index === count($testingRouteArray)) {
                             $this->current["route"] = $route;
                             $this->current["controller"] = $controller;
                             $this->current["site"] = $site;
+                            $this->current["arguments"] = $tempParameter;
                             return true;
                         }
                     }

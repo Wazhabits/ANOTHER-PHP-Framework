@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Framework\Model;
+namespace Modules\Documentation\Model;
 
 
 use Core\Database\Model;

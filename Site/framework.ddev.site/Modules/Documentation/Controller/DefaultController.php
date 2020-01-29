@@ -11,11 +11,20 @@ use Modules\Documentation\Maker;
 class DefaultController extends Controller
 {
     /**
+     * @var ClassesRepository $repository
+     */
+    private $repository;
+
+    public function __construct()
+    {
+        $this->repository = new ClassesRepository();
+    }
+
+    /**
      * Get all documentation (json)
      */
     public function index() {
-        $repository = new ClassesRepository();
-        $result = $repository->findAll();
+        $result = $this->repository->findAll();
         Response::setHeader(["Content-Type" => "application/json"]);
         Response::send();
         echo json_encode($result);
@@ -29,5 +38,14 @@ class DefaultController extends Controller
         $maker = new Maker();
         $maker->extract();
         Response::setHeader(["location" => "/api/documentation"]);
+    }
+
+    /**
+     * Retrieve a class documentation
+     * @param $args
+     */
+    public function get($args) {
+        $classname = urldecode($args["route"]["arguments"]["classname"]);
+        echo json_encode($this->repository->findOne("classname", $classname));
     }
 }

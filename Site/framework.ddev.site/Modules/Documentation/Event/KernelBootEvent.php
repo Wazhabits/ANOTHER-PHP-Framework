@@ -17,7 +17,7 @@ class KernelBootEvent
      * @event core/kernel.boot
      */
     static function makeDocumentation() {
-        Logger::log("documentation", "Configuration Builder running", Logger::$DEFAULT_LEVEL);
+        Logger::log("documentation", "Builder running", Logger::$DEFAULT_LEVEL);
         $maker = new Maker();
         $maker->extract();
     }

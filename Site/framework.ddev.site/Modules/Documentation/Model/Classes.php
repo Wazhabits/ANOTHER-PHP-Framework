@@ -13,7 +13,7 @@ class Classes extends Model
      * @size 4096
      * @nullable true
      */
-    public $json = "";
+    public $configuration = "";
 
     /**
      * @var string $class

@@ -27,7 +27,7 @@ class Method extends Model
      * @var
      * @type int
      * @size 11
-     * @foreign Framework\Model\Classes
+     * @foreign Modules\Documentation\Model\Classes
      */
     public $class;
 }

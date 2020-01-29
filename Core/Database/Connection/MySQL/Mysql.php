@@ -6,6 +6,8 @@ namespace Core\Connection;
 use Core\Connection\Mysql\QueryBuilder;
 use Core\Database\Connection;
 use Core\Database\Model\Model;
+use Core\Files;
+use Core\Kernel;
 use Core\Logger;
 
 /**
@@ -49,6 +51,8 @@ class Mysql implements Connection
      * @return false|mixed|\PDOStatement
      */
     public function exec($query = "") {
+        if (Kernel::getEnvironment()->getConfiguration("LOG_QUERY") === "true")
+            Files::put("Log/database/history.log", $query);
         return $this->pdo->query($query);
     }
     /**

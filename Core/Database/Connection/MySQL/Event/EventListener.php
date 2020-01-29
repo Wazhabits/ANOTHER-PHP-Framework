@@ -7,7 +7,7 @@ use Core\Kernel;
 use Core\Database;
 use Core\Database\Connection\MySQL\Reader\Model;
 
-class KernelBootEvent
+class EventListener
 {
     /**
      * @event core/kernel.boot

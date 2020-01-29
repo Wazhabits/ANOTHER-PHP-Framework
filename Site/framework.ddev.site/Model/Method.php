@@ -6,7 +6,7 @@ namespace Framework\Model;
 
 use Core\Database\Model;
 
-class Property extends Model
+class Method extends Model
 {
     /**
      * @var string $name

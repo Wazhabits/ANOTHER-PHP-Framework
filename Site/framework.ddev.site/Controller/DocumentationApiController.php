@@ -6,6 +6,7 @@ use Core\Controller;
 use Core\Database\Manager;
 use Core\Response;
 use Framework\Model\Classes;
+use Framework\Repository\ClassesRepository;
 
 class DocumentationApiController extends Controller
 {
@@ -14,10 +15,8 @@ class DocumentationApiController extends Controller
      * @route /api/documentation
      */
     public function documentationApi() {
-        $result = Manager::getConnection("mysql")->getQueryBuilder(Classes::class)
-            ->select("*")
-            ->from(Classes::class)
-            ->execute();
+        $repository = new ClassesRepository();
+        $result = $repository->findAll();
         Response::setHeader(["Content-Type" => "application/json"]);
         Response::send();
         echo json_encode($result);

@@ -51,10 +51,12 @@ class Select extends BaseType
     {
         $tablename = self::$configuration["table"]["name"];
         $pdoResult = Manager::getConnection("mysql")->exec($this->getQuery());
-        if ($pdoResult !== false)
+        if ($pdoResult !== false) {
             $models[$tablename] = $pdoResult->fetchAll();
-            $models = Manager::getConnection("mysql")->convert($models);
-        return $models;
+            if (is_array($models[$tablename]))
+               return Manager::getConnection("mysql")->convert($models);
+        }
+        return false;
     }
 
     /**

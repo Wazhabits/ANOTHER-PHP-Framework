@@ -68,6 +68,7 @@ class Model
      */
     private function save() {
         foreach ($this->schema["json"] as $filename => $content) {
+            Manager::addScheme($filename, ["json" => $content, "sql" => $this->schema["sql"][$filename]]);
             $filepathSchema = "Cache/database/schema/" . $filename . ".json";
             $filepathSql = "Cache/database/sql/" . $filename . ".sql";
             if (!file_exists($filepathSchema) || filesize($filepathSchema) !== strlen($content))

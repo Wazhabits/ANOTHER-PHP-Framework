@@ -8,3 +8,7 @@ nginx
 # PROJECT
 Cache/*
 Log/*
+.env
+# TESTS
+phpunit
+.phpunit*

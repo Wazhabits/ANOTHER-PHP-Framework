@@ -31,7 +31,7 @@ Loader::explore(PATH_CORE, "Interface");
 Loader::explore(PATH_CORE, "", "Interface");
 Loader::explore(PATH_SITE, "Interface");
 Loader::explore(PATH_SITE, "", "Interface");
-Loader::explore(PATH_ROOT, "Interface");
+Loader::explore(PATH_ROOT, "Interface", "Tests");
 
 /**
  * Initialize kernel

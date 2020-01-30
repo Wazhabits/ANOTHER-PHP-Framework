@@ -17,8 +17,11 @@ class EventTest extends TestCase
     }
 
     public function testAddEvent() {
+        // Add event without default listener
         Event::add("test/event.1");
+        // Add event with default listener
         Event::add("test/event.2", "Example\\Test::example");
+        // Test if event configuration array is good
         $this->assertEquals([
             "test/event.1" => [],
             "test/event.2" => [

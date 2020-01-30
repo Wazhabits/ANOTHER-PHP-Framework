@@ -28,18 +28,30 @@ class EventTest extends TestCase
     }
 
     public function testExecEventValid() {
+        $bool = false;
         Event::add("test/event.second", "Tests\EventTest::eventListener");
         Event::exec("test/event.second", $bool);
         $this->assertTrue($bool);
-        $this->assertFalse(Event::exec("test/event.nonExistingEvent"));
+        Event::exec("test/event.second", $bool);
+        $this->assertFalse($bool);
+        Event::exec("test/event.second", $bool);
+        $this->assertTrue($bool);
+        Event::exec("test/event.second", $bool);
+        $this->assertFalse($bool);
     }
 
     public function testExecEventNonValid() {
-        $this->assertFalse(Event::exec("test/event.nonExistingEvent"));
-        $this->assertFalse(Event::exec("*"));
-        $this->assertFalse(Event::exec(""));
-        $this->assertFalse(Event::exec(false));
+        Event::add("test/event.empty");
+        // Bad event name given
         $this->assertFalse(Event::exec(null));
+        $this->assertFalse(Event::exec(false));
+        $this->assertFalse(Event::exec(42));
+        $this->assertFalse(Event::exec(""));
+        // Non existing event
+        $this->assertFalse(Event::exec("*"));
+        $this->assertFalse(Event::exec("test/event.nonExistingEvent"));
+        // Event without listener
+        $this->assertFalse(Event::exec("test/event.empty"));
     }
 
     /**
@@ -47,6 +59,6 @@ class EventTest extends TestCase
      * @param $args
      */
     static function eventListener(&$args) {
-        $args = true;
+        $args = !$args;
     }
 }

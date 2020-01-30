@@ -27,10 +27,19 @@ class EventTest extends TestCase
         ], Event::$event);
     }
 
-    public function testExecEvent() {
+    public function testExecEventValid() {
         Event::add("test/event.second", "Tests\EventTest::eventListener");
         Event::exec("test/event.second", $bool);
         $this->assertTrue($bool);
+        $this->assertFalse(Event::exec("test/event.nonExistingEvent"));
+    }
+
+    public function testExecEventNonValid() {
+        $this->assertFalse(Event::exec("test/event.nonExistingEvent"));
+        $this->assertFalse(Event::exec("*"));
+        $this->assertFalse(Event::exec(""));
+        $this->assertFalse(Event::exec(false));
+        $this->assertFalse(Event::exec(null));
     }
 
     /**

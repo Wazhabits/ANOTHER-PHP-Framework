@@ -52,22 +52,21 @@ class Event implements Base
      * This function execute all listener associated to an event
      * @param $eventName
      * @param $args
+     * @return bool
      */
     public static function exec($eventName, &$args = null)
     {
-        if (array_key_exists($eventName, self::$event)) {
-            self::add($eventName);
-        }
+        if (!is_string($eventName) || $eventName === "" || !array_key_exists($eventName, self::$event) || empty(self::$event[$eventName]))
+            return false;
         /**
          * If there is listener for this event
          */
-        if (!empty(self::$event[$eventName])) {
-            foreach (self::$event[$eventName] as $listener) {
-                /**
-                 * Executing it
-                 */
-                $listener($args);
-            }
+        foreach (self::$event[$eventName] as $listener) {
+            /**
+             * Executing it
+             */
+            $listener($args);
         }
+        return true;
     }
 }

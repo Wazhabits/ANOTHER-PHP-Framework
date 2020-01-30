@@ -11,25 +11,50 @@ use PHPUnit\Framework\TestCase;
 
 class EventTest extends TestCase
 {
-    private $expectedEvent = [
-        "test/event.first" => [
-
-        ],
-    ];
     public function __construct($name = null, array $data = [], $dataName = '')
     {
-        Event::add("test/event.first");
         parent::__construct($name, $data, $dataName);
     }
 
     public function testAddEvent() {
-        $this->assertEquals($this->expectedEvent, Event::$event);
+        // Add event without default listener
+        Event::add("test/event.1");
+        // Add event with default listener
+        Event::add("test/event.2", "Example\\Test::example");
+        // Test if event configuration array is good
+        $this->assertEquals([
+            "test/event.1" => [],
+            "test/event.2" => [
+                "Example\\Test::example"
+            ]
+        ], Event::$event);
     }
 
-    public function testExecEvent() {
+    public function testExecEventValid() {
+        $bool = false;
         Event::add("test/event.second", "Tests\EventTest::eventListener");
         Event::exec("test/event.second", $bool);
         $this->assertTrue($bool);
+        Event::exec("test/event.second", $bool);
+        $this->assertFalse($bool);
+        Event::exec("test/event.second", $bool);
+        $this->assertTrue($bool);
+        Event::exec("test/event.second", $bool);
+        $this->assertFalse($bool);
+    }
+
+    public function testExecEventNonValid() {
+        Event::add("test/event.empty");
+        // Bad event name given
+        $this->assertFalse(Event::exec(null));
+        $this->assertFalse(Event::exec(false));
+        $this->assertFalse(Event::exec(42));
+        $this->assertFalse(Event::exec(""));
+        // Non existing event
+        $this->assertFalse(Event::exec("*"));
+        $this->assertFalse(Event::exec("test/event.nonExistingEvent"));
+        // Event without listener
+        $this->assertFalse(Event::exec("test/event.empty"));
     }
 
     /**
@@ -37,6 +62,6 @@ class EventTest extends TestCase
      * @param $args
      */
     static function eventListener(&$args) {
-        $args = true;
+        $args = !$args;
     }
 }

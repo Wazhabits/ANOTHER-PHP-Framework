@@ -11,19 +11,20 @@ use PHPUnit\Framework\TestCase;
 
 class EventTest extends TestCase
 {
-    private $expectedEvent = [
-        "test/event.first" => [
-
-        ],
-    ];
     public function __construct($name = null, array $data = [], $dataName = '')
     {
-        Event::add("test/event.first");
         parent::__construct($name, $data, $dataName);
     }
 
     public function testAddEvent() {
-        $this->assertEquals($this->expectedEvent, Event::$event);
+        Event::add("test/event.1");
+        Event::add("test/event.2", "Example\\Test::example");
+        $this->assertEquals([
+            "test/event.1" => [],
+            "test/event.2" => [
+                "Example\\Test::example"
+            ]
+        ], Event::$event);
     }
 
     public function testExecEvent() {

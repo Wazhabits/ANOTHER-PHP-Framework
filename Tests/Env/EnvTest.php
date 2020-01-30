@@ -38,15 +38,24 @@ class EnvTest extends TestCase
     private $expectedConfiguration;
 
 
+    /**
+     * Testing if a file .env is convert as a configuration array
+     */
     public function testReadEnvFile() {
         $this->assertEquals($this->expectedConfiguration, $this->env->getConfiguration());
     }
 
+    /**
+     * Testing define env using set() function
+     */
     public function testSetCustomEnv() {
         $this->env->set("CustomEnvSetting", "custom");
         $this->assertEquals("custom", $this->env->getConfiguration("CUSTOMENVSETTING"));
     }
 
+    /**
+     * Testing different get environment settings with getConfiguration
+     */
     public function testGetEnv() {
         $this->env->set("CustomEnvSetting", "custom");
         $this->assertEquals(null, $this->env->getConfiguration("UNEXISTINGENVSETTING"));

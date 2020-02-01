@@ -41,8 +41,8 @@ class Response
         if (self::$SENT)
             return;
         self::$SENT = true;
-        if (Kernel::getEnvironment()->getConfiguration("SHOW_EXECUTION_TIME") === "true")
-            self::$response["header"]["fw-exec-time"] = Kernel::getEnvironment()->getExecutionTime() . "ms";
+        if (Environment::getConfiguration("SHOW_EXECUTION_TIME") === "true")
+            self::$response["header"]["fw-exec-time"] = Environment::getExecutionTime() . "ms";
         foreach (self::$response["header"] as $property => $value) {
             header($property . ": " . $value);
         }

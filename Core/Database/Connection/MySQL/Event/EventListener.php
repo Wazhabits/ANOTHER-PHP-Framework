@@ -3,6 +3,7 @@
 namespace Core\Database\Connection\MySQL\Event;
 
 use Core\Connection\Mysql;
+use Core\Environment;
 use Core\Kernel;
 use Core\Database;
 use Core\Database\Connection\MySQL\Reader\Model;
@@ -13,13 +14,13 @@ class EventListener
      * @event core/kernel.boot
      */
     static function listenKernelBoot() {
-        if (Kernel::getEnvironment()->getConfiguration("DATABASE_ENABLE") === "true" && Kernel::getEnvironment()->getConfiguration("DATABASE_DRIVER") === "mysql") {
+        if (Environment::getConfiguration("DATABASE_ENABLE") === "true" && Environment::getConfiguration("DATABASE_DRIVER") === "mysql") {
             $connection = new Mysql([
-                "host" => Kernel::getEnvironment()->getConfiguration("MYSQL_HOST"),
-                "port" => Kernel::getEnvironment()->getConfiguration("MYSQL_PORT"),
-                "name" => Kernel::getEnvironment()->getConfiguration("MYSQL_NAME"),
-                "user" => Kernel::getEnvironment()->getConfiguration("MYSQL_USER"),
-                "pass" => Kernel::getEnvironment()->getConfiguration("MYSQL_PASS")
+                "host" => Environment::getConfiguration("MYSQL_HOST"),
+                "port" => Environment::getConfiguration("MYSQL_PORT"),
+                "name" => Environment::getConfiguration("MYSQL_NAME"),
+                "user" => Environment::getConfiguration("MYSQL_USER"),
+                "pass" => Environment::getConfiguration("MYSQL_PASS")
             ]);
             Database\Manager::setConnection($connection);
         }

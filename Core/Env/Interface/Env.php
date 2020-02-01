@@ -11,19 +11,19 @@ interface Env
      * @param string $key
      * @return array|mixed|null
      */
-    public function getConfiguration($key = "");
+    static function getConfiguration($key = "");
 
     /**
      * Return current execution time
      * @return int
      */
-    public function getExecutionTime();
+    static function getExecutionTime();
 
     /**
      * This function return the current milisecond
      * @return int
      */
-    public function getMicrotime();
+    static function getMicrotime();
 
     /**
      * This function set a configuration pear key/value
@@ -31,5 +31,5 @@ interface Env
      * @param $value
      * @param $addToArray = false
      */
-    public function set($key, $value, $addToArray = false);
+    static function set($key, $value, $addToArray = false);
 }

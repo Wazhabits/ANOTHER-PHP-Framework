@@ -45,7 +45,7 @@ class Template implements Base
         }
         self::$varsBuilder = new Vars($buffer, $args);
         Response::send();
-        Kernel::$environment->set("time", "ControllerCall:" . Kernel::getEnvironment()->getExecutionTime(). "ms", true);
+        Environment::set("time", "ControllerCall:" . Environment::getExecutionTime(). "ms", true);
     }
 
     /**
@@ -110,7 +110,7 @@ class Template implements Base
         self::$baseTemplatePath = PATH_SITE . DIRECTORY_SEPARATOR
             . $_SERVER["HTTP_HOST"] . DIRECTORY_SEPARATOR . "Resource" . DIRECTORY_SEPARATOR;
         self::$templatePath = self::$baseTemplatePath
-            . $templatePath . Kernel::getEnvironment()->getConfiguration("TEMPLATE_EXT");
+            . $templatePath . Environment::getConfiguration("TEMPLATE_EXT");
     }
 
     /**
@@ -144,7 +144,7 @@ class Template implements Base
         preg_match_all("/{section:([\w|\w\/\w+]*)}/", $buffer, $matches);
         foreach ($matches[1] as $sectionPath) {
             $sectionContent = Files::read(self::$baseTemplatePath . $sectionPath
-                . Kernel::getEnvironment()->getConfiguration("TEMPLATE_EXT"));
+                . Environment::getConfiguration("TEMPLATE_EXT"));
             self::sectionalize($sectionContent);
             $buffer = str_replace("{section:" . $sectionPath . "}", $sectionContent, $buffer);
         }
@@ -158,7 +158,7 @@ class Template implements Base
         preg_match_all("/{debug:(.*?)}/s", $buffer, $matches);
         $i = 0;
         while ($i < count($matches[1])) {
-            self::$args["execution_time"] = Kernel::getEnvironment()->getConfiguration("TIME");
+            self::$args["execution_time"] = Environment::getConfiguration("TIME");
             switch ($matches[1][$i]) {
                 case "__args":
                     $buffer = str_replace("{debug:" . $matches[1][$i] . "}", self::showArray(self::object_to_array(self::$args)), $buffer);

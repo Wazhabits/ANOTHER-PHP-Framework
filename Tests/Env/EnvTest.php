@@ -6,7 +6,7 @@ namespace Tests;
 require_once "Core/Loader/Interface/LoaderBase.php";
 require_once "Core/Loader/Loader.php";
 
-use Core\Env;
+use Core\Environment;
 use Core\Loader;
 use PHPUnit\Framework\TestCase;
 
@@ -23,12 +23,12 @@ class EnvTest extends TestCase
             define("PATH_CORE", __DIR__ . "/../.." . DIRECTORY_SEPARATOR . "Core");
         Loader::explore(PATH_CORE, "Interface");
         Loader::explore(PATH_CORE, "", "Interface");
-        $this->env = new Env(__DIR__ . DIRECTORY_SEPARATOR . ".env");
+        $this->env = new Environment(__DIR__ . DIRECTORY_SEPARATOR . ".env");
         parent::__construct($name, $data, $dataName);
     }
 
     /**
-     * @var Env
+     * @var Environment
      */
     private $env;
 

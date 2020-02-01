@@ -51,7 +51,7 @@ class Routing implements Base
         /**
          * Tell if a site of app doesn't had existing route
          */
-        foreach (explode(",",Kernel::getEnvironment()->getConfiguration("SITES_DOMAINS")) as $site) {
+        foreach (explode(",",Environment::getConfiguration("SITES_DOMAINS")) as $site) {
             if (!isset($this->routes[$site]) || empty($this->routes[$site]))
                 Logger::log("routing", "ROUTING|Site '" . $site . "' has no route", Logger::$WARNING_LEVEL);
         }

@@ -31,14 +31,13 @@ class Routing implements Base
     }
 
     /**
-     *
+     * Read all different type of routes declared :
+     * - Get .routing files
+     * - Get @route annotation
      */
     private function router() {
         foreach (Loader::$ROUTING as $route)
             $this->read($route);
-        /**
-         * Create routing for controller who had the @ route annotation
-         */
         $annotation = Kernel::getAnnotation()->getDocumentation();
         foreach ($annotation as $classname => $conf) {
             foreach ($conf as $method => $configuration) {

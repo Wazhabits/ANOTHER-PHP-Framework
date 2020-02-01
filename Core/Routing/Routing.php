@@ -24,6 +24,16 @@ class Routing implements Base
     private $status;
 
     public function __construct() {
+        $this->status = $this->router()->setCurrent();
+        Response::setStatus($this->status);
+        Event::exec("core/routing.current", $this->current);
+        $this->checkEmptySite();
+    }
+
+    /**
+     *
+     */
+    private function router() {
         foreach (Loader::$ROUTING as $route)
             $this->read($route);
         /**
@@ -48,6 +58,11 @@ class Routing implements Base
                 }
             }
         }
+        Event::exec("core/routing.read", $this->routes);
+        return $this;
+    }
+
+    private function checkEmptySite() {
         /**
          * Tell if a site of app doesn't had existing route
          */
@@ -55,10 +70,6 @@ class Routing implements Base
             if (!isset($this->routes[$site]) || empty($this->routes[$site]))
                 Logger::log("routing", "ROUTING|Site '" . $site . "' has no route", Logger::$WARNING_LEVEL);
         }
-        Event::exec("core/routing.read", $this->routes);
-        $this->status = $this->setCurrent();
-        Logger::log("general", "ROUTING|" . $_SERVER["REQUEST_URI"] . ":" . $this->status);
-        Event::exec("core/routing.current", $this->current);
     }
 
     /**
@@ -81,9 +92,9 @@ class Routing implements Base
     private function setCurrent() {
         $site = $_SERVER["HTTP_HOST"];
         $uri = $_SERVER["REQUEST_URI"];
+        $status = 200;
         if (!isset($this->routes[$site])) {
-            Event::exec("core/routing.500", $this->routes);
-            return 500;
+            $status = 500;
         } else {
             if (isset($this->routes[$site][$uri])){
                 $this->current["route"] = $uri;
@@ -94,14 +105,13 @@ class Routing implements Base
                 $this->current["controller"] = $this->routes["static"][$uri];
                 $this->current["site"] = $site;
             } else {
-                if (!$this->checkRouteParams($site, $uri) && !$this->checkRouteParams("static", $uri)) {
-                    Event::exec("core/routing.404", $this->routes);
-                    return 404;
-                }
+                if (!$this->checkRouteParams($site, $uri) && !$this->checkRouteParams("static", $uri))
+                    $status = 404;
             }
         }
-        Event::exec("core/routing.200", $this->routes);
-        return 200;
+        Logger::log("general", "ROUTING|" . $_SERVER["REQUEST_URI"] . ":" . $this->status);
+        Event::exec("core/routing." . $status, $this->routes);
+        return $status;
     }
 
     /**

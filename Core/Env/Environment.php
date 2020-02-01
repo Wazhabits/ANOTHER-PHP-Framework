@@ -2,7 +2,7 @@
 
 namespace Core;
 
-use Core\Env\Env as Base;
+use Core\Environment\Environment as Base;
 
 class Environment implements Base
 {

@@ -5,7 +5,7 @@ namespace Core;
 class Kernel
 {
     /**
-     * @var \Core\Env\Env $environment
+     * @var \Core\Env\Environment $environment
      */
     static $environment;
 

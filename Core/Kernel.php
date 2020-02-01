@@ -39,21 +39,20 @@ class Kernel
      */
     static function boot() {
         Response::initialize();
-        self::$environment = new Env(PATH_ROOT . ".env");
-        self::$environment->set("time", "Load of class & Define env:" .($classTime = self::$environment->getExecutionTime()). "ms", true);
+        Environment::read(PATH_ROOT . ".env");
+        Environment::set("time", "Load of class & Define env:" .($classTime = Environment::getExecutionTime()). "ms", true);
         self::$annotation = new Annotation();
-        self::$environment->set("time", "AnnotationInit:" . self::$environment->getExecutionTime(). "ms", true);
+        Environment::set("time", "AnnotationInit:" . Environment::getExecutionTime(). "ms", true);
         self::$routing = new Routing();
-        self::$environment->set("time", "RoutingInit:" . self::$environment->getExecutionTime(). "ms", true);
-        self::$context = Kernel::getEnvironment()->getConfiguration("APPLICATION_CONTEXT");
+        Environment::set("time", "RoutingInit:" . Environment::getExecutionTime(). "ms", true);
+        self::$context = Environment::getConfiguration("APPLICATION_CONTEXT");
         Event::addEventByAnnotation();
-        self::$environment->set("time", "EventInit:" . self::$environment->getExecutionTime(). "ms", true);
+        Environment::set("time", "EventInit:" . Environment::getExecutionTime(). "ms", true);
         $injection = [];
         Event::exec("core/kernel.boot", $injection);
         self::inject($injection);
-        if (self::$routing->getCurrent()["status"] === 200) {
+        if (self::$routing->getCurrent()["status"] === 200)
             self::makeControllerCall(self::$routing->getCurrent());
-        }
         Response::send();
     }
 
@@ -91,13 +90,6 @@ class Kernel
         self::$controller = new $controller[0]();
         Event::exec("core/controller.call", self::$controller);
         return self::$controller->{$controller[1]}($current);
-    }
-
-    /**
-     * @return \Core\Env\Env $environment
-     */
-    static function getEnvironment() {
-        return self::$environment;
     }
 
     /**

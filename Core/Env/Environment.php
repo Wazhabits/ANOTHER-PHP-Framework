@@ -4,27 +4,21 @@ namespace Core;
 
 use Core\Env\Env as Base;
 
-class Env implements Base
+class Environment implements Base
 {
-    private $configuration = [];
-
-    public function __construct($path)
-    {
-        if (!defined("EXECUTION_BEGIN"))
-            define("EXECUTION_BEGIN", $this->getMicrotime());
-        if (file_exists($path))
-            $this->read($path);
-        else
-            return false;
-        return $this;
-    }
+    static $configuration = [];
 
     /**
      * This function read a .env file and set configuration
      * @param $path
+     * @return bool
      */
-    private function read($path)
+    static function read($path)
     {
+        if (!defined("EXECUTION_BEGIN"))
+            define("EXECUTION_BEGIN", self::getMicrotime());
+        if (!file_exists($path))
+            return false;
         $content = Files::read($path);
         $vars = explode("\n", $content);
         /**
@@ -34,9 +28,10 @@ class Env implements Base
         foreach ($vars as $var) {
             if (substr($var, 0, 1) !== "#") {
                 $configuration = explode("=", $var);
-                $this->set($configuration[0], $configuration[1]);
+                self::set($configuration[0], $configuration[1]);
             }
         }
+        return true;
     }
 
     /**
@@ -45,11 +40,11 @@ class Env implements Base
      * @param $value
      * @param $addToArray = false
      */
-    public function set($key, $value, $addToArray = false) {
+    static function set($key, $value, $addToArray = false) {
         if ($addToArray)
-            $this->configuration[strtoupper($key)][] = trim($value);
+            self::$configuration[strtoupper($key)][] = trim($value);
         else
-            $this->configuration[strtoupper($key)] = trim($value);
+            self::$configuration[strtoupper($key)] = trim($value);
     }
 
     /**
@@ -57,12 +52,12 @@ class Env implements Base
      * @param string $key
      * @return array|mixed|null
      */
-    public function getConfiguration($key = "") {
+    static function getConfiguration($key = "") {
         if ($key === "")
-            return $this->configuration;
+            return self::$configuration;
         else {
-            if (array_key_exists($key, $this->configuration))
-                return $this->configuration[$key];
+            if (array_key_exists($key, self::$configuration))
+                return self::$configuration[$key];
             else
                 return null;
         }
@@ -72,7 +67,7 @@ class Env implements Base
      * This function return the current milisecond
      * @return int
      */
-    public function getMicrotime() {
+    static function getMicrotime() {
         return (int)(microtime(true) * 1000);
     }
 
@@ -80,7 +75,7 @@ class Env implements Base
      * Return current execution time
      * @return int
      */
-    public function getExecutionTime() {
-        return $this->getMicrotime() - EXECUTION_BEGIN;
+    static function getExecutionTime() {
+        return self::getMicrotime() - EXECUTION_BEGIN;
     }
 }

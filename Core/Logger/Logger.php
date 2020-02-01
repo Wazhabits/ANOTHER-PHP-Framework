@@ -32,9 +32,9 @@ class Logger implements LoggerBase
      */
     public static function log($key = "", $message = "", $status = 0)
     {
-        if ($key === "" || $message === "" || $status > (int)Kernel::getEnvironment()->getConfiguration("LOG_LEVEL"))
+        if ($key === "" || $message === "" || $status > (int)Environment::getConfiguration("LOG_LEVEL"))
             return false;
-        Files::put(self::makeLogPath($key, $status), Kernel::getEnvironment()->getMicrotime() . "|" . $message);
+        Files::put(self::makeLogPath($key, $status), Environment::getMicrotime() . "|" . $message);
         return true;
     }
 
@@ -47,7 +47,7 @@ class Logger implements LoggerBase
     private static function makeLogPath($key, $status) {
         $directory =  PATH_LOG . DIRECTORY_SEPARATOR . $key . DIRECTORY_SEPARATOR
             . self::$FOLDERS[$status] . DIRECTORY_SEPARATOR;
-        $timeHash = date(Kernel::getEnvironment()->getConfiguration("LOG_FORMAT"), time());
+        $timeHash = date(Environment::getConfiguration("LOG_FORMAT"), time());
         $fileExt = ".log";
         return $directory . $timeHash . $fileExt;
     }

@@ -67,6 +67,7 @@ class Annotation implements Base
     }
 
     /**
+     * Parse all marker set into the doc of method
      * @param $marker
      * @return array
      */
@@ -89,9 +90,6 @@ class Annotation implements Base
                      * If marker exist in this method
                      */
                     if (array_key_exists($marker, $comment)) {
-                        /**
-                         * Parse all marker set into the doc of method
-                         */
                         foreach ($comment[$marker] as $markerValue) {
                             $result[$classes][$method] = trim($markerValue);
                         }

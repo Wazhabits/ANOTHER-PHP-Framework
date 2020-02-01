@@ -43,15 +43,12 @@ class Routing implements Base
             foreach ($conf as $method => $configuration) {
                 if (isset($configuration) && array_key_exists("route", $configuration)) {
                     if (isset($configuration["site"])) {
-                        $site = trim($configuration["site"][0]);
                         foreach ($configuration["route"] as $route) {
-                            $route = trim($route);
-                            $this->routes[$site][$route] = $classname . "->" . $method;
+                            $this->routes[trim($configuration["site"][0])][trim($route)] = $classname . "->" . $method;
                         }
                     } else {
                         foreach ($configuration["route"] as $route) {
-                            $route = trim($route);
-                            $this->routes["static"][$route] = $classname . "->" . $method;
+                            $this->routes["static"][trim($route)] = $classname . "->" . $method;
                         }
                     }
                 }
@@ -61,10 +58,10 @@ class Routing implements Base
         return $this;
     }
 
+    /**
+     * Tell if a site of app doesn't had existing route
+     */
     private function checkEmptySite() {
-        /**
-         * Tell if a site of app doesn't had existing route
-         */
         foreach (explode(",",Kernel::getEnvironment()->getConfiguration("SITES_DOMAINS")) as $site) {
             if (!isset($this->routes[$site]) || empty($this->routes[$site]))
                 Logger::log("routing", "ROUTING|Site '" . $site . "' has no route", Logger::$WARNING_LEVEL);

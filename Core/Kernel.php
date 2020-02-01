@@ -38,6 +38,7 @@ class Kernel
      * This function define environment
      */
     static function boot() {
+        Response::initialize();
         self::$environment = new Env(PATH_ROOT . ".env");
         self::$environment->set("time", "Load of class & Define env:" .($classTime = self::$environment->getExecutionTime()). "ms", true);
         self::$annotation = new Annotation();
@@ -47,12 +48,12 @@ class Kernel
         self::$context = Kernel::getEnvironment()->getConfiguration("APPLICATION_CONTEXT");
         Event::addEventByAnnotation();
         self::$environment->set("time", "EventInit:" . self::$environment->getExecutionTime(). "ms", true);
-        Response::initialize();
         $injection = [];
         Event::exec("core/kernel.boot", $injection);
         self::inject($injection);
-        if (self::$routing->getCurrent()["status"] === 200)
+        if (self::$routing->getCurrent()["status"] === 200) {
             self::makeControllerCall(self::$routing->getCurrent());
+        }
         Response::send();
     }
 

@@ -51,9 +51,13 @@ class Kernel
         $injection = [];
         Event::exec("core/kernel.boot", $injection);
         self::inject($injection);
-        if (self::$routing->getCurrent()["status"] === 200)
-            self::makeControllerCall(self::$routing->getCurrent());
-        Response::send();
+        $result = (self::$routing->getCurrent()["status"] === 200) ? self::makeControllerCall(self::$routing->getCurrent()) : null;
+        if ($result !== null) {
+            Response::setHeader(["Content-Type" => "application/json"]);
+            Response::send();
+            echo json_encode($result);
+        } else
+            Response::send();
     }
 
     /**

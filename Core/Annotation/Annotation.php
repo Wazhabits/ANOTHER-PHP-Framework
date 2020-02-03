@@ -8,10 +8,6 @@ use Core\Annotation\Annotation as Base;
 class Annotation implements Base
 {
     /**
-     * @var array
-     */
-    public $classesDocumentation = [];
-    /**
      * This array contain all documentation of code
      * @var array
      */

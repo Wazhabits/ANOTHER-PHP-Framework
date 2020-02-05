@@ -15,7 +15,7 @@ class Kernel
     static $routing;
 
     /**
-     * @var
+     * @var \Core\Controller\Controller $controller
      */
     static $controller;
 
@@ -34,7 +34,6 @@ class Kernel
      */
     static function boot() {
         Response::initialize();
-        Environment::read(PATH_ROOT . ".env");
         self::$annotation = new Annotation();
         self::$routing = new Routing();
         self::$context = Environment::getConfiguration("APPLICATION_CONTEXT");

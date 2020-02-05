@@ -23,6 +23,8 @@ define("PATH_CACHE", PATH_ROOT . "Cache" . DIRECTORY_SEPARATOR);
  * Including loader
  */
 include_once __DIR__ . "/Core/Loader/Loader.php";
+
+use Core\Environment;
 use Core\Loader;
 
 /**
@@ -35,6 +37,10 @@ Loader::explore(PATH_MODULE, "", "Tests");
 Loader::explore(PATH_SITE, "Interface");
 Loader::explore(PATH_SITE, "", "Interface");
 
+/**
+ * Base environment vars
+ */
+Environment::read(PATH_ROOT . ".env");
 /**
  * Default routing file
  */

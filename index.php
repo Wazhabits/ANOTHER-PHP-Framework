@@ -25,6 +25,7 @@ define("PATH_CACHE", PATH_ROOT . "Cache" . DIRECTORY_SEPARATOR);
 include_once __DIR__ . "/Core/Loader/Loader.php";
 
 use Core\Environment;
+use Core\Kernel;
 use Core\Loader;
 
 /**
@@ -50,4 +51,4 @@ if (file_exists(PATH_ROOT . ".routing"))
 /**
  * Initialize kernel
  */
-\Core\Kernel::boot();
+Kernel::boot();

@@ -2,15 +2,8 @@
 
 namespace Core;
 
-use http\Env;
-
 class Kernel
 {
-    /**
-     * @var \Core\Env\Environment $environment
-     */
-    static $environment;
-
     /**
      * @var \Core\Annotation\Annotation $annotation
      */
@@ -46,7 +39,6 @@ class Kernel
         self::$routing = new Routing();
         self::$context = Environment::getConfiguration("APPLICATION_CONTEXT");
         Event::linkEvent();
-        $injection = [];
         Event::exec("core/kernel.boot", $injection);
         self::inject($injection);
         $result = (self::$routing->getCurrent()["status"] === 200) ? self::makeControllerCall(self::$routing->getCurrent()) : null;
@@ -63,9 +55,10 @@ class Kernel
      * @param $injection
      */
     static function inject($injection) {
-        foreach ($injection as $property => $value) {
-            self::$injected[$property] = $value;
-        }
+        if (is_array($injection))
+            foreach ($injection as $property => $value) {
+                self::$injected[$property] = $value;
+            }
     }
 
     /**
@@ -91,7 +84,7 @@ class Kernel
         $controller = explode("->", $current["route"]["controller"]);
         self::$controller = new $controller[0]();
         Event::exec("core/controller.call", self::$controller);
-        return self::$controller->{$controller[1]}($current);
+        return (in_array(\Core\Controller\Controller::class, class_implements(self::$controller))) ? self::$controller->{$controller[1]}($current) : false;
     }
 
     /**

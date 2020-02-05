@@ -3,7 +3,6 @@
 namespace Modules\Documentation\Controller;
 
 use Core\Controller;
-use Core\Kernel;
 use Core\Logger;
 use Core\Response;
 use Framework\Repository\ClassesRepository;

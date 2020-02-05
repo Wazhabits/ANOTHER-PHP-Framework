@@ -5,11 +5,6 @@ namespace Core;
 class Kernel
 {
     /**
-     * @var \Core\Env\Env $environment
-     */
-    static $environment;
-
-    /**
      * @var \Core\Annotation\Annotation $annotation
      */
     static $annotation;
@@ -20,7 +15,7 @@ class Kernel
     static $routing;
 
     /**
-     * @var
+     * @var \Core\Controller\Controller $controller
      */
     static $controller;
 
@@ -39,21 +34,19 @@ class Kernel
      */
     static function boot() {
         Response::initialize();
-        Environment::read(PATH_ROOT . ".env");
-        Environment::set("time", "Load of class & Define env:" .($classTime = Environment::getExecutionTime()). "ms", true);
         self::$annotation = new Annotation();
-        Environment::set("time", "AnnotationInit:" . Environment::getExecutionTime(). "ms", true);
         self::$routing = new Routing();
-        Environment::set("time", "RoutingInit:" . Environment::getExecutionTime(). "ms", true);
         self::$context = Environment::getConfiguration("APPLICATION_CONTEXT");
-        Event::addEventByAnnotation();
-        Environment::set("time", "EventInit:" . Environment::getExecutionTime(). "ms", true);
-        $injection = [];
+        Event::linkEvent();
         Event::exec("core/kernel.boot", $injection);
         self::inject($injection);
-        if (self::$routing->getCurrent()["status"] === 200)
-            self::makeControllerCall(self::$routing->getCurrent());
-        Response::send();
+        $result = (self::$routing->getCurrent()["status"] === 200) ? self::makeControllerCall(self::$routing->getCurrent()) : null;
+        if ($result !== null) {
+            Response::setHeader(["Content-Type" => "application/json"]);
+            Response::send();
+            echo json_encode($result);
+        } else
+            Response::send();
     }
 
     /**
@@ -61,9 +54,10 @@ class Kernel
      * @param $injection
      */
     static function inject($injection) {
-        foreach ($injection as $property => $value) {
-            self::$injected[$property] = $value;
-        }
+        if (is_array($injection))
+            foreach ($injection as $property => $value) {
+                self::$injected[$property] = $value;
+            }
     }
 
     /**
@@ -89,7 +83,7 @@ class Kernel
         $controller = explode("->", $current["route"]["controller"]);
         self::$controller = new $controller[0]();
         Event::exec("core/controller.call", self::$controller);
-        return self::$controller->{$controller[1]}($current);
+        return (in_array(\Core\Controller\Controller::class, class_implements(self::$controller))) ? self::$controller->{$controller[1]}($current) : false;
     }
 
     /**

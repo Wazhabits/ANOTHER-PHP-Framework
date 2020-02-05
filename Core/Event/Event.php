@@ -11,7 +11,7 @@ class Event implements Base
     /**
      * This function read the annotation entry and add event listener if find method containing the @ event marker
      */
-    public static function addEventByAnnotation() {
+    public static function linkEvent() {
         /**
          * Parse all function who had @ event marker
          */
@@ -20,6 +20,7 @@ class Event implements Base
                 self::add($event, $classes . "::" . $method);
             }
         }
+        Environment::addExecutionTime("event");
     }
 
     /**

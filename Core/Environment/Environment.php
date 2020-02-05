@@ -2,7 +2,7 @@
 
 namespace Core;
 
-use Core\Env\Env as Base;
+use Core\Environment\Environment as Base;
 
 class Environment implements Base
 {
@@ -41,10 +41,19 @@ class Environment implements Base
      * @param $addToArray = false
      */
     static function set($key, $value, $addToArray = false) {
-        if ($addToArray)
-            self::$configuration[strtoupper($key)][] = trim($value);
+        if ($addToArray) {
+            $keys = explode(".", $key);
+            if (count($keys) > 1)
+                self::$configuration[strtoupper($keys[0])][$key[1]] = trim($value);
+            else
+                self::$configuration[strtoupper($keys[0])][] = trim($value);
+        }
         else
             self::$configuration[strtoupper($key)] = trim($value);
+    }
+
+    static function addExecutionTime($key) {
+        self::$configuration["TIME"][$key] = self::getExecutionTime();
     }
 
     /**

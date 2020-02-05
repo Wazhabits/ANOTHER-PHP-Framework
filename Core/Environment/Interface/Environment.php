@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Core\Env;
+namespace Core\Environment;
 
 
-interface Env
+interface Environment
 {
     /**
      * This method return a configuration value or the configuration array

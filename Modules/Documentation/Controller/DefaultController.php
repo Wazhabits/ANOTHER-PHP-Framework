@@ -24,10 +24,7 @@ class DefaultController extends Controller
      * Get all documentation (json)
      */
     public function index() {
-        $result = $this->repository->findAll();
-        Response::setHeader(["Content-Type" => "application/json"]);
-        Response::send();
-        echo json_encode($result);
+        return $this->repository->findAll();
     }
 
     /**
@@ -43,9 +40,9 @@ class DefaultController extends Controller
     /**
      * Retrieve a class documentation
      * @param $args
+     * @return array
      */
     public function get($args) {
-        $classname = urldecode($args["route"]["arguments"]["classname"]);
-        echo json_encode($this->repository->findOne("classname", $classname));
+        return $this->repository->findOne("classname", urldecode($args["route"]["arguments"]["classname"]));
     }
 }

@@ -57,7 +57,7 @@ class Annotation implements Base
         if ($classname === "")
             return $this->documentation;
         if ($method !== "")
-            return (array_key_exists($method, $this->documentation[$classname])) ? $this->documentation[$classname][$method] : false;
+            return $this->documentation[$classname][$method] ?? false;
         else
             return $this->documentation[$classname];
     }

@@ -46,6 +46,7 @@ class Annotation implements Base
                 }
             }
         }
+        Environment::addExecutionTime("annotation");
     }
 
     /**

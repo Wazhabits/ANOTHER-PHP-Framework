@@ -28,6 +28,7 @@ class Routing implements Base
         Response::setStatus($this->status);
         Event::exec("core/routing.current", $this->current);
         $this->checkEmptySite();
+        Environment::addExecutionTime("router");
     }
 
     /**

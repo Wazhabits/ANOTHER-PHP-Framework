@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use http\Env;
+
 class Kernel
 {
     /**
@@ -40,14 +42,10 @@ class Kernel
     static function boot() {
         Response::initialize();
         Environment::read(PATH_ROOT . ".env");
-        Environment::set("time", "Load of class & Define env:" .($classTime = Environment::getExecutionTime()). "ms", true);
         self::$annotation = new Annotation();
-        Environment::set("time", "AnnotationInit:" . Environment::getExecutionTime(). "ms", true);
         self::$routing = new Routing();
-        Environment::set("time", "RoutingInit:" . Environment::getExecutionTime(). "ms", true);
         self::$context = Environment::getConfiguration("APPLICATION_CONTEXT");
-        Event::addEventByAnnotation();
-        Environment::set("time", "EventInit:" . Environment::getExecutionTime(). "ms", true);
+        Event::linkEvent();
         $injection = [];
         Event::exec("core/kernel.boot", $injection);
         self::inject($injection);

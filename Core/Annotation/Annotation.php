@@ -4,6 +4,8 @@
 namespace Core;
 
 use Core\Annotation\Annotation as Base;
+use Exception;
+use ReflectionClass;
 
 class Annotation implements Base
 {
@@ -32,14 +34,14 @@ class Annotation implements Base
                         /**
                          * Reflect this class to extract documentation
                          */
-                        $reflectedClass = new \ReflectionClass($class);
+                        $reflectedClass = new ReflectionClass($class);
                         $namespace = explode("\\", $class)[0];
                         $this->document($class, $reflectedClass);
                         $this->documentation["classes"][$namespace][] = str_replace($namespace . "\\", "", $class);
-                    } catch (\Exception $exception) {
+                    } catch (Exception $exception) {
                         var_dump($exception);
                     }
-                } catch (\Exception $exception) {
+                } catch (Exception $exception) {
                     var_dump($exception);
                 }
             }
@@ -99,9 +101,9 @@ class Annotation implements Base
     /**
      * This function parse all method of class to extract documentation
      * @param $classname
-     * @param \ReflectionClass $reflectedClass
+     * @param ReflectionClass $reflectedClass
      */
-    private function document($classname, \ReflectionClass $reflectedClass)
+    private function document($classname, ReflectionClass $reflectedClass)
     {
         $methods = $reflectedClass->getMethods();
         $properties = $reflectedClass->getProperties();
@@ -146,7 +148,7 @@ class Annotation implements Base
                 /**
                  * Select by key=>value into the doc string
                  */
-                preg_match_all("/\@(\w*)\s(.*)/", $comment, $matches);
+                preg_match_all("/@(\w*)\s(.*)/", $comment, $matches);
                 if (count($matches[1])) {
                     $varsName = $matches[1][0];
                     $varsComment = $matches[2][0];

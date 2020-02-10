@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Framework\Repository;
+namespace Modules\Documentation\Repository;
 
 
 use Core\Database\Manager;
@@ -41,7 +41,31 @@ class ClassesRepository
         return Manager::getConnection("mysql")->getQueryBuilder(Property::class)->select("*")->from(Property::class)->where([["class", "=", $id]])->execute();
     }
 
-    public function findOne($column, $value) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function findBy($column, $value) {
         $classes = Manager::getConnection("mysql")
             ->getQueryBuilder(Classes::class)
             ->select("*")
@@ -49,8 +73,12 @@ class ClassesRepository
             ->where([[$column, "=", $value]])
             ->limit(1)
             ->execute();
+
+
         $classes[0]->methods = $this->getMethod($classes[0]->id);
         $classes[0]->properties = $this->getProperties($classes[0]->id);
+
+
         return $classes;
     }
 }

@@ -5,8 +5,8 @@ namespace Modules\Documentation\Controller;
 use Core\Controller;
 use Core\Logger;
 use Core\Response;
-use Framework\Repository\ClassesRepository;
 use Modules\Documentation\Maker;
+use Modules\Documentation\Repository\ClassesRepository;
 
 class DefaultController extends Controller
 {
@@ -43,6 +43,9 @@ class DefaultController extends Controller
      * @return array
      */
     public function get($args) {
-        return $this->repository->findOne("classname", urldecode($args["route"]["arguments"]["classname"]));
+        $value = $this->repository->findBy("classname", urldecode($args["route"]["arguments"]["classname"]));
+        if (empty($value))
+            Response::setStatus(404);
+        return $value;
     }
 }

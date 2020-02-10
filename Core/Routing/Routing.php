@@ -106,7 +106,7 @@ class Routing implements Base
                     $status = 404;
             }
         }
-        Logger::log("general", "ROUTING|" . $_SERVER["REQUEST_URI"] . ":" . $this->status);
+        Logger::log("general", "ROUTING|" . $_SERVER["REQUEST_URI"] . ":" . $status);
         Event::exec("core/routing." . $status, $this->routes);
         return $status;
     }

@@ -107,9 +107,8 @@ class Template implements Base
          */
         Event::exec("core/template.preProcess", $argumentForEvent);
         self::$args = self::object_to_array($args);
-        self::$baseTemplatePath = PATH_SITE . DIRECTORY_SEPARATOR
-            . $_SERVER["HTTP_HOST"] . DIRECTORY_SEPARATOR . "Resource" . DIRECTORY_SEPARATOR;
-        self::$templatePath = self::$baseTemplatePath
+        self::$baseTemplatePath = PATH_SITE;
+        self::$templatePath = self::$baseTemplatePath . $_SERVER["HTTP_HOST"] . DIRECTORY_SEPARATOR . "Resource" . DIRECTORY_SEPARATOR
             . $templatePath . Environment::getConfiguration("TEMPLATE_EXT");
     }
 

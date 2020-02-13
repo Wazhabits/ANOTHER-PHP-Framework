@@ -53,7 +53,7 @@ class Template implements Base
      * @return bool
      */
     private static function getCache(&$buffer) {
-        if (file_exists(self::calcTemplatePath())) {
+        if (file_exists(self::calcTemplatePath()) && Kernel::$context === "Production") {
             $buffer = file_get_contents(self::calcTemplatePath());
             return true;
         }

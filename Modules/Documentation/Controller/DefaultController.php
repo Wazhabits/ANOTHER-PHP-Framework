@@ -34,7 +34,7 @@ class DefaultController extends Controller
         Logger::log("documentation", "Builder running", Logger::$DEFAULT_LEVEL);
         $maker = new Maker();
         $maker->extract();
-        Response::setHeader(["location" => "/api/documentation"]);
+        Response::setHeader(["location" => "/api/documentation/get/all"]);
     }
 
     /**

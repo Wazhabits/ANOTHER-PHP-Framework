@@ -1,36 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Home - Another PHP Framework</title>
-    <link rel="stylesheet" href="Public/style.css">
-    <script
-            src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous"></script>
-    <script src="Public/main.js"></script>
+    {section:structure/head}
 </head>
-<body>
+<body><div class="page-wrapper">
     <header>
         <div id="banner-top">
-            <ul class="left"></ul>
-            <ul class="right">
-                <li>
-                    <form action="#">
-                        <label for="search">Search</label>
-                        <input type="text" id="search" name="search" placeholder="Search ...">
-                    </form>
-                </li>
-            </ul>
+            <div id="version">
+                <span class="current-version">0.2.5-dev</span>
+            </div>
+            <div>
+                <form id="search-form" action="/search" method="get">
+                    <label for="search-bar"><i class="fas fa-search"></i> Search</label>
+                    <input type="text" id="search-bar" name="search" placeholder="Search">
+                </form>
+            </div>
+            <div id="language">
+                <a href="#language-menu"><i class="fas fa-language"></i></a>
+                <ul id="language-menu">
+                    <li><a href="/en">EN</a></li>
+                    <li><a href="/fr">FR</a></li>
+                </ul>
+            </div>
+            <div><a href="#main-menu" class="burger" id="burger"><i class="fas fa-hamburger"></i></a></div>
         </div>
-        <div id="main-menu">
+        <nav id="main-menu">
             <ul>
-                <li>Documentation</li>
-                <li>Download</li>
-                <li>Getting Started</li>
-                <li>Community</li>
+                <li><a href="#"><i class="fas fa-feather-alt"></i> Download</a></li>
+                <li><a href="#"><i class="far fa-paper-plane"></i> Start</a></li>
+                <li><a href="#"><i class="far fa-sticky-note"></i> Manual</a></li>
+                <li><a href="#">Community</a></li>
             </ul>
-        </div>
+        </nav>
     </header>
     <main>
         <div class="carousel-home">
@@ -47,6 +48,49 @@
                 </div>
             </div>
         </div>
+        <div class="promotion">
+            <div class="box">
+                <i class="fas fa-seedling"></i>
+                <h2>Without external dependency</h2>
+                <p>
+                    To start, you just need a web server with a PHP 7.2 version running
+                </p>
+                <p>
+                    <a href="/start">Read more ...</a>
+                </p>
+            </div>
+            <div class="box">
+                <i class="fas fa-rocket"></i>
+                <h2>Start faster</h2>
+                <p>
+                    With our framework, you can start a new project in few minutes
+                </p>
+                <p>
+                    <a href="/start">Discover ...</a>
+                </p>
+            </div>
+            <div class="box">
+                <i class="fab fa-buffer"></i>
+                <h2>Light & Powerful</h2>
+                <p>
+                    Our application architecture is designed to be light, split on logically and strong
+                </p>
+                <p>
+                    <a href="/start">Learn about it</a>
+                </p>
+            </div>
+        </div>
+        <div class="citation">
+            <i class="far fa-lightbulb"></i>
+            <blockquote>Our product is designed to be faster, light and understandable. Our goal is to provide a tool to bootstrap a new project in few minutes... A. Piveteau</blockquote>
+        </div>
     </main>
+</div>
+<div id="splash">
+    <h1>I-TW <span>HOME</span></h1>
+</div>
+<div id="javascript-include">
+    {section:structure/script}
+</div>
 </body>
 </html>

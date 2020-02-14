@@ -1,0 +1,326 @@
+/*---------------------------------------------
+Theme for i-tw.fr website
+---------------------------------------------*/
+
+/*
+Color part
+---------------------------------------------*/
+:root {
+    --colorDarkGrey: #323232;
+    --colorSecondary: #fc5185;
+    --colorPrimary: #364f6b;
+    --colorLight: #ededed;
+    --colorLightGrey: #f3f3f3;
+}
+
+/*
+Shared part
+---------------------------------------------*/
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    color: var(--colorDarkGrey);
+    transition: 0.5s;
+}
+code {
+    font-family: 'Source Code Pro', monospace;
+}
+h1,h2,h3,h4,h5,h6 {
+    font-family: 'Raleway', sans-serif;
+    margin-bottom: 25px;
+}
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+h3 {
+    font-size: 1.25rem;
+}
+p {
+    margin-bottom: 25px;
+}
+a {
+    color: var(--colorSecondary);
+    font-weight: 600;
+    text-decoration: none;
+}
+p>a {
+    padding: 0 5px;
+    font-size: 1.1rem;
+}
+a:hover {
+    color: var(--colorPrimary);
+}
+.page-wrapper {
+    filter: blur(4px);
+    transition: 1s;
+}
+/*
+Splash part
+---------------------------------------------*/
+#splash {
+    font-size: 60px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Skranji', cursive;
+    background: var(--colorPrimary);
+}
+.unsplash {
+    transition: 1.5s;
+    filter: none;
+}
+#splash>h1 {
+    font-size: 5rem;
+    transform: rotate(90deg);
+    color: var(--colorLight);
+    letter-spacing: -16px;
+}
+#splash>h1>span {
+    font-size: 0;
+}
+/*
+Header part
+---------------------------------------------*/
+header {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    height: 60px;
+    width: 100%;
+    text-transform: uppercase;
+}
+header.fixed {
+    position: fixed;
+}
+#main-menu {
+    width: 100%;
+}
+#main-menu>ul {
+    float: right;
+    margin-right: 50px;
+    height: 30px;
+}
+#main-menu>ul>li {
+    display: inline-block;
+}
+#main-menu>ul>li>a {
+    display: inline-block;
+    height: 30px;
+    padding: 5px 10px;
+    position: relative;
+    font-size: 18px;
+    line-height: 20px;
+    overflow: hidden;
+    color: var(--colorPrimary);
+}
+#main-menu>ul>li>a:hover {
+    color: var(--colorSecondary);
+}
+#main-menu>ul>li>a>i {
+}
+#main-menu>ul>li:last-child>a {
+    padding-right: 0;
+}
+/*
+Banner part
+---------------------------------------------*/
+#banner-top {
+    width: 100%;
+    height: 30px;
+    padding: 0 50px;
+    background-color: var(--colorDarkGrey);
+    color: var(--colorLight);
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    justify-content: flex-end;
+}
+#version>.current-version {
+    font-weight: 200;
+    padding: 0 10px;
+}
+#search-form {
+    height: 33px;
+    margin-top: -3px;
+    overflow: hidden;
+}
+#search-form>label {
+    font-size: 0;
+    position: relative;
+}
+#search-form>label>i {
+    font-size: 22px;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    margin-right: -35px;
+    position: absolute;
+    top: -14px;
+    left: 5px;
+}
+#search-bar {
+    padding: 5px 0 5px 35px;
+    height: 32px;
+    border: none;
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: var(--colorLight);
+    text-transform: uppercase;
+}
+#search-bar::placeholder {
+    color: var(--colorLight);
+}
+#banner-top a {
+    color: var(--colorLightGrey);
+    font-size: 26px;
+    padding: 0 5px;
+    line-height: 30px;
+    text-align: center;
+}
+#banner-top a:hover {
+    opacity: 0.7;
+    transition: 0.5s;
+}
+/*
+Language menu part
+---------------------------------------------*/
+#language {
+    position: relative;
+}
+#language>a {
+    display: inline-block;
+    width: 40px;
+}
+#language>#language-menu {
+    display: flex;
+    visibility: hidden;
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    bottom: -40px;
+}
+#language-menu>li>a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+}
+#burger {
+    margin-right: -40px;
+    visibility: hidden;
+}
+/*
+Carousel home part
+---------------------------------------------*/
+.carousel-home {
+    width: 100%;
+    height: 90vh;
+    justify-content: end;
+    overflow: hidden;
+}
+.carousel-home>.element {
+    width: 100%;
+    height: 90vh;
+    position: absolute;
+    background-position: center center !important;
+    background-size: cover !important;
+    padding: 50px 0;
+}
+.carousel-home>.element>div {
+    width: 66%;
+    margin-left: 33.5%;
+}
+/*
+Promotional boxes part
+---------------------------------------------*/
+.promotion {
+    display: flex;
+    padding: 50px 0;
+    background: var(--colorPrimary);
+    justify-content: center;
+}
+.promotion>.box {
+    width: 300px;
+    height: 450px;
+    margin: 0 25px;
+    margin-top: 50px;
+    padding: 25px;
+    padding-bottom: 100px;
+    text-align: center;
+    border-radius: 20px;
+    background: var(--colorLight);
+    border: 2px solid var(--colorPrimary);
+}
+.promotion>.box a {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: 2px solid transparent;
+}
+.promotion>.box a:hover {
+    transition: 0.2s;
+    border: 2px solid var(--colorPrimary);
+}
+.promotion>.box:nth-child(2) {
+    margin-top: 0;
+    background: var(--colorPrimary);
+    color: rgba(255, 255, 255, 0.8);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+.promotion>.box:nth-child(2) a:hover {
+    color: var(--colorSecondary);
+    border: 2px solid var(--colorSecondary);
+}
+.promotion>.box>i {
+    font-size: 80px;
+    padding-top: 25px;
+    width: 100%;
+    margin-bottom: 50px;
+}
+.promotion>.box>h2 {
+    color: rgba(0,0,0,0.8);
+}
+.promotion>.box>p {
+    color: rgba(0,0,0,0.4);
+}
+.promotion>.box:nth-child(2)>i {
+    color: rgba(255,255,255,1);
+}
+.promotion>.box:nth-child(2)>h2 {
+    color: rgba(255,255,255,0.8);
+}
+.promotion>.box:nth-child(2)>p {
+    color: rgba(255,255,255,0.4);
+}
+
+
+.citation {
+    padding: 50px;
+    display: flex;
+    justify-content: center;
+}
+.citation>i {
+    font-size: 80px;
+    padding: 50px 50px 50px 0;
+    color: rgba(54, 79, 107, 0.6);
+}
+.citation>blockquote {
+    font-size: 24px;
+    padding: 40px;
+    font-style: italic;
+    text-transform: uppercase;
+    max-width: 60%;
+}

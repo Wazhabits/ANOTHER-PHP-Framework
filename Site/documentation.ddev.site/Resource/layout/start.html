@@ -1,0 +1,110 @@
+{section:structure/head}
+<main>
+    <div class="section bg-dark">
+        <h2>Installation</h2>
+        <p>Requirement</p>
+        <ul>
+            <li>Web server with PHP 7.2 running</li>
+            <li>Optionnal : SQL DB server</li>
+        </ul>
+        <p>Put folder content in the web root folder, enjoy</p>
+    </div>
+    <div class="section bg-primary">
+        <h2>Configuration</h2>
+        <p>To add a new site to your application you need to register your domain. To do it create a folder named like your domain on the <strong>Site folder</strong></p>
+        <h3>.env file</h3>
+        <p>If you want to set custom environment configuration or overwrite existing you can write <strong>.env</strong> file at the root of your <strong>site folder</strong> like the default .env file :</p>
+        <pre><code class="text"># APPLICATION PART
+APPLICATION_ID=
+APPLICATION_NAME=
+# APPLICATION CONTEXT
+# VAILABLE CONTEXT :
+# - Develop
+# - Production
+APPLICATION_CONTEXT=Development
+# SITES PART
+# Existing site on application (comma separated)
+SITES_DOMAINS=domain.tld
+################
+### DATABASE ###
+################
+DATABASE_ENABLE=true
+## DATABASE TYPE
+## TO USE BY DEFAULT
+DATABASE_DRIVER=mysql
+################
+## MYSQL PART ##
+################
+# User
+MYSQL_USER=db
+# Password
+MYSQL_PASS=db
+# Host
+MYSQL_HOST=db
+# Port
+MYSQL_PORT=3306
+# Database name
+MYSQL_NAME=db
+# LOG PART
+# Form of log file name, need to split by date logs
+LOG_FORMAT=Ym.d
+# Level to log :
+# 3 = errors
+# 2 = warning
+# 1 = notice
+# 0 = none
+LOG_LEVEL=0
+# Log Database query
+LOG_QUERY=false
+# Template file extention
+TEMPLATE_EXT=.html
+# Display execution time in header
+SHOW_EXECUTION_TIME=true</code></pre>
+        <h3>.routing file</h3>
+        <p>If you want to register routes without tell it into controller you can write a file at the root of your <strong>domain folder</strong> like this :</p>
+        <pre><code class="json">{
+    "domain.tld": {
+        "/": "Site\\Controller\\DefaultController->index",
+        "/news/{newstitle}": "Site\\Controller\\DefaultController->news"
+    }
+}</code></pre>
+    </div>
+    <div class="section">
+        <h2>Hello World</h2>
+        <p>Lets start with a simple hello world rendering</p>
+        <h3>Controller</h3>
+        <p>This is the controller</p>
+        <pre><code class="php">&lt;?php
+
+
+namespace Framework\Controller;
+
+use Core\Controller;
+use Core\Database\Manager;
+use Core\Response;
+use Framework\Model\User;
+
+class DefaultController extends Controller
+{
+    /**
+     * Routing define by .routing file at the root of web server (next to index.php)
+     * @site domain.tld
+     * @route /
+     */
+    public function index()
+    {
+        $this->render("index", ["message" => ["hello", "world"]]);
+    }
+}</code></pre>
+        <h3>Template</h3>
+        <p>The <strong>index</strong> template location is <strong>Site/domain.tld/Resource/index.html</strong> and look like :</p>
+        <pre><code class="html">&lt;p>
+    &lbrack;foreach:message as element]
+        '&lbrace;key:element}:&lbrack;element}'
+    &lbrack;foreach]
+&lt;/p></code></pre>
+        <p>Done</p>
+    </div>
+    {section:structure/vote}
+</main>
+{section:structure/footer}

@@ -27,9 +27,6 @@ body {
     color: var(--colorDarkGrey);
     transition: 0.5s;
 }
-code {
-    font-family: 'Source Code Pro', monospace;
-}
 h1,h2,h3,h4,h5,h6 {
     font-family: 'Raleway', sans-serif;
     margin-bottom: 25px;
@@ -63,6 +60,96 @@ a:hover {
     filter: blur(4px);
     transition: 1s;
     padding-top:30px;
+}
+
+.primary {
+    color: var(--colorPrimary);
+}
+.secondary {
+    color: var(--colorSecondary);
+}
+.uppercase {
+    text-transform: uppercase;
+}
+hr {
+    width: 80%;
+    margin: 50px auto;
+    opacity: 0.4;
+    border-color: var(--colorPrimary);
+    background-color: transparent;
+    color: transparent;
+}
+.center {
+    text-align: center;
+}
+.flex-space-around {
+    display: flex;
+    justify-content: space-around;
+}
+.flex-space-between {
+    display: flex;
+    justify-content: space-between;
+}
+pre {
+    margin-bottom: 25px;
+    padding: 25px;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+code {
+    font-family: 'Source Code Pro', monospace;
+    color: var(--colorLight);
+    line-height: 1rem;
+}
+/*
+Color part
+---------------------------------------------*/
+.bg-primary {
+    background-color: var(--colorPrimary);
+    color: var(--colorLight);
+}
+.bg-primary * {
+    color: var(--colorLight);
+}
+.bg-primary a,
+.bg-primary a>i {
+    color: var(--colorSecondary);
+}
+.bg-primary hr {
+    border-color: var(--colorLight);
+}
+.bg-secondary {
+    background-color: var(--colorSecondary);
+    color: var(--colorLight);
+}
+.bg-secondary * {
+    color: var(--colorLight);
+}
+.bg-secondary a,
+.bg-secondary a>i {
+    color: var(--colorDarkGrey);
+}
+.bg-secondary hr {
+    border-color: var(--colorLight);
+}
+.bg-dark {
+    background-color: var(--colorDarkGrey);
+    color: var(--colorLight);
+}
+.bg-dark * {
+    color: var(--colorLight);
+}
+.bg-dark a,
+.bg-dark a>i {
+    color: var(--colorSecondary);
+}
+.bg-dark hr {
+    border-color: var(--colorLight);
+}
+/*
+Vote part
+---------------------------------------------*/
+#choice>a {
+    font-size: 1.2rem;
 }
 /*
 Splash part

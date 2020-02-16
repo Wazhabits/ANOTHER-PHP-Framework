@@ -13,6 +13,14 @@ class DefaultController extends Controller
      * @route /
      */
     public function index() {
-        $this->render("index", []);
+        $this->render("layout/index", []);
+    }
+
+    /**
+     * @site documentation.ddev.site
+     * @route /start
+     */
+    public function start() {
+        $this->render("layout/start", []);
     }
 }

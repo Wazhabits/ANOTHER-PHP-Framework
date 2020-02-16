@@ -64,10 +64,7 @@ class Template implements Base
      * @param $buffer
      */
     private static function putCache(&$buffer) {
-        if (file_exists(self::calcTemplatePath())) {
-            unlink(self::calcTemplatePath());
-        }
-        file_put_contents(self::calcTemplatePath(), $buffer);
+        Files::put(self::calcTemplatePath(), $buffer);
     }
 
     /**

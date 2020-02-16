@@ -15,11 +15,11 @@ class templatePreProcess
      * @param array &$args
      */
     static function getStats(&$args) {
-        $view = Manager::getConnection("mysql")->getQueryBuilder(Pages::class)->select(["view", "id"])->from(Pages::class)->where([["url", "=", $_SERVER["REQUEST_URI"]]])->execute();
+        $view = Manager::getConnection("mysql")->getQueryBuilder(Pages::class)->select("*")->from(Pages::class)->where([["url", "=", $_SERVER["REQUEST_URI"]]])->execute();
         if (isset($view[0])) {
             $view[0]->view++;
             $args["__PAGE"]["view"] = $view[0]->view;
-            $vote = Manager::getConnection("mysql")->getQueryBuilder(Statistic::class)->select(["result"])->from(Statistic::class)->where([["pageid", "=", $view[0]->id]])->execute();
+            $vote = Manager::getConnection("mysql")->getQueryBuilder(Statistic::class)->select("*")->from(Statistic::class)->where([["pageid", "=", $view[0]->id]])->execute();
             $like = 0;
             $dislike = 0;
             if (is_array($vote)) {

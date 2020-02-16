@@ -31,8 +31,8 @@ $(document).ready(function () {
         $.ajax({
             type: "GET",
             url:  url + encodeURI(location),
-            success: function (data) {
-                console.log(data);
+            success: function () {
+                window.location.reload();
             },
             error: function () {
               console.log("Something went wrong, sorry");

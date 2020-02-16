@@ -142,7 +142,7 @@ class Template implements Base
         $matches = [];
         preg_match_all("/{section:([\w|\w\/\w+]*)}/", $buffer, $matches);
         foreach ($matches[1] as $sectionPath) {
-            $sectionContent = Files::read(self::$baseTemplatePath . $sectionPath
+            $sectionContent = Files::read(self::$baseTemplatePath .$_SERVER["HTTP_HOST"] . DIRECTORY_SEPARATOR . "Resource" . DIRECTORY_SEPARATOR . $sectionPath
                 . Environment::getConfiguration("TEMPLATE_EXT"));
             self::sectionalize($sectionContent);
             $buffer = str_replace("{section:" . $sectionPath . "}", $sectionContent, $buffer);

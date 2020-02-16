@@ -1,7 +1,4 @@
 <?php
-
-session_start();
-
 /**
  * This file is part of the Framework project
  * Copyright 2019 - Core team
@@ -53,4 +50,9 @@ if (file_exists(PATH_ROOT . ".routing"))
 /**
  * Initialize kernel
  */
-Kernel::boot();
+try {
+    session_start();
+    Kernel::boot();
+} catch (Exception $exception) {
+    echo "<h1>" . $exception->getMessage() . "</h1><p><span>" . $exception->getCode() . "</span> on line <span>" . $exception->getLine() . "</span></p>";
+}

@@ -453,7 +453,7 @@ Promotional boxes part
     position: relative;
 }
 .promotion>.box>hr {
-    margin: 25px 0;
+    margin: 25px auto;
     border-color: var(--colorDarkGrey);
 }
 .promotion>.box:first-child {
@@ -495,6 +495,7 @@ Promotional boxes part
 }
 .promotion>.box>h2 {
     color: rgba(0,0,0,0.8);
+    border: none;
 }
 .promotion>.box>p {
     color: rgba(0,0,0,0.4);

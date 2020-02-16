@@ -37,9 +37,13 @@ h1 {
 
 h2 {
     font-size: 1.5rem;
+    padding-bottom: 5px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.6);
 }
 h3 {
     font-size: 1.25rem;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
 }
 p {
     margin-bottom: 25px;
@@ -90,6 +94,9 @@ hr {
     display: flex;
     justify-content: space-between;
 }
+/*
+Code part
+---------------------------------------------*/
 pre {
     margin-bottom: 25px;
     padding: 25px;
@@ -178,8 +185,23 @@ Color part
 /*
 Vote part
 ---------------------------------------------*/
+#vote>h3 {
+    border: none !important;
+}
 #choice>a {
     font-size: 1.2rem;
+    display: inline-block;
+    padding: 10px 50px;
+    border: 2px solid rgba(255,255,255, 0.4);
+    color: var(--colorLight);
+}
+#choice>a>i {
+    margin-right: 10px;
+    margin-left: -25px;
+}
+#choice>a:hover {
+    border: 2px solid rgba(255,255,255, 0.8);
+    transition: 0.2s;
 }
 /*
 Splash part
@@ -231,7 +253,10 @@ header.fixed {
 }
 #main-menu {
     width: 100%;
-    background: rgba(255,255,255,0.8);
+    background: rgba(255,255,255,0.9);
+    -webkit-box-shadow: 0px 15px 15px 6px rgba(0,0,0,0.15);
+    -moz-box-shadow: 0px 15px 15px 6px rgba(0,0,0,0.15);
+    box-shadow: 0px 15px 15px 6px rgba(0,0,0,0.15);
 }
 #main-menu>ul {
     float: right;

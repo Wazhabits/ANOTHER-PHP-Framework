@@ -1,5 +1,5 @@
 {
-    "framework.ddev.site": {
+    "frameworknoname.ddev.site": {
         "/": "Framework\\Controller\\DefaultController->index"
     },
     "framework2.ddev.site": {

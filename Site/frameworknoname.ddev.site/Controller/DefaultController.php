@@ -19,7 +19,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @site framework.ddev.site
+     * @site frameworknoname.ddev.site
      * @route /loop
      */
     public function loop() {
@@ -33,7 +33,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @site framework.ddev.site
+     * @site frameworknoname.ddev.site
      * @route /section
      */
     public function section() {
@@ -41,7 +41,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @site framework.ddev.site
+     * @site frameworknoname.ddev.site
      * @route /condition
      */
     public function condition() {
@@ -49,7 +49,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @site framework.ddev.site
+     * @site frameworknoname.ddev.site
      * @route /api
      */
     public function testResponseWithoutTemplate() {
@@ -58,7 +58,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @site framework.ddev.site
+     * @site frameworknoname.ddev.site
      * @route /connection
      */
     public function connection() {
@@ -127,7 +127,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @site framework.ddev.site
+     * @site frameworknoname.ddev.site
      * @route /vars
      */
     public function variables() {

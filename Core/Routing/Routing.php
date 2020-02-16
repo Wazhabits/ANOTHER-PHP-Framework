@@ -93,15 +93,11 @@ class Routing implements Base
         if (!isset($this->routes[$site])) {
             $status = 500;
         } else {
-            if (isset($this->routes[$site][$uri])){
-                $this->current["route"] = $uri;
-                $this->current["controller"] = $this->routes[$site][$uri];
-                $this->current["site"] = $site;
-            } elseif (isset($this->routes["static"][$uri])) {
-                $this->current["route"] = $uri;
-                $this->current["controller"] = $this->routes["static"][$uri];
-                $this->current["site"] = $site;
-            } else {
+            if (isset($this->routes[$site][$uri]))
+                $this->define($uri, $this->routes[$site][$uri], $site);
+            elseif (isset($this->routes["static"][$uri]))
+                $this->define($uri, $this->routes["static"][$uri], $site);
+            else {
                 if (!$this->checkRouteParams($site, $uri) && !$this->checkRouteParams("static", $uri))
                     $status = 404;
             }
@@ -109,6 +105,22 @@ class Routing implements Base
         Logger::log("general", "ROUTING|" . $_SERVER["REQUEST_URI"] . ":" . $status);
         Event::exec("core/routing." . $status, $this->routes);
         return $status;
+    }
+
+    /**
+     * This function define the final current route use
+     * @param $route
+     * @param $controller
+     * @param $site
+     * @param array $arguments
+     * @return $this
+     */
+    private function define($route, $controller, $site, $arguments = []) {
+        $this->current["route"] = $route;
+        $this->current["controller"] = $controller;
+        $this->current["site"] = $site;
+        $this->current["arguments"] = $arguments;
+        return $this;
     }
 
     /**
@@ -139,10 +151,7 @@ class Routing implements Base
                             $tempParameter[substr($existingRouteArray[$index], 1, strlen($existingRouteArray[$index]) - 2)] = $testingRouteArray[$index];
                         $index++;
                         if ($index === count($testingRouteArray)) {
-                            $this->current["route"] = $route;
-                            $this->current["controller"] = $controller;
-                            $this->current["site"] = $site;
-                            $this->current["arguments"] = $tempParameter;
+                            $this->define($uri, $controller, $site, $tempParameter);
                             return true;
                         }
                     }

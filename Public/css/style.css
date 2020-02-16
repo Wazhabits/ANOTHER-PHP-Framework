@@ -400,6 +400,12 @@ Main part
 main>div {
     padding: 50px 15%;
 }
+main ul {
+    margin-bottom: 15px;
+}
+main ul>li {
+    padding-left: 10px;
+}
 /*
 Carousel home part
 ---------------------------------------------*/
@@ -445,6 +451,10 @@ Promotional boxes part
     -moz-box-shadow: 0px 25px 25px 0px rgba(0,0,0,0.5);
     box-shadow: 0px 25px 25px 0px rgba(0,0,0,0.5);
     position: relative;
+}
+.promotion>.box>hr {
+    margin: 25px 0;
+    border-color: var(--colorDarkGrey);
 }
 .promotion>.box:first-child {
     margin-left: 0;

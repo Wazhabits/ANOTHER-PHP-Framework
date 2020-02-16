@@ -27,10 +27,8 @@ class Files implements Base
      * @return bool|int|mixed
      */
     static function put($path, $content, $deleteIfExist = false) {
-        if (!file_exists($path))
-            self::test($path);
-        elseif ($deleteIfExist)
-            unlink($path);
+        self::delete($path);
+        self::test($path);
         return file_put_contents($path, $content . PHP_EOL, FILE_APPEND | LOCK_EX);
     }
 

@@ -40,25 +40,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * Function counting view
-     * @param $args
-     */
-    public function view($args) {
-        $path = $args["route"]["arguments"]["path"];
-        $page = $this->getPage($path);
-        if ($page === false || empty($page)) {
-            $page = new Pages([
-                "url" => str_replace("|", "/", urldecode($path)),
-                "view" => 0
-            ]);
-        } else {
-            $page = $page[0];
-            $page->view = $page->view + 1;
-        }
-        $page->save();
-    }
-
-    /**
      * Function who made a vote
      */
     public function voteNo($args) {

@@ -64,10 +64,7 @@ class Template implements Base
      * @param $buffer
      */
     private static function putCache(&$buffer) {
-        if (file_exists(self::calcTemplatePath())) {
-            unlink(self::calcTemplatePath());
-        }
-        file_put_contents(self::calcTemplatePath(), $buffer);
+        Files::put(self::calcTemplatePath(), $buffer);
     }
 
     /**
@@ -96,16 +93,9 @@ class Template implements Base
 
     private static function init(&$templatePath, &$args) {
         /**
-         * Prepare args for event
-         */
-        $argumentForEvent = [
-            &$templatePath,
-            &$args
-        ];
-        /**
          * Exec event preProcess
          */
-        Event::exec("core/template.preProcess", $argumentForEvent);
+        Event::exec("core/template.preProcess", $args);
         self::$args = self::object_to_array($args);
         self::$baseTemplatePath = PATH_SITE;
         self::$templatePath = self::$baseTemplatePath . $_SERVER["HTTP_HOST"] . DIRECTORY_SEPARATOR . "Resource" . DIRECTORY_SEPARATOR

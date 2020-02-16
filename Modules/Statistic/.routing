@@ -1,7 +1,6 @@
 {
     "static": {
         "/api/statistic/vote/no/{path}": "Modules\\Statistic\\Controller\\DefaultController->voteNo",
-        "/api/statistic/vote/yes/{path}": "Modules\\Statistic\\Controller\\DefaultController->voteYes",
-        "/api/statistic/view/{path}": "Modules\\Statistic\\Controller\\DefaultController->view"
+        "/api/statistic/vote/yes/{path}": "Modules\\Statistic\\Controller\\DefaultController->voteYes"
     }
 }

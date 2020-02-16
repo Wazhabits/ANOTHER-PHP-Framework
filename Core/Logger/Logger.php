@@ -45,10 +45,16 @@ class Logger implements LoggerBase
      * @return string
      */
     private static function makeLogPath($key, $status) {
-        $directory =  PATH_LOG . DIRECTORY_SEPARATOR . $key . DIRECTORY_SEPARATOR
-            . self::$FOLDERS[$status] . DIRECTORY_SEPARATOR;
+        if (Environment::getConfiguration("LOG_SPLIT_BY_SITE") === "true")
+            $directory =  PATH_LOG  . str_replace(".", "-", $_SERVER["HTTP_HOST"]) . DIRECTORY_SEPARATOR . $key . DIRECTORY_SEPARATOR
+                . self::$FOLDERS[$status] . DIRECTORY_SEPARATOR;
+        else
+            $directory =  PATH_LOG . $key . DIRECTORY_SEPARATOR
+                . self::$FOLDERS[$status] . DIRECTORY_SEPARATOR;
+        Files::test($directory);
         $timeHash = date(Environment::getConfiguration("LOG_FORMAT"), time());
         $fileExt = ".log";
+
         return $directory . $timeHash . $fileExt;
     }
 }

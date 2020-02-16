@@ -1,47 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {section:structure/head}
-</head>
-<body><div class="page-wrapper">
-    <header>
-        <div id="banner-top">
-            <div id="version">
-                <span class="current-version">0.2.5-dev</span>
-            </div>
-            <div>
-                <form id="search-form" action="/search" method="get">
-                    <label for="search-bar"><i class="fas fa-search"></i> Search</label>
-                    <input type="text" id="search-bar" name="search" placeholder="Search">
-                </form>
-            </div>
-            <div id="language">
-                <a href="#language-menu"><i class="fas fa-language"></i></a>
-                <ul id="language-menu">
-                    <li><a href="/en">EN</a></li>
-                    <li><a href="/fr">FR</a></li>
-                </ul>
-            </div>
-            <div><a href="#main-menu" class="burger" id="burger"><i class="fas fa-hamburger"></i></a></div>
-        </div>
-        <nav id="main-menu">
-            <ul>
-                <li><a href="#"><i class="fas fa-feather-alt"></i> Download</a></li>
-                <li><a href="#"><i class="far fa-paper-plane"></i> Start</a></li>
-                <li><a href="#"><i class="far fa-sticky-note"></i> Manual</a></li>
-                <li><a href="#">Community</a></li>
-            </ul>
-        </nav>
-    </header>
+{section:structure/head}
+<div class="page-wrapper">
+    {section:structure/menu}
     <main>
         <div class="carousel-home">
-            <div class="element" style="background: url('https://via.placeholder.com/1200x900');">
+            <div class="element" style="background: url('Public/back1.jpg');">
                 <div>
                     <h1>Optimized reactivity</h1>
                     <p>Start a project faster than you think</p>
                 </div>
             </div>
-            <div class="element" style="background: url('https://via.placeholder.com/1200x900');">
+            <div class="element" style="background: url('Public/back2.jpg');">
                 <div>
                     <h1>Powerful structure</h1>
                     <p>An MVC pattern linked to an event-driven architecture</p>
@@ -50,6 +18,7 @@
         </div>
         <div class="promotion">
             <div class="box">
+                <i class="fas fa-seedling"></i>
                 <i class="fas fa-seedling"></i>
                 <h2>Without external dependency</h2>
                 <p>
@@ -61,6 +30,7 @@
             </div>
             <div class="box">
                 <i class="fas fa-rocket"></i>
+                <i class="fas fa-rocket"></i>
                 <h2>Start faster</h2>
                 <p>
                     With our framework, you can start a new project in few minutes
@@ -70,6 +40,7 @@
                 </p>
             </div>
             <div class="box">
+                <i class="fab fa-buffer"></i>
                 <i class="fab fa-buffer"></i>
                 <h2>Light & Powerful</h2>
                 <p>
@@ -85,12 +56,4 @@
             <blockquote>Our product is designed to be faster, light and understandable. Our goal is to provide a tool to bootstrap a new project in few minutes... A. Piveteau</blockquote>
         </div>
     </main>
-</div>
-<div id="splash">
-    <h1>I-TW <span>HOME</span></h1>
-</div>
-<div id="javascript-include">
-    {section:structure/script}
-</div>
-</body>
-</html>
+    {section:structure/footer}

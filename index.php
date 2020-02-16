@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 /**
  * This file is part of the Framework project
  * Copyright 2019 - Core team

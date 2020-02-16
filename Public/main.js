@@ -18,6 +18,16 @@ function carousel() {
 imagecounter = 0;
 
 $(document).ready(function () {
+    $.ajax({
+        type: "GET",
+        url:  "api/statistic/view/" + encodeURI(window.location.pathname.replace("/", "|")),
+        success: function (data) {
+            console.log(data);
+        },
+        error: function () {
+            console.log("Something went wrong, sorry");
+        }
+    });
     carousel();
     setInterval(carousel, 5000);
     $("#language>a").on("click", function (event) {
@@ -26,10 +36,11 @@ $(document).ready(function () {
     });
     $("body").on("click", "#choice>a", function (event) {
         event.preventDefault();
-        let url = $(this).attr("href");
+        let url = $(this).attr("href"),
+            location = window.location.pathname.replace("/", "|");
         $.ajax({
             type: "GET",
-            url:  url,
+            url:  url + encodeURI(location),
             success: function (data) {
                 console.log(data);
             },

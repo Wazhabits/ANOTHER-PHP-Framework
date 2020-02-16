@@ -19,7 +19,28 @@ imagecounter = 0;
 
 $(document).ready(function () {
     carousel();
-    setInterval(carousel, 5000)
+    setInterval(carousel, 5000);
+    $("#language>a").on("click", function (event) {
+        event.preventDefault();
+        $($(this).attr("href")).toggleClass("show");
+    });
+    $("body").on("click", "#choice>a", function (event) {
+        event.preventDefault();
+        let url = $(this).attr("href");
+        $.ajax({
+            type: "GET",
+            url:  url,
+            success: function (data) {
+                console.log(data);
+            },
+            error: function () {
+              console.log("Something went wrong, sorry");
+            }
+        });
+        $.get($(this).attr("href"), function (data) {
+           console.log("Thanks for your vote");
+        });
+    })
 });
 
 if ($("img").length > 0) {

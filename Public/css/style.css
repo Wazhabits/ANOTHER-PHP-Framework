@@ -94,11 +94,41 @@ pre {
     margin-bottom: 25px;
     padding: 25px;
     background-color: rgba(0, 0, 0, 0.8);
+    padding-top: 50px;
 }
 code {
     font-family: 'Source Code Pro', monospace;
     color: var(--colorLight);
     line-height: 1rem;
+    position: relative;
+}
+code::before {
+    position: absolute;
+    left: 0px;
+    top: -25px;
+    text-transform: uppercase;
+    opacity: 0.6;
+    color: var(--colorLight);
+}
+pre:hover>code::before {
+    color: var(--colorSecondary);
+    opacity: 1;
+    transition: 0.2s;
+}
+code.php::before {
+    content: "php";
+}
+code.html::before {
+    content: "html";
+}
+code.json::before {
+    content: "json";
+}
+code.js::before {
+    content: "js";
+}
+code.text::before {
+    content: "text";
 }
 /*
 Color part
@@ -274,9 +304,11 @@ Banner part
     background-color: rgba(255, 255, 255, 0.3);
     color: var(--colorLight);
     text-transform: uppercase;
+    line-height: 20px;
 }
 #search-bar::placeholder {
     color: var(--colorLight);
+    line-height: 20px;
 }
 #banner-top a {
     color: var(--colorLightGrey);
@@ -300,17 +332,37 @@ Language menu part
     width: 40px;
 }
 #language>#language-menu {
-    display: flex;
-    visibility: hidden;
-    z-index: -1;
     position: absolute;
+    top: 0;
     left: 0;
-    bottom: -40px;
+    height: 30px;
+    visibility: hidden;
+    opacity: 0;
+    display: flex;
+    z-index: -1;
+    background-color: var(--colorDarkGrey);
+}
+#language>#language-menu.show {
+    visibility: visible;
+    opacity: 1;
+    z-index: 9;
+    transition: 0.5s ease-in-out;
+    top: 30px;
+}
+#language-menu>li {
+    list-style: none;
 }
 #language-menu>li>a {
     display: inline-block;
     width: 40px;
-    height: 40px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 20px;
+    padding: 0;
+    text-align: center;
+}
+#language-menu>li>a:hover {
+    background-color: var(--colorSecondary)
 }
 #burger {
     margin-right: -40px;

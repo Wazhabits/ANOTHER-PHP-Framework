@@ -12,7 +12,7 @@ use Modules\Statistic\Model\Statistic;
 class templatePreProcess
 {
     /**
-     * get current page stats
+     * get stats of current page
      * @param $path
      * @return mixed
      */
@@ -25,6 +25,11 @@ class templatePreProcess
             ->execute();
     }
 
+    /**
+     * Get vote of current page
+     * @param $id
+     * @return mixed
+     */
     static function getVote($id) {
         $vote = Manager::getConnection("mysql")->getQueryBuilder(Statistic::class)->select("*")->from(Statistic::class)->where([["pageid", "=", $id]])->execute();
         $like = 0;
@@ -43,11 +48,17 @@ class templatePreProcess
         return $temp;
     }
 
+    /**
+     * Get comment of current page
+     * @param $id
+     * @return mixed
+     */
     static function getComment($id) {
         return Manager::getConnection("mysql")->getQueryBuilder(Comment::class)->select("*")->from(Comment::class)->where([["pageid", "=", $id]])->execute();
     }
 
     /**
+     * get current stats for template
      * @event core/template.preProcess
      * @param array &$args
      */
